@@ -1,24 +1,15 @@
 
-include_directories (
-${PROJECT_SOURCE_DIR}/unikey
-${FCITX4_FCITX_INCLUDE_DIRS}
-${FCITX4_FCITX_CONFIG_INCLUDE_DIRS}
-${FCITX4_FCITX_UTILS_INCLUDE_DIRS}
-${PROJECT_BINARY_DIR}
-${LIBICONV_INCLUDE_DIR}
-)
-
 set( fcitx_unikey_sources
     unikey-im.cpp
-    unikey-config.cpp
-    unikey-ui.cpp
     )
 
-add_definitions( -DLOCALEDIR=\"${CMAKE_INSTALL_PREFIX}/share/locale\" )
+add_library(unikey MODULE ${fcitx_unikey_sources})
+target_link_libraries(unikey Fcitx5::Core Fcitx5::Config unikey-lib)
+target_include_directories(unikey PRIVATE ${PROJECT_BINARY_DIR})
+set_target_properties(unikey PROPERTIES PREFIX "")
+install(TARGETS unikey DESTINATION "${CMAKE_INSTALL_LIBDIR}/fcitx5")
+fcitx5_translate_desktop_file(unikey.conf.in unikey.conf)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/unikey.conf" DESTINATION "${CMAKE_INSTALL_DATADIR}/fcitx5/inputmethod")
+fcitx5_translate_desktop_file(unikey-addon.conf.in unikey-addon.conf)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/unikey-addon.conf" RENAME unikey.conf DESTINATION "${FCITX_INSTALL_PKGDATADIR}/addon")
 
-fcitx_add_addon_full(unikey
-   SOURCES ${fcitx_unikey_sources}
-   DESC
-   LINK_LIBS unikey
-   IM_CONFIG unikey.conf
-   )

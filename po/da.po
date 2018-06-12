@@ -1,21 +1,20 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # scootergrisen, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: fcitx\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2016-09-17 12:02-0700\n"
+"POT-Creation-Date: 2018-06-06 17:08-0700\n"
 "PO-Revision-Date: 2017-09-11 21:23+0000\n"
 "Last-Translator: scootergrisen\n"
 "Language-Team: Danish (http://www.transifex.com/fcitx/fcitx/language/da/)\n"
+"Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: da\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: macro-editor/editor.cpp:41
@@ -26,157 +25,13 @@ msgstr "&Tilføj"
 msgid "&Delete"
 msgstr "&Slet"
 
-#: macro-editor/editor.cpp:43
-msgid "De&lete All"
-msgstr "S&let alle"
-
-#: macro-editor/editor.cpp:44
-msgid "&Import"
-msgstr "&Importér"
-
 #: macro-editor/editor.cpp:45
 msgid "&Export"
 msgstr "&Eksportér"
 
-#: macro-editor/editor.cpp:48 macro-editor/editor.cpp:76
-msgid "Unikey Macro Editor"
-msgstr "Unikey-makroredigering"
-
-#: macro-editor/model.cpp:44 src/unikey-ui.cpp:127 src/unikey-ui.cpp:187
-#: src/fcitx-unikey.conf.in:10
-msgid "Macro"
-msgstr "Makro"
-
-#: macro-editor/model.cpp:46
-msgid "Word"
-msgstr "Ord"
-
-#: src/unikey-im.cpp:116 src/fcitx-unikey.conf.in:3 src/unikey.conf.in:3
-#: src/fcitx-unikey.desc:1 src/fcitx-unikey.desc:14 src/fcitx-unikey.desc:28
-#: src/fcitx-unikey.desc:33 src/fcitx-unikey.desc:38 src/fcitx-unikey.desc:43
-#: src/fcitx-unikey.desc:48 src/fcitx-unikey.desc:53
-msgid "Unikey"
-msgstr "Unikey"
-
-#: src/unikey-ui.cpp:105 src/unikey-ui.cpp:172
-msgid "Choose input method"
-msgstr "Vælg inputmetode"
-
-#: src/unikey-ui.cpp:113 src/unikey-ui.cpp:178
-msgid "Choose output charset"
-msgstr "Vælg outputtegnsæt"
-
-#: src/unikey-ui.cpp:119 src/unikey-ui.cpp:182
-msgid "Spell Check"
-msgstr "Stavekontrol"
-
-#: src/unikey-ui.cpp:120
-msgid "Enable Spell Check"
-msgstr "Aktivér stavekontrol"
-
-#: src/unikey-ui.cpp:128
-msgid "Enable Macro"
-msgstr "Aktivér makro"
-
-#: src/unikey-ui.cpp:142
-msgid "Unikey Input Method"
-msgstr "Unikey-inputmetode"
-
-#: src/unikey-ui.cpp:156 src/fcitx-unikey.desc:17
-msgid "Output Charset"
-msgstr "Outputtegnsæt"
-
-#: src/unikey-ui.cpp:182
-msgid "No Spell Check"
-msgstr "Ingen stavekontrol"
-
-#: src/unikey-ui.cpp:183
-msgid "Toggle Spell Check"
-msgstr "Stavekontrol til/fra"
-
-#: src/unikey-ui.cpp:187
-msgid "No Macro"
-msgstr "Ingen makro"
-
-#: src/unikey-ui.cpp:188
-msgid "Toggle Macro"
-msgstr "Makro til/fra"
-
-#: src/fcitx-unikey.conf.in:4
-msgid "Unikey Wrapper For Fcitx"
-msgstr "Unikey-wrapper for Fcitx"
-
-#: src/fcitx-unikey.desc:4
-msgid "Input Method"
-msgstr "Inputmetode"
-
-#: src/fcitx-unikey.desc:6
-msgid "Telex"
-msgstr "Telex"
-
-#: src/fcitx-unikey.desc:7
-msgid "VNI"
-msgstr "VNI"
-
-#: src/fcitx-unikey.desc:8 src/fcitx-unikey.desc:22
-msgid "VIQR"
-msgstr "VIQR"
-
-#: src/fcitx-unikey.desc:9
-msgid "Microsoft Vietnamese"
-msgstr "Microsoft vietnamesisk"
-
-#: src/fcitx-unikey.desc:10
-msgid "UserIM"
-msgstr "BrugerIM"
-
-#: src/fcitx-unikey.desc:11
-msgid "Simple Telex"
-msgstr "Simpel telex"
-
-#: src/fcitx-unikey.desc:12
-msgid "Simple Telex2"
-msgstr "Simpel telex2"
-
-#: src/fcitx-unikey.desc:19
-msgid "Unicode"
-msgstr "Unicode"
-
-#: src/fcitx-unikey.desc:20
-msgid "TCVN3"
-msgstr "TCVN3"
-
-#: src/fcitx-unikey.desc:21
-msgid "VNI Win"
-msgstr "VNI Win"
-
-#: src/fcitx-unikey.desc:23
-msgid "BK HCM 2"
-msgstr "BK HCM 2"
-
-#: src/fcitx-unikey.desc:24
-msgid "CString"
-msgstr "CStreng"
-
-#: src/fcitx-unikey.desc:25
-msgid "NCR Decimal"
-msgstr "NCR-decimal"
-
-#: src/fcitx-unikey.desc:26
-msgid "NCR Hex"
-msgstr "NCR-heksadecimal"
-
-#: src/fcitx-unikey.desc:31
-msgid "Enable spell check"
-msgstr "Aktivér stavekontrol"
-
-#: src/fcitx-unikey.desc:36
-msgid "Enable macro"
-msgstr "Aktivér makro"
-
-#: src/fcitx-unikey.desc:41
-msgid "Use oà, _uý (instead of òa, úy)"
-msgstr "Brug oà, _uý (i stedet for òa, úy)"
+#: macro-editor/editor.cpp:44
+msgid "&Import"
+msgstr "&Importér"
 
 #: src/fcitx-unikey.desc:46
 msgid "Allow type with more freedom"
@@ -186,6 +41,178 @@ msgstr "Tillad type med mere frihed"
 msgid "Auto restore keys with invalid words"
 msgstr "Gendan automatisk nøgler med ugyldige ord"
 
+#: src/fcitx-unikey.desc:23
+msgid "BK HCM 2"
+msgstr "BK HCM 2"
+
+#: src/fcitx-unikey.desc:24
+msgid "CString"
+msgstr "CStreng"
+
+#: src/unikey-ui.cpp:105 src/unikey-ui.cpp:172
+msgid "Choose input method"
+msgstr "Vælg inputmetode"
+
+#: src/unikey-ui.cpp:113 src/unikey-ui.cpp:178
+msgid "Choose output charset"
+msgstr "Vælg outputtegnsæt"
+
+#: macro-editor/editor.cpp:43
+msgid "De&lete All"
+msgstr "S&let alle"
+
+#. i18n: file: macro-editor/dialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, Dialog)
+#: rc.cpp:3
+#, kde-format
+msgid "Dialog"
+msgstr ""
+
+#: src/unikey-ui.cpp:128
+msgid "Enable Macro"
+msgstr "Aktivér makro"
+
+#: src/unikey-ui.cpp:120
+msgid "Enable Spell Check"
+msgstr "Aktivér stavekontrol"
+
+#: src/fcitx-unikey.desc:36
+msgid "Enable macro"
+msgstr "Aktivér makro"
+
+#: src/fcitx-unikey.desc:31
+msgid "Enable spell check"
+msgstr "Aktivér stavekontrol"
+
+#: src/fcitx-unikey.desc:4
+msgid "Input Method"
+msgstr "Inputmetode"
+
+#: macro-editor/model.cpp:44 src/unikey-ui.cpp:127 src/unikey-ui.cpp:187
+#: src/fcitx-unikey.conf.in:10
+msgid "Macro"
+msgstr "Makro"
+
+#. i18n: file: macro-editor/dialog.ui:32
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:9
+#, fuzzy, kde-format
+msgid "Macro:"
+msgstr "Makro"
+
+#. i18n: file: macro-editor/editor.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, Editor)
+#: rc.cpp:12
+#, kde-format
+msgid "MainWindow"
+msgstr ""
+
+#: src/fcitx-unikey.desc:9
+msgid "Microsoft Vietnamese"
+msgstr "Microsoft vietnamesisk"
+
+#: src/fcitx-unikey.desc:25
+msgid "NCR Decimal"
+msgstr "NCR-decimal"
+
+#: src/fcitx-unikey.desc:26
+msgid "NCR Hex"
+msgstr "NCR-heksadecimal"
+
+#: src/unikey-ui.cpp:187
+msgid "No Macro"
+msgstr "Ingen makro"
+
+#: src/unikey-ui.cpp:182
+msgid "No Spell Check"
+msgstr "Ingen stavekontrol"
+
+#: src/unikey-ui.cpp:156 src/fcitx-unikey.desc:17
+msgid "Output Charset"
+msgstr "Outputtegnsæt"
+
 #: src/fcitx-unikey.desc:56
 msgid "Process W at word begin"
 msgstr "Behandl W ved ords begyndelse"
+
+#: src/fcitx-unikey.desc:11
+msgid "Simple Telex"
+msgstr "Simpel telex"
+
+#: src/fcitx-unikey.desc:12
+msgid "Simple Telex2"
+msgstr "Simpel telex2"
+
+#: src/unikey-ui.cpp:119 src/unikey-ui.cpp:182
+msgid "Spell Check"
+msgstr "Stavekontrol"
+
+#: src/fcitx-unikey.desc:20
+msgid "TCVN3"
+msgstr "TCVN3"
+
+#: src/fcitx-unikey.desc:6
+msgid "Telex"
+msgstr "Telex"
+
+#: src/unikey-ui.cpp:188
+msgid "Toggle Macro"
+msgstr "Makro til/fra"
+
+#: src/unikey-ui.cpp:183
+msgid "Toggle Spell Check"
+msgstr "Stavekontrol til/fra"
+
+#: src/fcitx-unikey.desc:19
+msgid "Unicode"
+msgstr "Unicode"
+
+#: src/unikey-im.cpp:116 src/fcitx-unikey.conf.in:3 src/unikey.conf.in:3
+#: src/fcitx-unikey.desc:1 src/fcitx-unikey.desc:14 src/fcitx-unikey.desc:28
+#: src/fcitx-unikey.desc:33 src/fcitx-unikey.desc:38 src/fcitx-unikey.desc:43
+#: src/fcitx-unikey.desc:48 src/fcitx-unikey.desc:53
+msgid "Unikey"
+msgstr "Unikey"
+
+#: src/unikey-ui.cpp:142
+msgid "Unikey Input Method"
+msgstr "Unikey-inputmetode"
+
+#: macro-editor/editor.cpp:48 macro-editor/editor.cpp:76
+msgid "Unikey Macro Editor"
+msgstr "Unikey-makroredigering"
+
+#: src/fcitx-unikey.conf.in:4 src/unikey-addon.conf.in:3
+msgid "Unikey Wrapper For Fcitx"
+msgstr "Unikey-wrapper for Fcitx"
+
+#: src/fcitx-unikey.desc:41
+msgid "Use oà, _uý (instead of òa, úy)"
+msgstr "Brug oà, _uý (i stedet for òa, úy)"
+
+#: src/fcitx-unikey.desc:10
+msgid "UserIM"
+msgstr "BrugerIM"
+
+#: src/fcitx-unikey.desc:8 src/fcitx-unikey.desc:22
+msgid "VIQR"
+msgstr "VIQR"
+
+#: src/fcitx-unikey.desc:7
+msgid "VNI"
+msgstr "VNI"
+
+#: src/fcitx-unikey.desc:21
+msgid "VNI Win"
+msgstr "VNI Win"
+
+#: macro-editor/model.cpp:46
+msgid "Word"
+msgstr "Ord"
+
+#. i18n: file: macro-editor/dialog.ui:25
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:6
+#, fuzzy, kde-format
+msgid "Word:"
+msgstr "Ord"

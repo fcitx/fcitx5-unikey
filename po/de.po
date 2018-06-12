@@ -7,9 +7,8 @@
 # mar well <m.wellendorf@gmx.de>, 2014,2017
 msgid ""
 msgstr ""
-"Project-Id-Version: fcitx\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2017-07-28 06:03-0700\n"
+"POT-Creation-Date: 2018-06-06 17:08-0700\n"
 "PO-Revision-Date: 2017-07-28 12:26+0000\n"
 "Last-Translator: mar well <m.wellendorf@gmx.de>\n"
 "Language-Team: German (http://www.transifex.com/fcitx/fcitx/language/de/)\n"
@@ -63,6 +62,13 @@ msgstr "Zeichensatz Ausgabe wählen"
 msgid "De&lete All"
 msgstr "De&lete All"
 
+#. i18n: file: macro-editor/dialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, Dialog)
+#: rc.cpp:3
+#, kde-format
+msgid "Dialog"
+msgstr ""
+
 #: src/unikey-ui.cpp:128
 msgid "Enable Macro"
 msgstr "Makro aktivieren"
@@ -87,6 +93,20 @@ msgstr "Eingabemethode"
 #: src/fcitx-unikey.conf.in:10
 msgid "Macro"
 msgstr "Makro"
+
+#. i18n: file: macro-editor/dialog.ui:32
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:9
+#, fuzzy, kde-format
+msgid "Macro:"
+msgstr "Makro"
+
+#. i18n: file: macro-editor/editor.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, Editor)
+#: rc.cpp:12
+#, kde-format
+msgid "MainWindow"
+msgstr ""
 
 #: src/fcitx-unikey.desc:9
 msgid "Microsoft Vietnamese"
@@ -163,7 +183,7 @@ msgstr "Unikey Eingabemethode"
 msgid "Unikey Macro Editor"
 msgstr "Unikey Macro Editor"
 
-#: src/fcitx-unikey.conf.in:4
+#: src/fcitx-unikey.conf.in:4 src/unikey-addon.conf.in:3
 msgid "Unikey Wrapper For Fcitx"
 msgstr "Unikey Wrapper für Fcitx"
 
@@ -189,4 +209,11 @@ msgstr "VNI Win"
 
 #: macro-editor/model.cpp:46
 msgid "Word"
+msgstr "Wort"
+
+#. i18n: file: macro-editor/dialog.ui:25
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:6
+#, fuzzy, kde-format
+msgid "Word:"
 msgstr "Wort"

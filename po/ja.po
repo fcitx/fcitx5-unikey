@@ -8,9 +8,8 @@
 # shirou - しろう <shirou.faw@gmail.com>, 2013
 msgid ""
 msgstr ""
-"Project-Id-Version: fcitx\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2017-11-23 00:03-0800\n"
+"POT-Creation-Date: 2018-06-06 17:08-0700\n"
 "PO-Revision-Date: 2017-11-23 06:18+0000\n"
 "Last-Translator: ABE Tsunehiko\n"
 "Language-Team: Japanese (http://www.transifex.com/fcitx/fcitx/language/ja/)\n"
@@ -64,6 +63,13 @@ msgstr "出力文字セットを選択"
 msgid "De&lete All"
 msgstr "全削除 (&l)"
 
+#. i18n: file: macro-editor/dialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, Dialog)
+#: rc.cpp:3
+#, kde-format
+msgid "Dialog"
+msgstr ""
+
 #: src/unikey-ui.cpp:128
 msgid "Enable Macro"
 msgstr "マクロを有効に"
@@ -88,6 +94,20 @@ msgstr "入力メソッド"
 #: src/fcitx-unikey.conf.in:10
 msgid "Macro"
 msgstr "マクロ"
+
+#. i18n: file: macro-editor/dialog.ui:32
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:9
+#, fuzzy, kde-format
+msgid "Macro:"
+msgstr "マクロ"
+
+#. i18n: file: macro-editor/editor.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, Editor)
+#: rc.cpp:12
+#, kde-format
+msgid "MainWindow"
+msgstr ""
 
 #: src/fcitx-unikey.desc:9
 msgid "Microsoft Vietnamese"
@@ -164,7 +184,7 @@ msgstr "Unikey 入力メソッド"
 msgid "Unikey Macro Editor"
 msgstr "Unikey マクロエディター"
 
-#: src/fcitx-unikey.conf.in:4
+#: src/fcitx-unikey.conf.in:4 src/unikey-addon.conf.in:3
 msgid "Unikey Wrapper For Fcitx"
 msgstr "Fcitx 用 Unikey ラッパー"
 
@@ -190,4 +210,11 @@ msgstr ""
 
 #: macro-editor/model.cpp:46
 msgid "Word"
+msgstr "単語"
+
+#. i18n: file: macro-editor/dialog.ui:25
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:6
+#, fuzzy, kde-format
+msgid "Word:"
 msgstr "単語"

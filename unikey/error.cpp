@@ -1,4 +1,5 @@
-// -*- coding:unix; mode:c++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
+// -*- coding:unix; mode:c++; tab-width:4; c-basic-offset:4;
+// indent-tabs-mode:nil -*-
 /*------------------------------------------------------------------------------
 VnConv: Vietnamese Encoding Converter Library
 UniKey Project: http://unikey.sourceforge.net
@@ -26,7 +27,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 #include "stdafx.h"
 #include "vnconv.h"
 
-char *ErrTable[VNCONV_LAST_ERROR] = 
+char *ErrTable[VNCONV_LAST_ERROR] =
 {"No error",
  "Unknown error",
  "Invalid charset",
@@ -38,9 +39,9 @@ char *ErrTable[VNCONV_LAST_ERROR] =
 
 DllExport const char * VnConvErrMsg(int errCode)
 {
-	if (errCode < 0 || errCode >= VNCONV_LAST_ERROR)
-		errCode = VNCONV_UNKNOWN_ERROR;
-	return ErrTable[errCode];
+    if (errCode < 0 || errCode >= VNCONV_LAST_ERROR)
+        errCode = VNCONV_UNKNOWN_ERROR;
+    return ErrTable[errCode];
 }
 
 */

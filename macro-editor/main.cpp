@@ -17,36 +17,22 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <QApplication>
-#include <qplugin.h>
-#include <libintl.h>
-#include <fcitx-utils/utils.h>
 #include "main.h"
 #include "editor.h"
 #include "model.h"
+#include <QApplication>
+#include <fcitx-utils/utils.h>
+#include <libintl.h>
+#include <qplugin.h>
 
-MacroEditorPlugin::MacroEditorPlugin(QObject* parent): FcitxQtConfigUIPlugin(parent)
-{
+namespace fcitx {
 
-}
+MacroEditorPlugin::MacroEditorPlugin(QObject *parent)
+    : FcitxQtConfigUIPlugin(parent) {}
 
-FcitxQtConfigUIWidget* MacroEditorPlugin::create(const QString& key)
-{
+FcitxQtConfigUIWidget *MacroEditorPlugin::create(const QString &key) {
     Q_UNUSED(key);
-    return new fcitx_unikey::MacroEditor;
+    return new fcitx::unikey::MacroEditor;
 }
 
-QStringList MacroEditorPlugin::files()
-{
-    return QStringList("unikey/macro");
-}
-
-QString MacroEditorPlugin::name()
-{
-    return "unikey-macro-editor";
-}
-
-QString MacroEditorPlugin::domain()
-{
-    return "fcitx-unikey";
-}
+} // namespace fcitx

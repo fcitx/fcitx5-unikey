@@ -22,15 +22,17 @@
 
 #include <fcitxqtconfiguiplugin.h>
 
+namespace fcitx {
+
 class MacroEditorPlugin : public FcitxQtConfigUIPlugin {
     Q_OBJECT
 public:
-    Q_PLUGIN_METADATA(IID FcitxQtConfigUIFactoryInterface_iid FILE "macro-editor.json")
-    explicit MacroEditorPlugin(QObject* parent = 0);
-    virtual QString name();
-    virtual QStringList files();
-    virtual QString domain();
-    virtual FcitxQtConfigUIWidget* create(const QString& key);
+    Q_PLUGIN_METADATA(IID FcitxQtConfigUIFactoryInterface_iid FILE
+                      "macro-editor.json")
+    explicit MacroEditorPlugin(QObject *parent = 0);
+    FcitxQtConfigUIWidget *create(const QString &key) override;
 };
+
+} // namespace fcitx
 
 #endif // FCITX_TOOLS_GUI_MAIN_H_

@@ -1,4 +1,5 @@
-// -*- coding:unix; mode:c++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
+// -*- coding:unix; mode:c++; tab-width:4; c-basic-offset:4;
+// indent-tabs-mode:nil -*-
 /*------------------------------------------------------------------------------
 VnConv: Vietnamese Encoding Converter Library
 UniKey Project: http://unikey.sourceforge.net
@@ -24,49 +25,46 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 #define __PATTERN_H
 
 #if defined(_WIN32)
-    #if defined(UNIKEYHOOK)
-        #define DllInterface   __declspec( dllexport )
-    #else
-        #define DllInterface   __declspec( dllimport )
-    #endif
+#if defined(UNIKEYHOOK)
+#define DllInterface __declspec(dllexport)
 #else
-    #define DllInterface //not used
+#define DllInterface __declspec(dllimport)
+#endif
+#else
+#define DllInterface // not used
 #endif
 
 #define MAX_PATTERN_LEN 40
 
-class DllInterface PatternState
-{
+class DllInterface PatternState {
 public:
-	char *m_pattern;
-	int m_border[MAX_PATTERN_LEN+1];
-	int m_pos;
-	int m_found;
-	void init(char *pattern);
-	void reset();
-	int foundAtNextChar(char ch); //get next input char, returns 1 if pattern is found.
+    char *m_pattern;
+    int m_border[MAX_PATTERN_LEN + 1];
+    int m_pos;
+    int m_found;
+    void init(char *pattern);
+    void reset();
+    int foundAtNextChar(
+        char ch); // get next input char, returns 1 if pattern is found.
 };
 
-class DllInterface PatternList
-{
+class DllInterface PatternList {
 public:
-	PatternState *m_patterns;
-	int m_count;
-	void init(char **patterns, int count);
-	int foundAtNextChar(char ch); 
-	void reset();
+    PatternState *m_patterns;
+    int m_count;
+    void init(char **patterns, int count);
+    int foundAtNextChar(char ch);
+    void reset();
 
-	PatternList() {
-		m_count = 0;
-		m_patterns = 0;
-	}
+    PatternList() {
+        m_count = 0;
+        m_patterns = 0;
+    }
 
-	~PatternList()
-	{
-		if (m_patterns)
-			delete [] m_patterns;
-	}
+    ~PatternList() {
+        if (m_patterns)
+            delete[] m_patterns;
+    }
 };
-
 
 #endif

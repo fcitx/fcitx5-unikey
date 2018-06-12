@@ -17,30 +17,21 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "ui_dialog.h"
 #include "dialog.h"
+#include "ui_dialog.h"
 
-namespace fcitx_unikey {
-MacroDialog::MacroDialog(QWidget* parent): QDialog(parent),
-    m_ui(new Ui::Dialog)
-{
+namespace fcitx {
+namespace unikey {
+MacroDialog::MacroDialog(QWidget *parent)
+    : QDialog(parent), m_ui(new Ui::Dialog) {
     m_ui->setupUi(this);
 }
 
-MacroDialog::~MacroDialog()
-{
-    delete m_ui;
-}
+MacroDialog::~MacroDialog() { delete m_ui; }
 
-QString MacroDialog::macro() const
-{
-    return m_ui->macroLineEdit->text();
-}
+QString MacroDialog::macro() const { return m_ui->macroLineEdit->text(); }
 
-QString MacroDialog::word() const
-{
-    return m_ui->wordLineEdit->text();
-}
+QString MacroDialog::word() const { return m_ui->wordLineEdit->text(); }
 
-
-}
+} // namespace unikey
+} // namespace fcitx

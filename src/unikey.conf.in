@@ -1,7 +1,6 @@
 [InputMethod]
-UniqueName=unikey
-_Name=Unikey
-IconName=unikey
-Priority=1
+Name=Unikey
+Icon=fcitx-unikey
 LangCode=vi
-Parent=fcitx-unikey
+Addon=unikey
+Configurable=True

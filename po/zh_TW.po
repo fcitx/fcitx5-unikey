@@ -7,9 +7,8 @@
 # BrLi <rainman59118@gmail.com>, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: fcitx\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2016-09-17 13:02-0700\n"
+"POT-Creation-Date: 2018-06-06 17:08-0700\n"
 "PO-Revision-Date: 2016-09-17 19:03+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/fcitx/fcitx/"
@@ -64,6 +63,13 @@ msgstr "選擇輸出字元集"
 msgid "De&lete All"
 msgstr "全部刪除 (&L)"
 
+#. i18n: file: macro-editor/dialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, Dialog)
+#: rc.cpp:3
+#, kde-format
+msgid "Dialog"
+msgstr ""
+
 #: src/unikey-ui.cpp:128
 msgid "Enable Macro"
 msgstr "啟用巨集"
@@ -88,6 +94,20 @@ msgstr "輸入法"
 #: src/fcitx-unikey.conf.in:10
 msgid "Macro"
 msgstr "巨集"
+
+#. i18n: file: macro-editor/dialog.ui:32
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:9
+#, fuzzy, kde-format
+msgid "Macro:"
+msgstr "巨集"
+
+#. i18n: file: macro-editor/editor.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, Editor)
+#: rc.cpp:12
+#, kde-format
+msgid "MainWindow"
+msgstr ""
 
 #: src/fcitx-unikey.desc:9
 msgid "Microsoft Vietnamese"
@@ -164,7 +184,7 @@ msgstr "Unikey 輸入法"
 msgid "Unikey Macro Editor"
 msgstr "Unikey 巨集編輯器"
 
-#: src/fcitx-unikey.conf.in:4
+#: src/fcitx-unikey.conf.in:4 src/unikey-addon.conf.in:3
 msgid "Unikey Wrapper For Fcitx"
 msgstr "Fcitx 的 Unikey 封裝"
 
@@ -190,4 +210,11 @@ msgstr "VNI Win"
 
 #: macro-editor/model.cpp:46
 msgid "Word"
+msgstr "單字"
+
+#. i18n: file: macro-editor/dialog.ui:25
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:6
+#, fuzzy, kde-format
+msgid "Word:"
 msgstr "單字"

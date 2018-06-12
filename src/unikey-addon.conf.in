@@ -1,0 +1,8 @@
+[Addon]
+Name=Unikey Wrapper For Fcitx
+Category=InputMethod
+Enabled=True
+Library=unikey
+Type=SharedLibrary
+OnDemand=True
+Configurable=True

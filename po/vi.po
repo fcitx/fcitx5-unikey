@@ -13,9 +13,8 @@
 # csslayer <wengxt@gmail.com>, 2012-2013
 msgid ""
 msgstr ""
-"Project-Id-Version: fcitx\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2016-09-17 21:02-0700\n"
+"POT-Creation-Date: 2018-06-06 17:08-0700\n"
 "PO-Revision-Date: 2016-09-18 03:52+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>\n"
 "Language-Team: Vietnamese (http://www.transifex.com/fcitx/fcitx/language/"
@@ -70,6 +69,13 @@ msgstr "Chọn bảng mã"
 msgid "De&lete All"
 msgstr "Xóa &hết"
 
+#. i18n: file: macro-editor/dialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, Dialog)
+#: rc.cpp:3
+#, kde-format
+msgid "Dialog"
+msgstr ""
+
 #: src/unikey-ui.cpp:128
 msgid "Enable Macro"
 msgstr "Bật Macro"
@@ -94,6 +100,20 @@ msgstr "Kiểu gõ"
 #: src/fcitx-unikey.conf.in:10
 msgid "Macro"
 msgstr "Macro"
+
+#. i18n: file: macro-editor/dialog.ui:32
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:9
+#, fuzzy, kde-format
+msgid "Macro:"
+msgstr "Macro"
+
+#. i18n: file: macro-editor/editor.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, Editor)
+#: rc.cpp:12
+#, kde-format
+msgid "MainWindow"
+msgstr ""
 
 #: src/fcitx-unikey.desc:9
 msgid "Microsoft Vietnamese"
@@ -170,7 +190,7 @@ msgstr "Unikey Kiểu gõ"
 msgid "Unikey Macro Editor"
 msgstr "Bộ chỉnh macro cho Unikey"
 
-#: src/fcitx-unikey.conf.in:4
+#: src/fcitx-unikey.conf.in:4 src/unikey-addon.conf.in:3
 msgid "Unikey Wrapper For Fcitx"
 msgstr "Bộ Unikey dành cho Fcitx"
 
@@ -196,4 +216,11 @@ msgstr "VNI Win"
 
 #: macro-editor/model.cpp:46
 msgid "Word"
+msgstr "Từ"
+
+#. i18n: file: macro-editor/dialog.ui:25
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:6
+#, fuzzy, kde-format
+msgid "Word:"
 msgstr "Từ"

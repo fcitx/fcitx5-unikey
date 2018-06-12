@@ -17,26 +17,29 @@
  *                                                                         *
  ***************************************************************************/
 
+#include "mactab.h"
 #include <QAbstractItemModel>
 #include <QSet>
-#include "mactab.h"
 
-namespace fcitx_unikey {
+namespace fcitx {
+namespace unikey {
 class MacroModel : public QAbstractTableModel {
     Q_OBJECT
 public:
-    explicit MacroModel(QObject* parent = 0);
+    explicit MacroModel(QObject *parent = 0);
     virtual ~MacroModel();
 
-    virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
-    virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
-    virtual int columnCount(const QModelIndex& parent = QModelIndex()) const;
-    virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
-    void load(CMacroTable* table);
-    void addItem(const QString& macro, const QString& word);
+    virtual QVariant headerData(int section, Qt::Orientation orientation,
+                                int role = Qt::DisplayRole) const;
+    virtual int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    virtual int columnCount(const QModelIndex &parent = QModelIndex()) const;
+    virtual QVariant data(const QModelIndex &index,
+                          int role = Qt::DisplayRole) const;
+    void load(CMacroTable *table);
+    void addItem(const QString &macro, const QString &word);
     void deleteItem(int row);
     void deleteAllItem();
-    void save(CMacroTable* m_table);
+    void save(CMacroTable *m_table);
     bool needSave();
 
 signals:
@@ -46,7 +49,7 @@ private:
     void setNeedSave(bool needSave);
     bool m_needSave;
     QSet<QString> m_keyset;
-    QList<QPair< QString, QString > >m_list;
+    QList<QPair<QString, QString>> m_list;
 };
-
-}
+} // namespace unikey
+} // namespace fcitx

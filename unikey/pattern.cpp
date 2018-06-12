@@ -1,4 +1,5 @@
-// -*- coding:unix; mode:c++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
+// -*- coding:unix; mode:c++; tab-width:4; c-basic-offset:4;
+// indent-tabs-mode:nil -*-
 /*------------------------------------------------------------------------------
 VnConv: Vietnamese Encoding Converter Library
 UniKey Project: http://unikey.sourceforge.net
@@ -27,54 +28,52 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //////////////////////////////////////////////////
 
 //----------------------------
-void PatternState::reset()
-{
-	m_pos = 0;
-	m_found = 0;
+void PatternState::reset() {
+    m_pos = 0;
+    m_found = 0;
 }
 
 //----------------------------
-void PatternState::init(char *pattern)
-{
-	m_pos = 0;
-	m_found = 0;
-	m_pattern = pattern;
+void PatternState::init(char *pattern) {
+    m_pos = 0;
+    m_found = 0;
+    m_pattern = pattern;
 
-	int i=0, j=-1;
-    m_border[i]=j;
-    while (m_pattern[i])
-    {
-        while (j>=0 && m_pattern[i]!=m_pattern[j]) j=m_border[j];
-        i++; j++;
-        m_border[i]=j;
+    int i = 0, j = -1;
+    m_border[i] = j;
+    while (m_pattern[i]) {
+        while (j >= 0 && m_pattern[i] != m_pattern[j])
+            j = m_border[j];
+        i++;
+        j++;
+        m_border[i] = j;
     }
 }
 
 //-----------------------------------------------------
-//get next input char, returns 1 if pattern is found.
+// get next input char, returns 1 if pattern is found.
 //-----------------------------------------------------
-int PatternState::foundAtNextChar(char ch)
-{
-	int ret = 0;
-	//int j = m_pos;
-	while (m_pos>=0 && ch!=m_pattern[m_pos]) m_pos=m_border[m_pos];
-	m_pos++;
-	if (m_pattern[m_pos]==0) {
-		m_found++;
-		m_pos = m_border[m_pos];
-		ret = 1;
-	}
-	return ret;
+int PatternState::foundAtNextChar(char ch) {
+    int ret = 0;
+    // int j = m_pos;
+    while (m_pos >= 0 && ch != m_pattern[m_pos])
+        m_pos = m_border[m_pos];
+    m_pos++;
+    if (m_pattern[m_pos] == 0) {
+        m_found++;
+        m_pos = m_border[m_pos];
+        ret = 1;
+    }
+    return ret;
 }
 
 //-----------------------------------------------------
-void PatternList::init(char **patterns, int count)
-{
-	m_count = count;
-	delete [] m_patterns;
-	m_patterns = new PatternState[count];
-	for (int i=0; i<count; i++)
-		m_patterns[i].init(patterns[i]);
+void PatternList::init(char **patterns, int count) {
+    m_count = count;
+    delete[] m_patterns;
+    m_patterns = new PatternState[count];
+    for (int i = 0; i < count; i++)
+        m_patterns[i].init(patterns[i]);
 }
 
 //-----------------------------------------------------
@@ -82,19 +81,17 @@ void PatternList::init(char **patterns, int count)
 // If more than 1 pattern is found, returns any pattern
 // Returns -1 if no pattern is found
 //-----------------------------------------------------
-int PatternList::foundAtNextChar(char ch)
-{
-	int patternFound = -1;
-	for (int i=0; i<m_count; i++) {
-		if (m_patterns[i].foundAtNextChar(ch))
-			patternFound = i;
-	}
-	return patternFound;
+int PatternList::foundAtNextChar(char ch) {
+    int patternFound = -1;
+    for (int i = 0; i < m_count; i++) {
+        if (m_patterns[i].foundAtNextChar(ch))
+            patternFound = i;
+    }
+    return patternFound;
 }
 
 //-----------------------------------------------------
-void PatternList::reset()
-{
-	for (int i=0; i<m_count; i++)
-		m_patterns[i].reset();
+void PatternList::reset() {
+    for (int i = 0; i < m_count; i++)
+        m_patterns[i].reset();
 }

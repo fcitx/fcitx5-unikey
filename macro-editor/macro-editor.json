@@ -1,2 +1,4 @@
 {
+    "addon": "unikey",
+    "files": ["macro"]
 }

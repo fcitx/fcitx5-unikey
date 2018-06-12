@@ -24,21 +24,21 @@ namespace Ui {
 class Editor;
 }
 
-namespace fcitx_unikey {
+namespace fcitx {
+namespace unikey {
 
 class MacroModel;
 class MacroEditor : public FcitxQtConfigUIWidget {
     Q_OBJECT
 public:
-    explicit MacroEditor(QWidget* parent = 0);
+    explicit MacroEditor(QWidget *parent = 0);
     virtual ~MacroEditor();
-    virtual void load();
-    virtual void save();
-    virtual QString title();
-    virtual QString addon();
-    virtual QString icon();
+    void load() override;
+    void save() override;
+    QString title() override;
+    QString icon() override;
 
-    static QString getData(CMacroTable* table, int i, bool iskey);
+    static QString getData(CMacroTable *table, int i, bool iskey);
 private slots:
     void addWord();
     void deleteWord();
@@ -49,9 +49,11 @@ private slots:
     void exportMacro();
     void importFileSelected();
     void exportFileSelected();
+
 private:
-    Ui::Editor* m_ui;
-    CMacroTable* m_table;
-    MacroModel* m_model;
+    Ui::Editor *m_ui;
+    CMacroTable *m_table;
+    MacroModel *m_model;
 };
-}
+} // namespace unikey
+} // namespace fcitx

@@ -1,4 +1,5 @@
-// -*- coding:unix; mode:c++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
+// -*- coding:unix; mode:c++; tab-width:4; c-basic-offset:4;
+// indent-tabs-mode:nil -*-
 /* Unikey Vietnamese Input Method
  * Copyright (C) 2000-2005 Pham Kim Long
  * Contact:
@@ -26,12 +27,14 @@
 
 #include "inputproc.h"
 struct UkKeyMapPair {
-    unsigned char   key;
-    int             action;
+    unsigned char key;
+    int action;
 };
 
 DllInterface int UkLoadKeyMap(const char *fileName, int keyMap[256]);
-DllInterface int UkLoadKeyOrderMap(const char *fileName, UkKeyMapPair *pMap, int *pMapCount);
-DllInterface int UkStoreKeyOrderMap(const char *fileName, UkKeyMapPair *pMap, int mapCount);
+DllInterface int UkLoadKeyOrderMap(const char *fileName, UkKeyMapPair *pMap,
+                                   int *pMapCount);
+DllInterface int UkStoreKeyOrderMap(const char *fileName, UkKeyMapPair *pMap,
+                                    int mapCount);
 
 #endif

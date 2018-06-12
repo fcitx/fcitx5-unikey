@@ -24,16 +24,18 @@ namespace Ui {
 class Dialog;
 }
 
-namespace fcitx_unikey {
+namespace fcitx {
+namespace unikey {
 class MacroDialog : public QDialog {
     Q_OBJECT
 public:
-    explicit MacroDialog(QWidget* parent = 0);
+    explicit MacroDialog(QWidget *parent = 0);
     virtual ~MacroDialog();
     QString macro() const;
     QString word() const;
 
 private:
-    Ui::Dialog* m_ui;
+    Ui::Dialog *m_ui;
 };
-}
+} // namespace unikey
+} // namespace fcitx

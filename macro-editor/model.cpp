@@ -19,26 +19,22 @@
 
 #include <QApplication>
 
-#include "model.h"
-#include "common.h"
 #include "editor.h"
+#include "model.h"
+#include <fcitx-utils/i18n.h>
 
-namespace fcitx_unikey {
+namespace fcitx {
+namespace unikey {
 
 typedef QPair<QString, QString> ItemType;
 
-MacroModel::MacroModel(QObject* parent): QAbstractTableModel(parent)
-    ,m_needSave(false)
-{
-}
+MacroModel::MacroModel(QObject *parent)
+    : QAbstractTableModel(parent), m_needSave(false) {}
 
-MacroModel::~MacroModel()
-{
+MacroModel::~MacroModel() {}
 
-}
-
-QVariant MacroModel::headerData(int section, Qt::Orientation orientation, int role) const
-{
+QVariant MacroModel::headerData(int section, Qt::Orientation orientation,
+                                int role) const {
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole) {
         if (section == 0)
             return _("Macro");
@@ -48,18 +44,11 @@ QVariant MacroModel::headerData(int section, Qt::Orientation orientation, int ro
     return QVariant();
 }
 
-int MacroModel::rowCount(const QModelIndex& parent) const
-{
-    return m_list.count();
-}
+int MacroModel::rowCount(const QModelIndex &) const { return m_list.count(); }
 
-int MacroModel::columnCount(const QModelIndex& parent) const
-{
-    return 2;
-}
+int MacroModel::columnCount(const QModelIndex &) const { return 2; }
 
-QVariant MacroModel::data(const QModelIndex& index, int role) const
-{
+QVariant MacroModel::data(const QModelIndex &index, int role) const {
     do {
         if (role == Qt::DisplayRole && index.row() < m_list.count()) {
             if (index.column() == 0) {
@@ -68,12 +57,11 @@ QVariant MacroModel::data(const QModelIndex& index, int role) const
                 return m_list[index.row()].second;
             }
         }
-    } while(0);
+    } while (0);
     return QVariant();
 }
 
-void MacroModel::addItem(const QString& macro, const QString& word)
-{
+void MacroModel::addItem(const QString &macro, const QString &word) {
     if (m_keyset.contains(macro))
         return;
     beginInsertRows(QModelIndex(), m_list.size(), m_list.size());
@@ -83,8 +71,7 @@ void MacroModel::addItem(const QString& macro, const QString& word)
     setNeedSave(true);
 }
 
-void MacroModel::deleteItem(int row)
-{
+void MacroModel::deleteItem(int row) {
     if (row >= m_list.count())
         return;
     QPair<QString, QString> item = m_list.at(row);
@@ -96,8 +83,7 @@ void MacroModel::deleteItem(int row)
     setNeedSave(true);
 }
 
-void MacroModel::deleteAllItem()
-{
+void MacroModel::deleteAllItem() {
     if (m_list.count())
         setNeedSave(true);
     beginResetModel();
@@ -106,22 +92,16 @@ void MacroModel::deleteAllItem()
     endResetModel();
 }
 
-void MacroModel::setNeedSave(bool needSave)
-{
+void MacroModel::setNeedSave(bool needSave) {
     if (m_needSave != needSave) {
         m_needSave = needSave;
         emit needSaveChanged(m_needSave);
     }
 }
 
-bool MacroModel::needSave()
-{
-    return m_needSave;
-}
+bool MacroModel::needSave() { return m_needSave; }
 
-
-void MacroModel::load(CMacroTable* table)
-{
+void MacroModel::load(CMacroTable *table) {
     beginResetModel();
     m_list.clear();
     m_keyset.clear();
@@ -134,14 +114,14 @@ void MacroModel::load(CMacroTable* table)
     endResetModel();
 }
 
-void MacroModel::save(CMacroTable* m_table)
-{
+void MacroModel::save(CMacroTable *m_table) {
     m_table->resetContent();
-    foreach(const ItemType& item, m_list) {
-        m_table->addItem(item.first.toUtf8().data(), item.second.toUtf8().data(), CONV_CHARSET_XUTF8);
+    foreach(const ItemType &item, m_list) {
+        m_table->addItem(item.first.toUtf8().data(),
+                         item.second.toUtf8().data(), CONV_CHARSET_XUTF8);
     }
     setNeedSave(false);
 }
 
-
-}
+} // namespace unikey
+} // namespace fcitx

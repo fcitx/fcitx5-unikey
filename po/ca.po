@@ -7,9 +7,8 @@
 # Walter Garcia-Fontes <walter.garcia@upf.edu>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: fcitx\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2017-12-09 00:04-0800\n"
+"POT-Creation-Date: 2018-06-06 17:08-0700\n"
 "PO-Revision-Date: 2017-12-08 19:57+0000\n"
 "Last-Translator: Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>\n"
 "Language-Team: Catalan (http://www.transifex.com/fcitx/fcitx/language/ca/)\n"
@@ -63,6 +62,13 @@ msgstr "Escolliu el conjunt de caràcters de sortida"
 msgid "De&lete All"
 msgstr "E&linina tot"
 
+#. i18n: file: macro-editor/dialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, Dialog)
+#: rc.cpp:3
+#, kde-format
+msgid "Dialog"
+msgstr ""
+
 #: src/unikey-ui.cpp:128
 msgid "Enable Macro"
 msgstr "Activa el macro"
@@ -87,6 +93,20 @@ msgstr "Mètode d'entrada"
 #: src/fcitx-unikey.conf.in:10
 msgid "Macro"
 msgstr "Macro"
+
+#. i18n: file: macro-editor/dialog.ui:32
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:9
+#, fuzzy, kde-format
+msgid "Macro:"
+msgstr "Macro"
+
+#. i18n: file: macro-editor/editor.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, Editor)
+#: rc.cpp:12
+#, kde-format
+msgid "MainWindow"
+msgstr ""
 
 #: src/fcitx-unikey.desc:9
 msgid "Microsoft Vietnamese"
@@ -163,7 +183,7 @@ msgstr "Mètode d'entrada unikey"
 msgid "Unikey Macro Editor"
 msgstr "Editor de macro unikey"
 
-#: src/fcitx-unikey.conf.in:4
+#: src/fcitx-unikey.conf.in:4 src/unikey-addon.conf.in:3
 msgid "Unikey Wrapper For Fcitx"
 msgstr "Contenidor unikey per a fcitx"
 
@@ -189,4 +209,11 @@ msgstr "VNI Win"
 
 #: macro-editor/model.cpp:46
 msgid "Word"
+msgstr "Paraula"
+
+#. i18n: file: macro-editor/dialog.ui:25
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:6
+#, fuzzy, kde-format
+msgid "Word:"
 msgstr "Paraula"

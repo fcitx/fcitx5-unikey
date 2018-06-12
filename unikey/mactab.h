@@ -1,4 +1,5 @@
-// -*- coding:unix; mode:c++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
+// -*- coding:unix; mode:c++; tab-width:4; c-basic-offset:4;
+// indent-tabs-mode:nil -*-
 /* Unikey Vietnamese Input Method
  * Copyright (C) 2000-2005 Pham Kim Long
  * Contact:
@@ -24,38 +25,36 @@
 #ifndef __MACRO_TABLE_H
 #define __MACRO_TABLE_H
 
-#include "keycons.h"
 #include "charset.h"
+#include "keycons.h"
 
 #if defined(_WIN32)
-    #if defined(UNIKEYHOOK)
-        #define DllInterface   __declspec( dllexport )
-    #else
-        #define DllInterface   __declspec( dllimport )
-    #endif
+#if defined(UNIKEYHOOK)
+#define DllInterface __declspec(dllexport)
 #else
-    #define DllInterface //not used
-    #define DllExport
-    #define DllImport
+#define DllInterface __declspec(dllimport)
+#endif
+#else
+#define DllInterface // not used
+#define DllExport
+#define DllImport
 #endif
 
-struct MacroDef
-{
-  int keyOffset;
-  int textOffset;
+struct MacroDef {
+    int keyOffset;
+    int textOffset;
 };
 
 #if !defined(WIN32)
 typedef char TCHAR;
 #endif
 
-class DllInterface CMacroTable
-{
+class DllInterface CMacroTable {
 public:
     void init();
     int loadFromFile(const char *fname);
     int writeToFile(const char *fname);
-    int writeToFp(FILE* f);
+    int writeToFp(FILE *f);
 
     const StdVnChar *lookup(StdVnChar *key);
     const StdVnChar *getKey(int idx) const;
@@ -66,7 +65,7 @@ public:
     int addItem(const void *key, const void *text, int charset);
 
 protected:
-    bool readHeader(FILE *f, int & version);
+    bool readHeader(FILE *f, int &version);
     void writeHeader(FILE *f);
 
     MacroDef m_table[MAX_MACRO_ITEMS];
