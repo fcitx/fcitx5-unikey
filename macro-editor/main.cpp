@@ -21,8 +21,6 @@
 #include "editor.h"
 #include "model.h"
 #include <QApplication>
-#include <fcitx-utils/utils.h>
-#include <libintl.h>
 #include <qplugin.h>
 
 namespace fcitx {

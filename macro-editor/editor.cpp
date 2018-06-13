@@ -17,9 +17,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <fcitx-config/xdg.h>
-#include <libintl.h>
-
 #include <QCloseEvent>
 #include <QDebug>
 #include <QFileDialog>
