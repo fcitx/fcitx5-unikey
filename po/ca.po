@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2018-06-13 00:03-0700\n"
+"POT-Creation-Date: 2018-06-14 00:02-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2018\n"
 "Language-Team: Catalan (https://www.transifex.com/fcitx/teams/12005/ca/)\n"
@@ -72,7 +72,7 @@ msgstr "Diàleg"
 
 #: src/unikey-ui.cpp:128
 msgid "Enable Macro"
-msgstr "Activa el macro"
+msgstr "Habilita la macro"
 
 #: src/unikey-ui.cpp:120
 msgid "Enable Spell Check"
@@ -80,7 +80,7 @@ msgstr "Habilita el corrector ortogràfic"
 
 #: src/fcitx-unikey.desc:36
 msgid "Enable macro"
-msgstr "Habilita el macro"
+msgstr "Habilita la macro"
 
 #: src/fcitx-unikey.desc:31
 msgid "Enable spell check"
@@ -159,7 +159,7 @@ msgstr "Telex"
 
 #: src/unikey-ui.cpp:188
 msgid "Toggle Macro"
-msgstr "Commuta el macro"
+msgstr "Commuta la macro"
 
 #: src/unikey-ui.cpp:183
 msgid "Toggle Spell Check"
@@ -182,7 +182,7 @@ msgstr "Mètode d'entrada unikey"
 
 #: macro-editor/editor.cpp:48 macro-editor/editor.cpp:76
 msgid "Unikey Macro Editor"
-msgstr "Editor de macro unikey"
+msgstr "Editor de macros unikey"
 
 #: src/fcitx-unikey.conf.in:4 src/unikey-addon.conf.in:3
 msgid "Unikey Wrapper For Fcitx"
