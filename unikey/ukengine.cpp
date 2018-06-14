@@ -23,9 +23,9 @@
 
 #include "keycons.h"
 #include <iostream>
+#include <mutex>
 #include <stdlib.h>
 #include <string.h>
-#include <mutex>
 
 /*
 #if defined(_WIN32)
@@ -2815,9 +2815,7 @@ static void SetupUnikeyEngineOnce() {
 
 std::once_flag setupFlag;
 
-void SetupUnikeyEngine() {
-    std::call_once(setupFlag, SetupUnikeyEngineOnce);
-}
+void SetupUnikeyEngine() { std::call_once(setupFlag, SetupUnikeyEngineOnce); }
 
 //--------------------------------------------------
 bool UkEngine::atWordBeginning() {

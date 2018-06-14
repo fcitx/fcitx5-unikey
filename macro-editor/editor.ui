@@ -11,52 +11,55 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Unikey Macro Editor</string>
   </property>
   <property name="windowIcon">
    <iconset theme="fcitx-unikey">
-    <normaloff/>
-   </iconset>
+    <normaloff>.</normaloff>.</iconset>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="QTableView" name="macroTableView"/>
+    <widget class="QTableView" name="macroTableView">
+     <property name="selectionMode">
+      <enum>QAbstractItemView::SingleSelection</enum>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
+    </widget>
    </item>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QPushButton" name="addButton">
        <property name="text">
-        <string/>
+        <string>&amp;Add</string>
        </property>
        <property name="icon">
         <iconset theme="list-add">
-         <normaloff/>
-        </iconset>
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="deleteButton">
        <property name="text">
-        <string/>
+        <string>&amp;Delete</string>
        </property>
        <property name="icon">
         <iconset theme="list-remove">
-         <normaloff/>
-        </iconset>
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="clearButton">
        <property name="text">
-        <string/>
+        <string>De&amp;lete All</string>
        </property>
        <property name="icon">
         <iconset theme="edit-delete">
-         <normaloff/>
-        </iconset>
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>
@@ -70,24 +73,22 @@
      <item>
       <widget class="QPushButton" name="importButton">
        <property name="text">
-        <string/>
+        <string>&amp;Import</string>
        </property>
        <property name="icon">
         <iconset theme="document-import">
-         <normaloff/>
-        </iconset>
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="exportButton">
        <property name="text">
-        <string/>
+        <string>&amp;Export</string>
        </property>
        <property name="icon">
         <iconset theme="document-export">
-         <normaloff/>
-        </iconset>
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>

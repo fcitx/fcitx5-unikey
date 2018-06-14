@@ -20,12 +20,12 @@
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/utf8.h>
 #include <fcitx/inputcontext.h>
+#include <fcitx/inputcontextmanager.h>
 #include <fcitx/inputpanel.h>
 #include <fcitx/menu.h>
 #include <fcitx/statusarea.h>
 #include <fcitx/userinterfacemanager.h>
 #include <vnconv.h>
-#include <fcitx/inputcontextmanager.h>
 
 constexpr auto CONVERT_BUF_SIZE = 1024;
 static const unsigned int Unikey_OC[] = {
@@ -140,7 +140,8 @@ fcitx::UnikeyEngine::UnikeyEngine(fcitx::Instance *instance)
     : instance_(instance), factory_([this](InputContext &ic) {
           return new UnikeyState(this, &ic);
       }) {
-    instance_->inputContextManager().registerProperty("unikey-state", &factory_);
+    instance_->inputContextManager().registerProperty("unikey-state",
+                                                      &factory_);
 
     auto &uiManager = instance_->userInterfaceManager();
     inputMethodAction_ = std::make_unique<SimpleAction>();
@@ -159,15 +160,13 @@ fcitx::UnikeyEngine::UnikeyEngine(fcitx::Instance *instance)
         action->setCheckable(true);
         uiManager.registerAction(
             "unikey-input-method-" + UkInputMethodToString(im), action);
-        connections_.emplace_back(
-            action->connect<SimpleAction::Activated>(
+        connections_.emplace_back(action->connect<SimpleAction::Activated>(
             [this, im](InputContext *ic) {
                 config_.im.setValue(im);
                 populateConfig();
                 safeSaveAsIni(config_, "conf/unikey.conf");
                 updateInputMethodAction(ic);
-            }
-                                                     ));
+            }));
 
         inputMethodMenu_->addAction(action);
     }
@@ -186,15 +185,13 @@ fcitx::UnikeyEngine::UnikeyEngine(fcitx::Instance *instance)
         auto action = charsetSubAction_.back().get();
         action->setShortText(UkConvI18NAnnotation::toString(conv));
         action->setCheckable(true);
-        connections_.emplace_back(
-            action->connect<SimpleAction::Activated>(
+        connections_.emplace_back(action->connect<SimpleAction::Activated>(
             [this, conv](InputContext *ic) {
                 config_.oc.setValue(conv);
                 populateConfig();
                 safeSaveAsIni(config_, "conf/unikey.conf");
                 updateCharsetAction(ic);
-            }
-                                                     ));
+            }));
         uiManager.registerAction("unikey-charset-" + UkConvToString(conv),
                                  action);
         charsetMenu_->addAction(action);
@@ -214,8 +211,8 @@ fcitx::UnikeyEngine::UnikeyEngine(fcitx::Instance *instance)
     macroAction_ = std::make_unique<SimpleAction>();
     macroAction_->setLongText(_("Macro"));
     macroAction_->setIcon("edit-find");
-    connections_.emplace_back(
-        macroAction_->connect<SimpleAction::Activated>([this](InputContext *ic) {
+    connections_.emplace_back(macroAction_->connect<SimpleAction::Activated>(
+        [this](InputContext *ic) {
             config_.macro.setValue(!*config_.macro);
             populateConfig();
             safeSaveAsIni(config_, "conf/unikey.conf");
@@ -294,7 +291,9 @@ void fcitx::UnikeyState::preedit(fcitx::KeyEvent &keyEvent) {
             // change tone position after press backspace
             if (uic_.bufChars() > 0) {
                 if (engine_->config().oc.value() == UkConv::XUTF8) {
-                    preeditStr_.append(reinterpret_cast<const char *>(uic_.buf()), uic_.bufChars());
+                    preeditStr_.append(
+                        reinterpret_cast<const char *>(uic_.buf()),
+                        uic_.bufChars());
                 } else {
                     unsigned char buf[CONVERT_BUF_SIZE];
                     int bufSize = CONVERT_BUF_SIZE;
@@ -313,14 +312,14 @@ void fcitx::UnikeyState::preedit(fcitx::KeyEvent &keyEvent) {
         commit();
         return;
     } else if ((sym >= FcitxKey_space && sym <= FcitxKey_asciitilde) ||
-             sym == FcitxKey_Shift_L ||
-             sym == FcitxKey_Shift_R) // sure this have FcitxKey_SHIFT_MASK
+               sym == FcitxKey_Shift_L ||
+               sym == FcitxKey_Shift_R) // sure this have FcitxKey_SHIFT_MASK
     {
         // capture ascii printable char
         unsigned int i = 0;
 
         uic_.setCapsState(state.test(KeyState::Shift),
-                           state.test(KeyState::CapsLock));
+                          state.test(KeyState::CapsLock));
 
         // process sym
 
@@ -381,7 +380,8 @@ void fcitx::UnikeyState::preedit(fcitx::KeyEvent &keyEvent) {
 
         if (uic_.bufChars() > 0) {
             if (*engine_->config().oc == UkConv::XUTF8) {
-                preeditStr_.append(reinterpret_cast<const char *>(uic_.buf()), uic_.bufChars());
+                preeditStr_.append(reinterpret_cast<const char *>(uic_.buf()),
+                                   uic_.bufChars());
             } else {
                 unsigned char buf[CONVERT_BUF_SIZE + 1];
                 int bufSize = CONVERT_BUF_SIZE;
@@ -426,8 +426,7 @@ void fcitx::UnikeyEngine::reset(const fcitx::InputMethodEntry &,
     state->reset();
 }
 
-void fcitx::UnikeyEngine::populateConfig()
-{
+void fcitx::UnikeyEngine::populateConfig() {
     UnikeyOptions ukopt;
     memset(&ukopt, 0, sizeof(ukopt));
     ukopt.macroEnabled = *config_.macro;
@@ -439,7 +438,6 @@ void fcitx::UnikeyEngine::populateConfig()
     im_.setOutputCharset(Unikey_OC[static_cast<int>(*config_.oc)]);
     im_.setOptions(&ukopt);
 }
-
 
 void fcitx::UnikeyEngine::reloadConfig() {
     readAsIni(config_, "conf/unikey.conf");
@@ -460,14 +458,16 @@ std::string fcitx::UnikeyEngine::subMode(const fcitx::InputMethodEntry &,
 }
 void fcitx::UnikeyEngine::updateMacroAction(InputContext *ic) {
     macroAction_->setChecked(*config_.macro);
-    macroAction_->setShortText(*config_.macro ? _("Macro Enabled") : _("Macro Disabled"));
+    macroAction_->setShortText(*config_.macro ? _("Macro Enabled")
+                                              : _("Macro Disabled"));
     macroAction_->update(ic);
 }
 
 void fcitx::UnikeyEngine::updateSpellAction(InputContext *ic) {
     spellCheckAction_->setChecked(*config_.spellCheck);
-    spellCheckAction_->setShortText(*config_.spellCheck ? _("Spell Check Enabled")
-                                                        : _("Spell Check Disabled"));
+    spellCheckAction_->setShortText(*config_.spellCheck
+                                        ? _("Spell Check Enabled")
+                                        : _("Spell Check Disabled"));
     spellCheckAction_->update(ic);
 }
 

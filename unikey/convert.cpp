@@ -27,8 +27,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 #include <string.h>
 
 #if defined(_WIN32)
-#include <io.h>
 #include <fcntl.h>
+#include <io.h>
 #endif
 
 #include "vnconv.h"

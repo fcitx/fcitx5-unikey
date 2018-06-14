@@ -49,7 +49,8 @@ struct UkSharedMem {
 
 enum VnWordForm { vnw_nonVn, vnw_empty, vnw_c, vnw_v, vnw_cv, vnw_vc, vnw_cvc };
 
-typedef std::function<void(int *pShiftPressed, int *pCapslockOn)> CheckKeyboardCaseCb;
+typedef std::function<void(int *pShiftPressed, int *pCapslockOn)>
+    CheckKeyboardCaseCb;
 
 struct KeyBufEntry {
     UkKeyEvent ev;

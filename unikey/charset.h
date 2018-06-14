@@ -90,7 +90,7 @@ public:
     virtual void startInput(){};
     virtual void startOutput(){};
     //	virtual UKBYTE *nextInput(UKBYTE *input, int inLen, StdVnChar & stdChar,
-    //int & bytesRead) = 0;
+    // int & bytesRead) = 0;
     virtual int nextInput(ByteInStream &is, StdVnChar &stdChar,
                           int &bytesRead) = 0;
 

@@ -1156,7 +1156,8 @@ WinCP1258Charset::WinCP1258Charset(UKWORD *compositeChars,
     for (k = 0, i = TOTAL_VNCHARS; k < TOTAL_VNCHARS; k++)
         if (precomposedChars[k] != compositeChars[k]) {
             if (precomposedChars[k] >> 8) // a 2-byte character
-                m_stdMap[precomposedChars[k] >> 8] = 0xFFFF; // INVALID_STD_CHAR;
+                m_stdMap[precomposedChars[k] >> 8] =
+                    0xFFFF; // INVALID_STD_CHAR;
             else if (m_stdMap[precomposedChars[k]] == 0)
                 m_stdMap[precomposedChars[k]] = k + 1;
 

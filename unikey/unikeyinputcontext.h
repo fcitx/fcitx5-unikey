@@ -20,8 +20,8 @@
 
 #include "keycons.h"
 #include "ukengine.h"
-#include <memory>
 #include <fcitx-utils/connectableobject.h>
+#include <memory>
 
 class UnikeyInputMethod : public fcitx::ConnectableObject {
 public:
@@ -47,7 +47,8 @@ public:
 
 private:
     FCITX_DEFINE_SIGNAL(UnikeyInputMethod, Reset);
-    std::unique_ptr<UkSharedMem> sharedMem_;;
+    std::unique_ptr<UkSharedMem> sharedMem_;
+    ;
 };
 
 class UnikeyInputContext {
@@ -63,7 +64,8 @@ public:
     void filter(unsigned int ch);
     void putChar(unsigned int ch); // put new char without filtering
 
-    // call this before UnikeyFilter for correctly processing some TELEX shortcuts
+    // call this before UnikeyFilter for correctly processing some TELEX
+    // shortcuts
     void setCapsState(int shiftPressed, int CapsLockOn);
 
     // call this when backspace is pressed
@@ -94,4 +96,3 @@ private:
 };
 
 #endif // _UNIKEY_UNIKEYINPUTCONTEXT_H_
-

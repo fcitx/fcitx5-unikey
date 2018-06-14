@@ -36,7 +36,8 @@ void CreateDefaultUnikeyOptions(UnikeyOptions *pOpt) {
     pOpt->autoNonVnRestore = 0;
 }
 
-UnikeyInputMethod::UnikeyInputMethod() : sharedMem_(std::make_unique<UkSharedMem>()) {
+UnikeyInputMethod::UnikeyInputMethod()
+    : sharedMem_(std::make_unique<UkSharedMem>()) {
     SetupUnikeyEngine();
     sharedMem_->input.init();
     sharedMem_->macStore.init();
@@ -87,25 +88,22 @@ void UnikeyInputContext::setCapsState(int shiftPressed, int CapsLockOn) {
 
 //--------------------------------------------
 UnikeyInputContext::UnikeyInputContext(UnikeyInputMethod *im) {
-    conn_ = im->connect<UnikeyInputMethod::Reset>([this] () {
-        engine_.reset();
-    });
+    conn_ =
+        im->connect<UnikeyInputMethod::Reset>([this]() { engine_.reset(); });
     engine_.setCtrlInfo(im->sharedMem());
-    engine_.setCheckKbCaseFunc([this] (int *pShiftPressed, int *pCapsLockOn) {
+    engine_.setCheckKbCaseFunc([this](int *pShiftPressed, int *pCapsLockOn) {
         *pShiftPressed = shiftPressed_;
         *pCapsLockOn = capsLockOn_;
     });
 }
 
 //--------------------------------------------
-UnikeyInputContext::~UnikeyInputContext()
-{}
+UnikeyInputContext::~UnikeyInputContext() {}
 
 //--------------------------------------------
 void UnikeyInputContext::filter(unsigned int ch) {
     bufChars_ = sizeof(buf_);
-    engine_.process(ch, backspaces_, buf_, bufChars_,
-                       output_);
+    engine_.process(ch, backspaces_, buf_, bufChars_, output_);
 }
 
 //--------------------------------------------
@@ -116,22 +114,21 @@ void UnikeyInputContext::putChar(unsigned int ch) {
 }
 
 //--------------------------------------------
-void UnikeyInputContext::resetBuf() {
-    engine_.reset(); }
+void UnikeyInputContext::resetBuf() { engine_.reset(); }
 
 //--------------------------------------------
 void UnikeyInputContext::backspacePress() {
     bufChars_ = sizeof(buf_);
-    engine_.processBackspace(backspaces_, buf_, bufChars_,
-                                output_);
+    engine_.processBackspace(backspaces_, buf_, bufChars_, output_);
     //  printf("Backspaces: %d\n",UnikeyBackspaces);
 }
 
 //--------------------------------------------
 void UnikeyInputContext::restoreKeyStrokes() {
     bufChars_ = sizeof(buf_);
-    engine_.restoreKeyStrokes(backspaces_, buf_, bufChars_,
-                                 output_);
+    engine_.restoreKeyStrokes(backspaces_, buf_, bufChars_, output_);
 }
 
-bool UnikeyInputContext::isAtWordBeginning() { return engine_.atWordBeginning(); }
+bool UnikeyInputContext::isAtWordBeginning() {
+    return engine_.atWordBeginning();
+}
