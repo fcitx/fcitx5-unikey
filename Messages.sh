@@ -2,7 +2,7 @@
 DOMAIN=$(basename $PWD)
 POT_FILE=po/$DOMAIN.pot
 set -x
-XGETTEXT="xgettext --package-name=$DOMAIN --add-comments --sort-output --msgid-bugs-address=fcitx-dev@googlegroups.com"
+XGETTEXT="xgettext --package-name=$DOMAIN --add-comments --sort-output --msgid-bugs-address=fcitx-dev@googlegroups.com --from-code=UTF-8"
 source_files=$(find . -name \*.cpp -o -name \*.h)
 $XGETTEXT --keyword=_ --keyword=N_ --language=C++ --add-comments --sort-output -o ${POT_FILE} $source_files
 desktop_files=$(find . -name \*.conf.in -o -name \*.conf.in.in -o -name \*.desktop.in)
