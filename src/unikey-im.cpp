@@ -349,7 +349,6 @@ void fcitx::UnikeyState::preedit(fcitx::KeyEvent &keyEvent) {
                 preeditStr_.append(sym == FcitxKey_w ? "w" : "W");
                 updatePreedit();
                 return keyEvent.filterAndAccept();
-                ;
             }
         }
 
@@ -510,16 +509,16 @@ void fcitx::UnikeyState::updatePreedit() {
 
     inputPanel.reset();
 
-    Text preedit(preeditStr_);
-    preedit.setCursor(preeditStr_.size());
+    Text preedit(preeditStr_, TextFormatFlag::Underline);
 
     if (preeditStr_.size()) {
-        if (ic_->capabilityFlags().test(CapabilityFlag::Preedit)) {
-            inputPanel.setClientPreedit(preedit);
-            ic_->updatePreedit();
-        } else {
-            inputPanel.setPreedit(preedit);
-        }
+        preedit.setCursor(preeditStr_.size());
+    }
+    if (ic_->capabilityFlags().test(CapabilityFlag::Preedit)) {
+        inputPanel.setClientPreedit(preedit);
+        ic_->updatePreedit();
+    } else {
+        inputPanel.setPreedit(preedit);
     }
     ic_->updateUserInterface(UserInterfaceComponent::InputPanel);
 }
