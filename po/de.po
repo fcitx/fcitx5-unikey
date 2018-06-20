@@ -4,13 +4,14 @@
 #
 # Translators:
 # csslayer <wengxt@gmail.com>, 2018
+# mar well <m.wellendorf@gmx.de>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2018-06-19 00:02-0700\n"
+"POT-Creation-Date: 2018-06-20 00:03-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: csslayer <wengxt@gmail.com>, 2018\n"
+"Last-Translator: mar well <m.wellendorf@gmx.de>, 2018\n"
 "Language-Team: German (https://www.transifex.com/fcitx/teams/12005/de/)\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -48,11 +49,11 @@ msgstr "&Import"
 
 #: src/unikey-config.h:65
 msgid "Allow type with more freedom"
-msgstr "Mit mehr Freiheit tippen erlauben"
+msgstr "Mit mehr Freiheit eingeben erlauben"
 
 #: src/unikey-config.h:60
 msgid "Auto restore keys with invalid words"
-msgstr "Automatisches Wiederherstellen der Tasten bei ungültigen Worten"
+msgstr "Automatisches Wiederherstellen der Tasten mit ungültigen Worten"
 
 #: src/unikey-config.h:40
 msgid "BK HCM 2"
@@ -74,7 +75,7 @@ msgstr "De&lete All"
 #: rc.cpp:21
 #, kde-format
 msgid "Dialog"
-msgstr ""
+msgstr "Dialog"
 
 #: src/unikey-config.h:55
 msgid "Enable spell check"
@@ -90,18 +91,18 @@ msgstr "Makro"
 
 #: src/unikey-im.cpp:461
 msgid "Macro Disabled"
-msgstr ""
+msgstr "Makro ausgeschaltet"
 
 #: src/unikey-im.cpp:460
 msgid "Macro Enabled"
-msgstr ""
+msgstr "Makro eingeschaltet"
 
 #. i18n: file: macro-editor/dialog.ui:32
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: rc.cpp:27
 #, kde-format
 msgid "Macro:"
-msgstr ""
+msgstr "Makro:"
 
 #: src/unikey-config.h:45
 msgid "Microsoft Vietnamese"
@@ -121,7 +122,7 @@ msgstr "Zeichensatz Ausgabe"
 
 #: src/unikey-im.cpp:175
 msgid "Output charset"
-msgstr ""
+msgstr "Zeichensatz Ausgabe"
 
 #: src/unikey-config.h:58
 msgid "Process W at word begin"
@@ -137,15 +138,15 @@ msgstr "Einfaches Telex2"
 
 #: src/unikey-im.cpp:469
 msgid "Spell Check Disabled"
-msgstr ""
+msgstr "Rechtschreibprüfung ausgeschaltet"
 
 #: src/unikey-im.cpp:468
 msgid "Spell Check Enabled"
-msgstr ""
+msgstr "Rechtschreibprüfung eingeschaltet"
 
 #: src/unikey-im.cpp:200
 msgid "Spell check"
-msgstr ""
+msgstr "Rechtschreibprüfung"
 
 #: src/unikey-config.h:39
 msgid "TCVN3"
@@ -168,7 +169,7 @@ msgstr "Unikey"
 #: macro-editor/editor.cpp:53 rc.cpp:3
 #, kde-format
 msgid "Unikey Macro Editor"
-msgstr "Unikey Macro Editor"
+msgstr "Unikey Makro Editor"
 
 #: src/unikey-addon.conf.in:3
 msgid "Unikey Wrapper For Fcitx"
@@ -203,4 +204,4 @@ msgstr "Wort"
 #: rc.cpp:24
 #, kde-format
 msgid "Word:"
-msgstr ""
+msgstr "Wort:"
