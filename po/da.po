@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2018-06-19 00:02-0700\n"
+"POT-Creation-Date: 2018-06-30 00:02-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: scootergrisen, 2018\n"
 "Language-Team: Danish (https://www.transifex.com/fcitx/teams/12005/da/)\n"
@@ -91,11 +91,11 @@ msgstr "Makro"
 
 #: src/unikey-im.cpp:461
 msgid "Macro Disabled"
-msgstr ""
+msgstr "Makro deaktiveret"
 
 #: src/unikey-im.cpp:460
 msgid "Macro Enabled"
-msgstr ""
+msgstr "Makro aktiveret"
 
 #. i18n: file: macro-editor/dialog.ui:32
 #. i18n: ectx: property (text), widget (QLabel, label_2)
@@ -122,7 +122,7 @@ msgstr "Outputtegnsæt"
 
 #: src/unikey-im.cpp:175
 msgid "Output charset"
-msgstr ""
+msgstr "Outputtegnsæt"
 
 #: src/unikey-config.h:58
 msgid "Process W at word begin"
@@ -138,15 +138,15 @@ msgstr "Simpel telex2"
 
 #: src/unikey-im.cpp:469
 msgid "Spell Check Disabled"
-msgstr ""
+msgstr "Stavekontrol deaktiveret"
 
 #: src/unikey-im.cpp:468
 msgid "Spell Check Enabled"
-msgstr ""
+msgstr "Stavekontrol aktiveret"
 
 #: src/unikey-im.cpp:200
 msgid "Spell check"
-msgstr ""
+msgstr "Stavekontrol"
 
 #: src/unikey-config.h:39
 msgid "TCVN3"
