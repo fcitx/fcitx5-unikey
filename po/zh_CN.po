@@ -4,13 +4,14 @@
 #
 # Translators:
 # csslayer <wengxt@gmail.com>, 2018
+# wwj402 <wwj402@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2018-06-19 00:02-0700\n"
+"POT-Creation-Date: 2018-07-19 00:02-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: csslayer <wengxt@gmail.com>, 2018\n"
+"Last-Translator: wwj402 <wwj402@gmail.com>, 2018\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
 "zh_CN/)\n"
 "Language: zh_CN\n"
@@ -75,7 +76,7 @@ msgstr "全部删除(&L)"
 #: rc.cpp:21
 #, kde-format
 msgid "Dialog"
-msgstr ""
+msgstr "对话框"
 
 #: src/unikey-config.h:55
 msgid "Enable spell check"
@@ -91,18 +92,18 @@ msgstr "宏"
 
 #: src/unikey-im.cpp:461
 msgid "Macro Disabled"
-msgstr ""
+msgstr "宏已禁用"
 
 #: src/unikey-im.cpp:460
 msgid "Macro Enabled"
-msgstr ""
+msgstr "宏已启用"
 
 #. i18n: file: macro-editor/dialog.ui:32
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: rc.cpp:27
 #, kde-format
 msgid "Macro:"
-msgstr ""
+msgstr "宏："
 
 #: src/unikey-config.h:45
 msgid "Microsoft Vietnamese"
@@ -122,7 +123,7 @@ msgstr "输出字符集"
 
 #: src/unikey-im.cpp:175
 msgid "Output charset"
-msgstr ""
+msgstr "输出字符集"
 
 #: src/unikey-config.h:58
 msgid "Process W at word begin"
@@ -138,15 +139,15 @@ msgstr "简化 Telex2"
 
 #: src/unikey-im.cpp:469
 msgid "Spell Check Disabled"
-msgstr ""
+msgstr "拼写检查已禁用"
 
 #: src/unikey-im.cpp:468
 msgid "Spell Check Enabled"
-msgstr ""
+msgstr "拼写检查已启用"
 
 #: src/unikey-im.cpp:200
 msgid "Spell check"
-msgstr ""
+msgstr "拼写检查"
 
 #: src/unikey-config.h:39
 msgid "TCVN3"
@@ -204,4 +205,4 @@ msgstr "单词"
 #: rc.cpp:24
 #, kde-format
 msgid "Word:"
-msgstr ""
+msgstr "单词："
