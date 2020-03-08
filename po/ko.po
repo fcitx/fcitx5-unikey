@@ -4,13 +4,15 @@
 #
 # Translators:
 # csslayer <wengxt@gmail.com>, 2018
+# 이정희 <daemul72@gmail.com>, 2020
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2018-06-19 00:02-0700\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: csslayer <wengxt@gmail.com>, 2018\n"
+"POT-Creation-Date: 2020-03-07 16:19-0800\n"
+"PO-Revision-Date: 2018-06-12 22:55+0000\n"
+"Last-Translator: 이정희 <daemul72@gmail.com>, 2020\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
@@ -48,7 +50,7 @@ msgstr "가져오기(&I)"
 
 #: src/unikey-config.h:65
 msgid "Allow type with more freedom"
-msgstr "더 자유롭게 입력"
+msgstr "더 많은 자유로움을 가진 형식 허용"
 
 #: src/unikey-config.h:60
 msgid "Auto restore keys with invalid words"
@@ -67,14 +69,14 @@ msgstr "CString"
 #: rc.cpp:12
 #, kde-format
 msgid "De&lete All"
-msgstr "모두 지우기(&l)"
+msgstr "모두 삭제(&l)"
 
 #. i18n: file: macro-editor/dialog.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, Dialog)
 #: rc.cpp:21
 #, kde-format
 msgid "Dialog"
-msgstr ""
+msgstr "대화창"
 
 #: src/unikey-config.h:55
 msgid "Enable spell check"
@@ -90,18 +92,18 @@ msgstr "매크로"
 
 #: src/unikey-im.cpp:461
 msgid "Macro Disabled"
-msgstr ""
+msgstr "매크로 사용안함"
 
 #: src/unikey-im.cpp:460
 msgid "Macro Enabled"
-msgstr ""
+msgstr "매크로 사용가능"
 
 #. i18n: file: macro-editor/dialog.ui:32
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: rc.cpp:27
 #, kde-format
 msgid "Macro:"
-msgstr ""
+msgstr "매크로"
 
 #: src/unikey-config.h:45
 msgid "Microsoft Vietnamese"
@@ -121,7 +123,7 @@ msgstr "출력 문자셋"
 
 #: src/unikey-im.cpp:175
 msgid "Output charset"
-msgstr ""
+msgstr "출력 문자셋"
 
 #: src/unikey-config.h:58
 msgid "Process W at word begin"
@@ -137,15 +139,15 @@ msgstr "간단한 텔렉스2"
 
 #: src/unikey-im.cpp:469
 msgid "Spell Check Disabled"
-msgstr ""
+msgstr "맞춤법 검사 사용안함"
 
 #: src/unikey-im.cpp:468
 msgid "Spell Check Enabled"
-msgstr ""
+msgstr "맞춤법 검사 사용가능"
 
 #: src/unikey-im.cpp:200
 msgid "Spell check"
-msgstr ""
+msgstr "맞춤법 검사"
 
 #: src/unikey-config.h:39
 msgid "TCVN3"
@@ -180,7 +182,7 @@ msgstr "òa, úy 대신 oà, _uý 사용"
 
 #: src/unikey-config.h:46
 msgid "UserIM"
-msgstr "사용자IM"
+msgstr "사용자 입력방법"
 
 #: src/unikey-config.h:40 src/unikey-config.h:45
 msgid "VIQR"
@@ -203,4 +205,4 @@ msgstr "단어"
 #: rc.cpp:24
 #, kde-format
 msgid "Word:"
-msgstr ""
+msgstr "단어:"
