@@ -4,15 +4,15 @@
 #
 # Translators:
 # csslayer <wengxt@gmail.com>, 2018
-# 이정희 <daemul72@gmail.com>, 2020
+# MarongHappy <daemul72@gmail.com>, 2020
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-03-07 16:19-0800\n"
+"POT-Creation-Date: 2020-03-25 00:02-0700\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
-"Last-Translator: 이정희 <daemul72@gmail.com>, 2020\n"
+"Last-Translator: MarongHappy <daemul72@gmail.com>, 2020\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
@@ -96,7 +96,7 @@ msgstr "매크로 사용안함"
 
 #: src/unikey-im.cpp:460
 msgid "Macro Enabled"
-msgstr "매크로 사용가능"
+msgstr "매크로 활성화됨"
 
 #. i18n: file: macro-editor/dialog.ui:32
 #. i18n: ectx: property (text), widget (QLabel, label_2)
@@ -143,7 +143,7 @@ msgstr "맞춤법 검사 사용안함"
 
 #: src/unikey-im.cpp:468
 msgid "Spell Check Enabled"
-msgstr "맞춤법 검사 사용가능"
+msgstr "철자 검사 활성화됨"
 
 #: src/unikey-im.cpp:200
 msgid "Spell check"
