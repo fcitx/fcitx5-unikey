@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-03-25 00:02-0700\n"
+"POT-Creation-Date: 2020-04-04 00:01-0700\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
 "Last-Translator: MarongHappy <daemul72@gmail.com>, 2020\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
@@ -32,7 +32,7 @@ msgstr "추가(&A)"
 #: rc.cpp:9
 #, kde-format
 msgid "&Delete"
-msgstr "지우기(&D)"
+msgstr "삭제(&D)"
 
 #. i18n: file: macro-editor/editor.ui:87
 #. i18n: ectx: property (text), widget (QPushButton, exportButton)
@@ -50,7 +50,7 @@ msgstr "가져오기(&I)"
 
 #: src/unikey-config.h:65
 msgid "Allow type with more freedom"
-msgstr "더 많은 자유로움을 가진 형식 허용"
+msgstr "더 자유로운 입력 허용"
 
 #: src/unikey-config.h:60
 msgid "Auto restore keys with invalid words"
