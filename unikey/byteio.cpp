@@ -1,5 +1,8 @@
-// -*- coding:unix; mode:c++; tab-width:4; c-basic-offset:4;
-// indent-tabs-mode:nil -*-
+/*
+ * SPDX-FileCopyrightText: 1998-2002 Pham Kim Long <unikey@gmail.com>
+ *
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
 #include "byteio.h"
 #include <string.h>
 

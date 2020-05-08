@@ -4,7 +4,6 @@ set(UNIKEY_SRCS
     charset.cpp
     convert.cpp
     data.cpp
-    error.cpp
     inputproc.cpp
     mactab.cpp
     pattern.cpp
