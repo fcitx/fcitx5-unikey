@@ -51,7 +51,9 @@ FCITX_CONFIGURATION(
     Option<bool> modernStyle{this, "ModernStyle",
                              _("Use oà, _uý (instead of òa, úy)"), false};
     Option<bool> freeMarking{this, "FreeMarking",
-                             _("Allow type with more freedom"), true};);
+                             _("Allow type with more freedom"), true};
+    ExternalOption macroEditor{this, "MacroEditor", _("Macro Editor"),
+                               "fcitx://config/addon/unikey/macro"};);
 
 } // namespace fcitx
 
