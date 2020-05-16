@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-04-04 00:01-0700\n"
+"POT-Creation-Date: 2020-05-16 00:02-0700\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
 "Last-Translator: MarongHappy <daemul72@gmail.com>, 2020\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
@@ -48,19 +48,19 @@ msgstr "내보내기(&E)"
 msgid "&Import"
 msgstr "가져오기(&I)"
 
-#: src/unikey-config.h:65
+#: src/unikey-config.h:54
 msgid "Allow type with more freedom"
 msgstr "더 자유로운 입력 허용"
 
-#: src/unikey-config.h:60
+#: src/unikey-config.h:49
 msgid "Auto restore keys with invalid words"
 msgstr "유효하지 않은 단어에 자동 복구 키 사용"
 
-#: src/unikey-config.h:40
+#: src/unikey-config.h:29
 msgid "BK HCM 2"
 msgstr "BK HCM 2"
 
-#: src/unikey-config.h:41
+#: src/unikey-config.h:30
 msgid "CString"
 msgstr "CString"
 
@@ -78,23 +78,27 @@ msgstr "모두 삭제(&l)"
 msgid "Dialog"
 msgstr "대화창"
 
-#: src/unikey-config.h:55
+#: src/unikey-config.h:44
 msgid "Enable spell check"
 msgstr "철자 검사 활성화"
 
-#: src/unikey-config.h:52 src/unikey-im.cpp:149
+#: src/unikey-config.h:41 src/unikey-im.cpp:138
 msgid "Input Method"
 msgstr "입력기"
 
-#: macro-editor/model.cpp:38 src/unikey-im.cpp:212
+#: macro-editor/model.cpp:27 src/unikey-im.cpp:201
 msgid "Macro"
 msgstr "매크로"
 
-#: src/unikey-im.cpp:461
+#: src/unikey-im.cpp:450
 msgid "Macro Disabled"
 msgstr "매크로 사용안함"
 
-#: src/unikey-im.cpp:460
+#: src/unikey-config.h:55
+msgid "Macro Editor"
+msgstr ""
+
+#: src/unikey-im.cpp:449
 msgid "Macro Enabled"
 msgstr "매크로 활성화됨"
 
@@ -105,59 +109,59 @@ msgstr "매크로 활성화됨"
 msgid "Macro:"
 msgstr "매크로"
 
-#: src/unikey-config.h:45
+#: src/unikey-config.h:34
 msgid "Microsoft Vietnamese"
 msgstr "마이크로소트프 베트남어"
 
-#: src/unikey-config.h:41
+#: src/unikey-config.h:30
 msgid "NCR Decimal"
 msgstr "NCR 10진수"
 
-#: src/unikey-config.h:42
+#: src/unikey-config.h:31
 msgid "NCR Hex"
 msgstr "NCR 16진수"
 
-#: src/unikey-config.h:54
+#: src/unikey-config.h:43
 msgid "Output Charset"
 msgstr "출력 문자셋"
 
-#: src/unikey-im.cpp:175
+#: src/unikey-im.cpp:164
 msgid "Output charset"
 msgstr "출력 문자셋"
 
-#: src/unikey-config.h:58
+#: src/unikey-config.h:47
 msgid "Process W at word begin"
 msgstr "단어 시작 시 W 처리"
 
-#: src/unikey-config.h:46
+#: src/unikey-config.h:35
 msgid "Simple Telex"
 msgstr "간단한 텔렉스"
 
-#: src/unikey-config.h:47
+#: src/unikey-config.h:36
 msgid "Simple Telex2"
 msgstr "간단한 텔렉스2"
 
-#: src/unikey-im.cpp:469
+#: src/unikey-im.cpp:458
 msgid "Spell Check Disabled"
 msgstr "맞춤법 검사 사용안함"
 
-#: src/unikey-im.cpp:468
+#: src/unikey-im.cpp:457
 msgid "Spell Check Enabled"
 msgstr "철자 검사 활성화됨"
 
-#: src/unikey-im.cpp:200
+#: src/unikey-im.cpp:189
 msgid "Spell check"
 msgstr "맞춤법 검사"
 
-#: src/unikey-config.h:39
+#: src/unikey-config.h:28
 msgid "TCVN3"
 msgstr "TCVN3"
 
-#: src/unikey-config.h:44
+#: src/unikey-config.h:33
 msgid "Telex"
 msgstr "텔렉스"
 
-#: src/unikey-config.h:39
+#: src/unikey-config.h:28
 msgid "Unicode"
 msgstr "유니코드"
 
@@ -167,7 +171,7 @@ msgstr "유니키"
 
 #. i18n: file: macro-editor/editor.ui:14
 #. i18n: ectx: property (windowTitle), widget (QWidget, Editor)
-#: macro-editor/editor.cpp:53 rc.cpp:3
+#: macro-editor/editor.cpp:42 rc.cpp:3
 #, kde-format
 msgid "Unikey Macro Editor"
 msgstr "유니키 매크로 편집기"
@@ -176,27 +180,27 @@ msgstr "유니키 매크로 편집기"
 msgid "Unikey Wrapper For Fcitx"
 msgstr "Fcitx 유니키 입력기"
 
-#: src/unikey-config.h:63
+#: src/unikey-config.h:52
 msgid "Use oà, _uý (instead of òa, úy)"
 msgstr "òa, úy 대신 oà, _uý 사용"
 
-#: src/unikey-config.h:46
+#: src/unikey-config.h:35
 msgid "UserIM"
 msgstr "사용자 입력방법"
 
-#: src/unikey-config.h:40 src/unikey-config.h:45
+#: src/unikey-config.h:29 src/unikey-config.h:34
 msgid "VIQR"
 msgstr "VIQR"
 
-#: src/unikey-config.h:44
+#: src/unikey-config.h:33
 msgid "VNI"
 msgstr "VNI"
 
-#: src/unikey-config.h:40
+#: src/unikey-config.h:29
 msgid "VNI Win"
 msgstr "VNI Win"
 
-#: macro-editor/model.cpp:40
+#: macro-editor/model.cpp:29
 msgid "Word"
 msgstr "단어"
 

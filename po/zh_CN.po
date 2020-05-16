@@ -5,12 +5,13 @@
 # Translators:
 # csslayer <wengxt@gmail.com>, 2018
 # wwj402 <wwj402@gmail.com>, 2018
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2018-07-19 00:02-0700\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2020-05-16 00:02-0700\n"
+"PO-Revision-Date: 2018-06-12 22:55+0000\n"
 "Last-Translator: wwj402 <wwj402@gmail.com>, 2018\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
 "zh_CN/)\n"
@@ -48,19 +49,19 @@ msgstr "导出(&E)"
 msgid "&Import"
 msgstr "导入(&I)"
 
-#: src/unikey-config.h:65
+#: src/unikey-config.h:54
 msgid "Allow type with more freedom"
 msgstr "允许更自由的输入"
 
-#: src/unikey-config.h:60
+#: src/unikey-config.h:49
 msgid "Auto restore keys with invalid words"
 msgstr "自动恢复无效词的键"
 
-#: src/unikey-config.h:40
+#: src/unikey-config.h:29
 msgid "BK HCM 2"
 msgstr "BK HCM 2"
 
-#: src/unikey-config.h:41
+#: src/unikey-config.h:30
 msgid "CString"
 msgstr "CString"
 
@@ -78,23 +79,27 @@ msgstr "全部删除(&L)"
 msgid "Dialog"
 msgstr "对话框"
 
-#: src/unikey-config.h:55
+#: src/unikey-config.h:44
 msgid "Enable spell check"
 msgstr "启用拼写检查"
 
-#: src/unikey-config.h:52 src/unikey-im.cpp:149
+#: src/unikey-config.h:41 src/unikey-im.cpp:138
 msgid "Input Method"
 msgstr "输入法"
 
-#: macro-editor/model.cpp:38 src/unikey-im.cpp:212
+#: macro-editor/model.cpp:27 src/unikey-im.cpp:201
 msgid "Macro"
 msgstr "宏"
 
-#: src/unikey-im.cpp:461
+#: src/unikey-im.cpp:450
 msgid "Macro Disabled"
 msgstr "宏已禁用"
 
-#: src/unikey-im.cpp:460
+#: src/unikey-config.h:55
+msgid "Macro Editor"
+msgstr ""
+
+#: src/unikey-im.cpp:449
 msgid "Macro Enabled"
 msgstr "宏已启用"
 
@@ -105,59 +110,59 @@ msgstr "宏已启用"
 msgid "Macro:"
 msgstr "宏："
 
-#: src/unikey-config.h:45
+#: src/unikey-config.h:34
 msgid "Microsoft Vietnamese"
 msgstr "微软越南语"
 
-#: src/unikey-config.h:41
+#: src/unikey-config.h:30
 msgid "NCR Decimal"
 msgstr "十进制 NCR"
 
-#: src/unikey-config.h:42
+#: src/unikey-config.h:31
 msgid "NCR Hex"
 msgstr "十六进制 NCR"
 
-#: src/unikey-config.h:54
+#: src/unikey-config.h:43
 msgid "Output Charset"
 msgstr "输出字符集"
 
-#: src/unikey-im.cpp:175
+#: src/unikey-im.cpp:164
 msgid "Output charset"
 msgstr "输出字符集"
 
-#: src/unikey-config.h:58
+#: src/unikey-config.h:47
 msgid "Process W at word begin"
 msgstr "在单词开头处理 W"
 
-#: src/unikey-config.h:46
+#: src/unikey-config.h:35
 msgid "Simple Telex"
 msgstr "简化 Telex"
 
-#: src/unikey-config.h:47
+#: src/unikey-config.h:36
 msgid "Simple Telex2"
 msgstr "简化 Telex2"
 
-#: src/unikey-im.cpp:469
+#: src/unikey-im.cpp:458
 msgid "Spell Check Disabled"
 msgstr "拼写检查已禁用"
 
-#: src/unikey-im.cpp:468
+#: src/unikey-im.cpp:457
 msgid "Spell Check Enabled"
 msgstr "拼写检查已启用"
 
-#: src/unikey-im.cpp:200
+#: src/unikey-im.cpp:189
 msgid "Spell check"
 msgstr "拼写检查"
 
-#: src/unikey-config.h:39
+#: src/unikey-config.h:28
 msgid "TCVN3"
 msgstr "TCVN3"
 
-#: src/unikey-config.h:44
+#: src/unikey-config.h:33
 msgid "Telex"
 msgstr "Telex"
 
-#: src/unikey-config.h:39
+#: src/unikey-config.h:28
 msgid "Unicode"
 msgstr "Unicode"
 
@@ -167,7 +172,7 @@ msgstr "Unikey"
 
 #. i18n: file: macro-editor/editor.ui:14
 #. i18n: ectx: property (windowTitle), widget (QWidget, Editor)
-#: macro-editor/editor.cpp:53 rc.cpp:3
+#: macro-editor/editor.cpp:42 rc.cpp:3
 #, kde-format
 msgid "Unikey Macro Editor"
 msgstr "Unikey 宏编辑器"
@@ -176,27 +181,27 @@ msgstr "Unikey 宏编辑器"
 msgid "Unikey Wrapper For Fcitx"
 msgstr "Fcitx 的 Unikey 封装"
 
-#: src/unikey-config.h:63
+#: src/unikey-config.h:52
 msgid "Use oà, _uý (instead of òa, úy)"
 msgstr "使用 oà, _uý (替换 òa, úy)"
 
-#: src/unikey-config.h:46
+#: src/unikey-config.h:35
 msgid "UserIM"
 msgstr "用户输入法"
 
-#: src/unikey-config.h:40 src/unikey-config.h:45
+#: src/unikey-config.h:29 src/unikey-config.h:34
 msgid "VIQR"
 msgstr "VIQR"
 
-#: src/unikey-config.h:44
+#: src/unikey-config.h:33
 msgid "VNI"
 msgstr "VNI"
 
-#: src/unikey-config.h:40
+#: src/unikey-config.h:29
 msgid "VNI Win"
 msgstr "VNI Win"
 
-#: macro-editor/model.cpp:40
+#: macro-editor/model.cpp:29
 msgid "Word"
 msgstr "单词"
 

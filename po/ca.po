@@ -3,15 +3,16 @@
 # This file is distributed under the same license as the fcitx5-unikey package.
 #
 # Translators:
-# Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>, 2018
 # csslayer <wengxt@gmail.com>, 2018
+# Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>, 2018
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2018-06-19 00:02-0700\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: csslayer <wengxt@gmail.com>, 2018\n"
+"POT-Creation-Date: 2020-05-16 00:02-0700\n"
+"PO-Revision-Date: 2018-06-12 22:55+0000\n"
+"Last-Translator: Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>, 2018\n"
 "Language-Team: Catalan (https://www.transifex.com/fcitx/teams/12005/ca/)\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
@@ -47,19 +48,19 @@ msgstr "&Exporta"
 msgid "&Import"
 msgstr "&Importa"
 
-#: src/unikey-config.h:65
+#: src/unikey-config.h:54
 msgid "Allow type with more freedom"
 msgstr "Permet escriure amb més llibertat"
 
-#: src/unikey-config.h:60
+#: src/unikey-config.h:49
 msgid "Auto restore keys with invalid words"
 msgstr "Restaura automàticament les tecles amb paraules no vàlides"
 
-#: src/unikey-config.h:40
+#: src/unikey-config.h:29
 msgid "BK HCM 2"
 msgstr "BK HCM 2"
 
-#: src/unikey-config.h:41
+#: src/unikey-config.h:30
 msgid "CString"
 msgstr "CString"
 
@@ -77,23 +78,27 @@ msgstr "E&limina-ho tot"
 msgid "Dialog"
 msgstr "Diàleg"
 
-#: src/unikey-config.h:55
+#: src/unikey-config.h:44
 msgid "Enable spell check"
 msgstr "Habilita el corrector ortogràfic"
 
-#: src/unikey-config.h:52 src/unikey-im.cpp:149
+#: src/unikey-config.h:41 src/unikey-im.cpp:138
 msgid "Input Method"
 msgstr "Mètode d'entrada"
 
-#: macro-editor/model.cpp:38 src/unikey-im.cpp:212
+#: macro-editor/model.cpp:27 src/unikey-im.cpp:201
 msgid "Macro"
 msgstr "Macro"
 
-#: src/unikey-im.cpp:461
+#: src/unikey-im.cpp:450
 msgid "Macro Disabled"
 msgstr ""
 
-#: src/unikey-im.cpp:460
+#: src/unikey-config.h:55
+msgid "Macro Editor"
+msgstr ""
+
+#: src/unikey-im.cpp:449
 msgid "Macro Enabled"
 msgstr ""
 
@@ -104,59 +109,59 @@ msgstr ""
 msgid "Macro:"
 msgstr "Macro:"
 
-#: src/unikey-config.h:45
+#: src/unikey-config.h:34
 msgid "Microsoft Vietnamese"
 msgstr "Vietnamita Microsoft"
 
-#: src/unikey-config.h:41
+#: src/unikey-config.h:30
 msgid "NCR Decimal"
 msgstr "NCR Decimal"
 
-#: src/unikey-config.h:42
+#: src/unikey-config.h:31
 msgid "NCR Hex"
 msgstr "NCR Hex"
 
-#: src/unikey-config.h:54
+#: src/unikey-config.h:43
 msgid "Output Charset"
 msgstr "Conjunt de caràcters de sortida"
 
-#: src/unikey-im.cpp:175
+#: src/unikey-im.cpp:164
 msgid "Output charset"
 msgstr ""
 
-#: src/unikey-config.h:58
+#: src/unikey-config.h:47
 msgid "Process W at word begin"
 msgstr "Processa W a l'inici de paraula"
 
-#: src/unikey-config.h:46
+#: src/unikey-config.h:35
 msgid "Simple Telex"
 msgstr "Telex simple"
 
-#: src/unikey-config.h:47
+#: src/unikey-config.h:36
 msgid "Simple Telex2"
 msgstr "Telex2 simple"
 
-#: src/unikey-im.cpp:469
+#: src/unikey-im.cpp:458
 msgid "Spell Check Disabled"
 msgstr ""
 
-#: src/unikey-im.cpp:468
+#: src/unikey-im.cpp:457
 msgid "Spell Check Enabled"
 msgstr ""
 
-#: src/unikey-im.cpp:200
+#: src/unikey-im.cpp:189
 msgid "Spell check"
 msgstr ""
 
-#: src/unikey-config.h:39
+#: src/unikey-config.h:28
 msgid "TCVN3"
 msgstr "TCVN3"
 
-#: src/unikey-config.h:44
+#: src/unikey-config.h:33
 msgid "Telex"
 msgstr "Telex"
 
-#: src/unikey-config.h:39
+#: src/unikey-config.h:28
 msgid "Unicode"
 msgstr "Unicode"
 
@@ -166,7 +171,7 @@ msgstr "Unikey"
 
 #. i18n: file: macro-editor/editor.ui:14
 #. i18n: ectx: property (windowTitle), widget (QWidget, Editor)
-#: macro-editor/editor.cpp:53 rc.cpp:3
+#: macro-editor/editor.cpp:42 rc.cpp:3
 #, kde-format
 msgid "Unikey Macro Editor"
 msgstr "Editor de macros unikey"
@@ -175,27 +180,27 @@ msgstr "Editor de macros unikey"
 msgid "Unikey Wrapper For Fcitx"
 msgstr "Contenidor unikey per a fcitx"
 
-#: src/unikey-config.h:63
+#: src/unikey-config.h:52
 msgid "Use oà, _uý (instead of òa, úy)"
 msgstr "Utilitza oà, _uý (en comptes de òa, úy)"
 
-#: src/unikey-config.h:46
+#: src/unikey-config.h:35
 msgid "UserIM"
 msgstr "Mètode d'entrada de l'usuari"
 
-#: src/unikey-config.h:40 src/unikey-config.h:45
+#: src/unikey-config.h:29 src/unikey-config.h:34
 msgid "VIQR"
 msgstr "VIQR"
 
-#: src/unikey-config.h:44
+#: src/unikey-config.h:33
 msgid "VNI"
 msgstr "VNI"
 
-#: src/unikey-config.h:40
+#: src/unikey-config.h:29
 msgid "VNI Win"
 msgstr "VNI Win"
 
-#: macro-editor/model.cpp:40
+#: macro-editor/model.cpp:29
 msgid "Word"
 msgstr "Paraula"
 

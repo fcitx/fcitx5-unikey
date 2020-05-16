@@ -5,12 +5,13 @@
 # Translators:
 # csslayer <wengxt@gmail.com>, 2018
 # scootergrisen, 2018
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2018-06-30 00:02-0700\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2020-05-16 00:02-0700\n"
+"PO-Revision-Date: 2018-06-12 22:55+0000\n"
 "Last-Translator: scootergrisen, 2018\n"
 "Language-Team: Danish (https://www.transifex.com/fcitx/teams/12005/da/)\n"
 "Language: da\n"
@@ -47,19 +48,19 @@ msgstr "&Eksportér"
 msgid "&Import"
 msgstr "&Importér"
 
-#: src/unikey-config.h:65
+#: src/unikey-config.h:54
 msgid "Allow type with more freedom"
 msgstr "Tillad type med mere frihed"
 
-#: src/unikey-config.h:60
+#: src/unikey-config.h:49
 msgid "Auto restore keys with invalid words"
 msgstr "Gendan automatisk nøgler med ugyldige ord"
 
-#: src/unikey-config.h:40
+#: src/unikey-config.h:29
 msgid "BK HCM 2"
 msgstr "BK HCM 2"
 
-#: src/unikey-config.h:41
+#: src/unikey-config.h:30
 msgid "CString"
 msgstr "CStreng"
 
@@ -77,23 +78,27 @@ msgstr "S&let alle"
 msgid "Dialog"
 msgstr "Dialog"
 
-#: src/unikey-config.h:55
+#: src/unikey-config.h:44
 msgid "Enable spell check"
 msgstr "Aktivér stavekontrol"
 
-#: src/unikey-config.h:52 src/unikey-im.cpp:149
+#: src/unikey-config.h:41 src/unikey-im.cpp:138
 msgid "Input Method"
 msgstr "Inputmetode"
 
-#: macro-editor/model.cpp:38 src/unikey-im.cpp:212
+#: macro-editor/model.cpp:27 src/unikey-im.cpp:201
 msgid "Macro"
 msgstr "Makro"
 
-#: src/unikey-im.cpp:461
+#: src/unikey-im.cpp:450
 msgid "Macro Disabled"
 msgstr "Makro deaktiveret"
 
-#: src/unikey-im.cpp:460
+#: src/unikey-config.h:55
+msgid "Macro Editor"
+msgstr ""
+
+#: src/unikey-im.cpp:449
 msgid "Macro Enabled"
 msgstr "Makro aktiveret"
 
@@ -104,59 +109,59 @@ msgstr "Makro aktiveret"
 msgid "Macro:"
 msgstr "Makro:"
 
-#: src/unikey-config.h:45
+#: src/unikey-config.h:34
 msgid "Microsoft Vietnamese"
 msgstr "Microsoft vietnamesisk"
 
-#: src/unikey-config.h:41
+#: src/unikey-config.h:30
 msgid "NCR Decimal"
 msgstr "NCR-decimal"
 
-#: src/unikey-config.h:42
+#: src/unikey-config.h:31
 msgid "NCR Hex"
 msgstr "NCR-heksadecimal"
 
-#: src/unikey-config.h:54
+#: src/unikey-config.h:43
 msgid "Output Charset"
 msgstr "Outputtegnsæt"
 
-#: src/unikey-im.cpp:175
+#: src/unikey-im.cpp:164
 msgid "Output charset"
 msgstr "Outputtegnsæt"
 
-#: src/unikey-config.h:58
+#: src/unikey-config.h:47
 msgid "Process W at word begin"
 msgstr "Behandl W ved ords begyndelse"
 
-#: src/unikey-config.h:46
+#: src/unikey-config.h:35
 msgid "Simple Telex"
 msgstr "Simpel telex"
 
-#: src/unikey-config.h:47
+#: src/unikey-config.h:36
 msgid "Simple Telex2"
 msgstr "Simpel telex2"
 
-#: src/unikey-im.cpp:469
+#: src/unikey-im.cpp:458
 msgid "Spell Check Disabled"
 msgstr "Stavekontrol deaktiveret"
 
-#: src/unikey-im.cpp:468
+#: src/unikey-im.cpp:457
 msgid "Spell Check Enabled"
 msgstr "Stavekontrol aktiveret"
 
-#: src/unikey-im.cpp:200
+#: src/unikey-im.cpp:189
 msgid "Spell check"
 msgstr "Stavekontrol"
 
-#: src/unikey-config.h:39
+#: src/unikey-config.h:28
 msgid "TCVN3"
 msgstr "TCVN3"
 
-#: src/unikey-config.h:44
+#: src/unikey-config.h:33
 msgid "Telex"
 msgstr "Telex"
 
-#: src/unikey-config.h:39
+#: src/unikey-config.h:28
 msgid "Unicode"
 msgstr "Unicode"
 
@@ -166,7 +171,7 @@ msgstr "Unikey"
 
 #. i18n: file: macro-editor/editor.ui:14
 #. i18n: ectx: property (windowTitle), widget (QWidget, Editor)
-#: macro-editor/editor.cpp:53 rc.cpp:3
+#: macro-editor/editor.cpp:42 rc.cpp:3
 #, kde-format
 msgid "Unikey Macro Editor"
 msgstr "Unikey-makroredigering"
@@ -175,27 +180,27 @@ msgstr "Unikey-makroredigering"
 msgid "Unikey Wrapper For Fcitx"
 msgstr "Unikey-wrapper for Fcitx"
 
-#: src/unikey-config.h:63
+#: src/unikey-config.h:52
 msgid "Use oà, _uý (instead of òa, úy)"
 msgstr "Brug oà, _uý (i stedet for òa, úy)"
 
-#: src/unikey-config.h:46
+#: src/unikey-config.h:35
 msgid "UserIM"
 msgstr "BrugerIM"
 
-#: src/unikey-config.h:40 src/unikey-config.h:45
+#: src/unikey-config.h:29 src/unikey-config.h:34
 msgid "VIQR"
 msgstr "VIQR"
 
-#: src/unikey-config.h:44
+#: src/unikey-config.h:33
 msgid "VNI"
 msgstr "VNI"
 
-#: src/unikey-config.h:40
+#: src/unikey-config.h:29
 msgid "VNI Win"
 msgstr "VNI Win"
 
-#: macro-editor/model.cpp:40
+#: macro-editor/model.cpp:29
 msgid "Word"
 msgstr "Ord"
 
