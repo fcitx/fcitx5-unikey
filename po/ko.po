@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-05-16 00:02-0700\n"
+"POT-Creation-Date: 2020-05-20 00:02-0700\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
 "Last-Translator: MarongHappy <daemul72@gmail.com>, 2020\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
@@ -96,7 +96,7 @@ msgstr "매크로 사용안함"
 
 #: src/unikey-config.h:55
 msgid "Macro Editor"
-msgstr ""
+msgstr "매크로 편집기"
 
 #: src/unikey-im.cpp:449
 msgid "Macro Enabled"
