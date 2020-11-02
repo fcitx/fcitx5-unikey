@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-05-16 00:02-0700\n"
+"POT-Creation-Date: 2020-11-02 15:55-0800\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
 "Last-Translator: mar well <m.wellendorf@gmx.de>, 2018\n"
 "Language-Team: German (https://www.transifex.com/fcitx/teams/12005/de/)\n"
@@ -22,156 +22,60 @@ msgstr ""
 
 #. i18n: file: macro-editor/editor.ui:36
 #. i18n: ectx: property (text), widget (QPushButton, addButton)
-#: rc.cpp:6
+#: rc.cpp:6 rc.cpp:33
 #, kde-format
 msgid "&Add"
 msgstr "&Hinzufügen"
 
 #. i18n: file: macro-editor/editor.ui:47
 #. i18n: ectx: property (text), widget (QPushButton, deleteButton)
-#: rc.cpp:9
+#: rc.cpp:9 rc.cpp:36
 #, kde-format
 msgid "&Delete"
 msgstr "&Löschen"
 
 #. i18n: file: macro-editor/editor.ui:87
 #. i18n: ectx: property (text), widget (QPushButton, exportButton)
-#: rc.cpp:18
+#: rc.cpp:18 rc.cpp:45
 #, kde-format
 msgid "&Export"
 msgstr "&Export"
 
 #. i18n: file: macro-editor/editor.ui:76
 #. i18n: ectx: property (text), widget (QPushButton, importButton)
-#: rc.cpp:15
+#: rc.cpp:15 rc.cpp:42
 #, kde-format
 msgid "&Import"
 msgstr "&Import"
 
-#: src/unikey-config.h:54
-msgid "Allow type with more freedom"
-msgstr "Mit mehr Freiheit eingeben erlauben"
-
-#: src/unikey-config.h:49
-msgid "Auto restore keys with invalid words"
-msgstr "Automatisches Wiederherstellen der Tasten mit ungültigen Worten"
-
-#: src/unikey-config.h:29
-msgid "BK HCM 2"
-msgstr "BK HCM 2"
-
-#: src/unikey-config.h:30
-msgid "CString"
-msgstr "CString"
-
 #. i18n: file: macro-editor/editor.ui:58
 #. i18n: ectx: property (text), widget (QPushButton, clearButton)
-#: rc.cpp:12
+#: rc.cpp:12 rc.cpp:39
 #, kde-format
 msgid "De&lete All"
 msgstr "De&lete All"
 
 #. i18n: file: macro-editor/dialog.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, Dialog)
-#: rc.cpp:21
+#: rc.cpp:21 rc.cpp:48
 #, kde-format
 msgid "Dialog"
 msgstr "Dialog"
 
-#: src/unikey-config.h:44
-msgid "Enable spell check"
-msgstr "Rechtschreibung einschalten"
-
-#: src/unikey-config.h:41 src/unikey-im.cpp:138
-msgid "Input Method"
-msgstr "Eingabemethode"
-
-#: macro-editor/model.cpp:27 src/unikey-im.cpp:201
-msgid "Macro"
-msgstr "Makro"
-
-#: src/unikey-im.cpp:450
-msgid "Macro Disabled"
-msgstr "Makro ausgeschaltet"
-
-#: src/unikey-config.h:55
-msgid "Macro Editor"
-msgstr ""
-
-#: src/unikey-im.cpp:449
-msgid "Macro Enabled"
-msgstr "Makro eingeschaltet"
-
 #. i18n: file: macro-editor/dialog.ui:32
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: rc.cpp:27
+#: rc.cpp:27 rc.cpp:54
 #, kde-format
 msgid "Macro:"
 msgstr "Makro:"
 
-#: src/unikey-config.h:34
-msgid "Microsoft Vietnamese"
-msgstr "Microsoft Vietnamesisch"
-
-#: src/unikey-config.h:30
-msgid "NCR Decimal"
-msgstr "NCR Dezimal"
-
-#: src/unikey-config.h:31
-msgid "NCR Hex"
-msgstr "NCR Hex"
-
-#: src/unikey-config.h:43
-msgid "Output Charset"
-msgstr "Zeichensatz Ausgabe"
-
-#: src/unikey-im.cpp:164
-msgid "Output charset"
-msgstr "Zeichensatz Ausgabe"
-
-#: src/unikey-config.h:47
-msgid "Process W at word begin"
-msgstr "W ausführen am Wortanfang"
-
-#: src/unikey-config.h:35
-msgid "Simple Telex"
-msgstr "Einfaches Telex"
-
-#: src/unikey-config.h:36
-msgid "Simple Telex2"
-msgstr "Einfaches Telex2"
-
-#: src/unikey-im.cpp:458
-msgid "Spell Check Disabled"
-msgstr "Rechtschreibprüfung ausgeschaltet"
-
-#: src/unikey-im.cpp:457
-msgid "Spell Check Enabled"
-msgstr "Rechtschreibprüfung eingeschaltet"
-
-#: src/unikey-im.cpp:189
-msgid "Spell check"
-msgstr "Rechtschreibprüfung"
-
-#: src/unikey-config.h:28
-msgid "TCVN3"
-msgstr "TCVN3"
-
-#: src/unikey-config.h:33
-msgid "Telex"
-msgstr "Telex"
-
-#: src/unikey-config.h:28
-msgid "Unicode"
-msgstr "Unicode"
-
-#: src/unikey.conf.in:3
+#: org.fcitx.fcitx5-unikey.metainfo.xml.in:7 src/unikey.conf.in:3
 msgid "Unikey"
 msgstr "Unikey"
 
 #. i18n: file: macro-editor/editor.ui:14
 #. i18n: ectx: property (windowTitle), widget (QWidget, Editor)
-#: macro-editor/editor.cpp:42 rc.cpp:3
+#: rc.cpp:3 rc.cpp:30
 #, kde-format
 msgid "Unikey Macro Editor"
 msgstr "Unikey Makro Editor"
@@ -180,33 +84,13 @@ msgstr "Unikey Makro Editor"
 msgid "Unikey Wrapper For Fcitx"
 msgstr "Unikey Wrapper für Fcitx"
 
-#: src/unikey-config.h:52
-msgid "Use oà, _uý (instead of òa, úy)"
-msgstr "oà, _uý benutzen (statt òa, úy)"
-
-#: src/unikey-config.h:35
-msgid "UserIM"
-msgstr "Benutzer-Eingabemethode"
-
-#: src/unikey-config.h:29 src/unikey-config.h:34
-msgid "VIQR"
-msgstr "VIQR"
-
-#: src/unikey-config.h:33
-msgid "VNI"
-msgstr "VNI"
-
-#: src/unikey-config.h:29
-msgid "VNI Win"
-msgstr "VNI Win"
-
-#: macro-editor/model.cpp:29
-msgid "Word"
-msgstr "Wort"
+#: org.fcitx.fcitx5-unikey.metainfo.xml.in:8
+msgid "Vietnamese input method"
+msgstr ""
 
 #. i18n: file: macro-editor/dialog.ui:25
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: rc.cpp:24
+#: rc.cpp:24 rc.cpp:51
 #, kde-format
 msgid "Word:"
 msgstr "Wort:"
