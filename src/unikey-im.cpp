@@ -76,21 +76,27 @@ public:
     void keyEvent(KeyEvent &keyEvent) {
         // Ignore all key release.
         if (keyEvent.isRelease()) {
+            if (keyEvent.rawKey().check(FcitxKey_Shift_L) ||
+                keyEvent.rawKey().check(FcitxKey_Shift_R)) {
+                lastShiftPressed_ = FcitxKey_None;
+            }
             return;
         }
+
         preedit(keyEvent);
 
         // check last keyevent with shift
-        if (keyEvent.origKey().sym() >= FcitxKey_space &&
-            keyEvent.origKey().sym() <= FcitxKey_asciitilde) {
+        if (keyEvent.rawKey().sym() >= FcitxKey_space &&
+            keyEvent.rawKey().sym() <= FcitxKey_asciitilde) {
             lastKeyWithShift_ =
-                keyEvent.origKey().states().test(KeyState::Shift);
+                keyEvent.rawKey().states().test(KeyState::Shift);
         } else {
             lastKeyWithShift_ = false;
         } // end check last keyevent with shift
     }
     void preedit(KeyEvent &keyEvent);
     void commit();
+    void syncState(KeySym sym);
     void updatePreedit();
 
     void eraseChars(int num_chars) {
@@ -114,6 +120,7 @@ public:
         uic_.resetBuf();
         preeditStr_.clear();
         updatePreedit();
+        lastShiftPressed_ = FcitxKey_None;
     }
 
 private:
@@ -123,6 +130,7 @@ private:
     bool lastKeyWithShift_ = false;
     std::string preeditStr_;
     bool autoCommit_ = false;
+    KeySym lastShiftPressed_ = FcitxKey_None;
 };
 
 UnikeyEngine::UnikeyEngine(Instance *instance)
@@ -239,9 +247,27 @@ void UnikeyEngine::keyEvent(const InputMethodEntry &, KeyEvent &keyEvent) {
 }
 
 void UnikeyState::preedit(KeyEvent &keyEvent) {
-
     auto sym = keyEvent.rawKey().sym();
     auto state = keyEvent.rawKey().states();
+
+    // We try to detect Press and release of two different shift.
+    // The sequence we want to detect is:
+    if (keyEvent.rawKey().check(FcitxKey_Shift_L) ||
+        keyEvent.rawKey().check(FcitxKey_Shift_R)) {
+        if (lastShiftPressed_ == FcitxKey_None) {
+            lastShiftPressed_ = keyEvent.rawKey().sym();
+        } else if (lastShiftPressed_ != keyEvent.rawKey().sym()) {
+            // Another shift is pressed, do restore Key.
+            uic_.restoreKeyStrokes();
+            syncState(keyEvent.rawKey().sym());
+            updatePreedit();
+            lastShiftPressed_ = FcitxKey_None;
+            return keyEvent.filterAndAccept();
+        }
+    } else {
+        // We pressed something else, reset the state.
+        lastShiftPressed_ = FcitxKey_None;
+    }
 
     if (state.testAny(KeyState::Ctrl_Alt) || sym == FcitxKey_Control_L ||
         sym == FcitxKey_Control_R || sym == FcitxKey_Tab ||
@@ -254,10 +280,7 @@ void UnikeyState::preedit(KeyEvent &keyEvent) {
     } else if (state.test(KeyState::Super)) {
         return;
     } else if ((sym >= FcitxKey_Caps_Lock && sym <= FcitxKey_Hyper_R) ||
-               ((!state.test(KeyState::Shift)) &&
-                (sym == FcitxKey_Shift_L ||
-                 sym == FcitxKey_Shift_R)) // when press one shift key
-    ) {
+               sym == FcitxKey_Shift_L || sym == FcitxKey_Shift_R) {
         return;
     } else if (sym == FcitxKey_BackSpace) {
         // capture BackSpace
@@ -297,10 +320,7 @@ void UnikeyState::preedit(KeyEvent &keyEvent) {
     } else if (sym >= FcitxKey_KP_Multiply && sym <= FcitxKey_KP_9) {
         commit();
         return;
-    } else if ((sym >= FcitxKey_space && sym <= FcitxKey_asciitilde) ||
-               sym == FcitxKey_Shift_L ||
-               sym == FcitxKey_Shift_R) // sure this have FcitxKey_SHIFT_MASK
-    {
+    } else if (sym >= FcitxKey_space && sym <= FcitxKey_asciitilde) {
         // capture ascii printable char
         unsigned int i = 0;
 
@@ -341,46 +361,16 @@ void UnikeyState::preedit(KeyEvent &keyEvent) {
         autoCommit_ = false;
 
         // shift + space, shift + shift event
-        if ((lastKeyWithShift_ == false && state.test(KeyState::Shift) &&
-             sym == FcitxKey_space && !uic_.isAtWordBeginning()) ||
-            (sym == FcitxKey_Shift_L ||
-             sym == FcitxKey_Shift_R) // (&& state & FcitxKey_SHIFT_MASK), sure
-                                      // this have FcitxKey_SHIFT_MASK
-        ) {
+        if (lastKeyWithShift_ == false && state.test(KeyState::Shift) &&
+            sym == FcitxKey_space && !uic_.isAtWordBeginning()) {
             uic_.restoreKeyStrokes();
         } else {
             uic_.filter(sym);
         }
-        // end shift + space, shift + shift event
+        // end shift + space
         // end process sym
 
-        // process result of ukengine
-        if (uic_.backspaces() > 0) {
-            if (static_cast<int>(preeditStr_.length()) <= uic_.backspaces()) {
-                preeditStr_.clear();
-            } else {
-                eraseChars(uic_.backspaces());
-            }
-        }
-
-        if (uic_.bufChars() > 0) {
-            if (*engine_->config().oc == UkConv::XUTF8) {
-                preeditStr_.append(reinterpret_cast<const char *>(uic_.buf()),
-                                   uic_.bufChars());
-            } else {
-                unsigned char buf[CONVERT_BUF_SIZE + 1];
-                int bufSize = CONVERT_BUF_SIZE;
-
-                latinToUtf(buf, uic_.buf(), uic_.bufChars(), &bufSize);
-                preeditStr_.append((const char *)buf,
-                                   CONVERT_BUF_SIZE - bufSize);
-            }
-        } else if (sym != FcitxKey_Shift_L &&
-                   sym != FcitxKey_Shift_R) // if ukengine not process
-        {
-            preeditStr_.append(utf8::UCS4ToUTF8(sym));
-        }
-        // end process result of ukengine
+        syncState(sym);
 
         // commit string: if need
         if (preeditStr_.length() > 0) {
@@ -486,6 +476,35 @@ void UnikeyState::commit() {
         ic_->commitString(preeditStr_);
     }
     reset();
+}
+
+void UnikeyState::syncState(KeySym sym) {
+    // process result of ukengine
+    if (uic_.backspaces() > 0) {
+        if (static_cast<int>(preeditStr_.length()) <= uic_.backspaces()) {
+            preeditStr_.clear();
+        } else {
+            eraseChars(uic_.backspaces());
+        }
+    }
+
+    if (uic_.bufChars() > 0) {
+        if (*engine_->config().oc == UkConv::XUTF8) {
+            preeditStr_.append(reinterpret_cast<const char *>(uic_.buf()),
+                               uic_.bufChars());
+        } else {
+            unsigned char buf[CONVERT_BUF_SIZE + 1];
+            int bufSize = CONVERT_BUF_SIZE;
+
+            latinToUtf(buf, uic_.buf(), uic_.bufChars(), &bufSize);
+            preeditStr_.append((const char *)buf, CONVERT_BUF_SIZE - bufSize);
+        }
+    } else if (sym != FcitxKey_Shift_L &&
+               sym != FcitxKey_Shift_R) // if ukengine not process
+    {
+        preeditStr_.append(utf8::UCS4ToUTF8(sym));
+    }
+    // end process result of ukengine
 }
 
 void UnikeyState::updatePreedit() {
