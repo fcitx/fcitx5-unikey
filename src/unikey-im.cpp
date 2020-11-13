@@ -73,7 +73,7 @@ public:
     UnikeyState(UnikeyEngine *engine, InputContext *ic)
         : engine_(engine), uic_(engine->im()), ic_(ic) {}
 
-    void keyEvent(fcitx::KeyEvent &keyEvent) {
+    void keyEvent(KeyEvent &keyEvent) {
         // Ignore all key release.
         if (keyEvent.isRelease()) {
             return;
@@ -89,7 +89,7 @@ public:
             lastKeyWithShift_ = false;
         } // end check last keyevent with shift
     }
-    void preedit(fcitx::KeyEvent &keyEvent);
+    void preedit(KeyEvent &keyEvent);
     void commit();
     void updatePreedit();
 
@@ -125,7 +125,7 @@ private:
     bool autoCommit_ = false;
 };
 
-fcitx::UnikeyEngine::UnikeyEngine(fcitx::Instance *instance)
+UnikeyEngine::UnikeyEngine(Instance *instance)
     : instance_(instance), factory_([this](InputContext &ic) {
           return new UnikeyState(this, &ic);
       }) {
@@ -212,12 +212,10 @@ fcitx::UnikeyEngine::UnikeyEngine(fcitx::Instance *instance)
     reloadConfig();
 }
 
-fcitx::UnikeyEngine::~UnikeyEngine() {}
+UnikeyEngine::~UnikeyEngine() {}
 
-} // namespace fcitx
-
-void fcitx::UnikeyEngine::activate(const fcitx::InputMethodEntry &,
-                                   fcitx::InputContextEvent &event) {
+void UnikeyEngine::activate(const InputMethodEntry &,
+                            InputContextEvent &event) {
     auto &statusArea = event.inputContext()->statusArea();
     statusArea.addAction(StatusGroup::InputMethod, inputMethodAction_.get());
     statusArea.addAction(StatusGroup::InputMethod, charsetAction_.get());
@@ -227,21 +225,20 @@ void fcitx::UnikeyEngine::activate(const fcitx::InputMethodEntry &,
     updateUI(event.inputContext());
 }
 
-void fcitx::UnikeyEngine::deactivate(const fcitx::InputMethodEntry &entry,
-                                     fcitx::InputContextEvent &event) {
+void UnikeyEngine::deactivate(const InputMethodEntry &entry,
+                              InputContextEvent &event) {
     auto &statusArea = event.inputContext()->statusArea();
     statusArea.clearGroup(StatusGroup::InputMethod);
     reset(entry, event);
 }
 
-void fcitx::UnikeyEngine::keyEvent(const fcitx::InputMethodEntry &,
-                                   fcitx::KeyEvent &keyEvent) {
+void UnikeyEngine::keyEvent(const InputMethodEntry &, KeyEvent &keyEvent) {
     auto ic = keyEvent.inputContext();
     auto state = ic->propertyFor(&factory_);
     state->keyEvent(keyEvent);
 }
 
-void fcitx::UnikeyState::preedit(fcitx::KeyEvent &keyEvent) {
+void UnikeyState::preedit(KeyEvent &keyEvent) {
 
     auto sym = keyEvent.rawKey().sym();
     auto state = keyEvent.rawKey().states();
@@ -408,13 +405,12 @@ void fcitx::UnikeyState::preedit(fcitx::KeyEvent &keyEvent) {
     commit();
 }
 
-void fcitx::UnikeyEngine::reset(const fcitx::InputMethodEntry &,
-                                fcitx::InputContextEvent &event) {
+void UnikeyEngine::reset(const InputMethodEntry &, InputContextEvent &event) {
     auto state = event.inputContext()->propertyFor(&factory_);
     state->reset();
 }
 
-void fcitx::UnikeyEngine::populateConfig() {
+void UnikeyEngine::populateConfig() {
     UnikeyOptions ukopt;
     memset(&ukopt, 0, sizeof(ukopt));
     ukopt.macroEnabled = *config_.macro;
@@ -427,7 +423,7 @@ void fcitx::UnikeyEngine::populateConfig() {
     im_.setOptions(&ukopt);
 }
 
-void fcitx::UnikeyEngine::reloadConfig() {
+void UnikeyEngine::reloadConfig() {
     readAsIni(config_, "conf/unikey.conf");
     populateConfig();
     auto path = StandardPath::global().locate(StandardPath::Type::Config,
@@ -438,20 +434,19 @@ void fcitx::UnikeyEngine::reloadConfig() {
     }
 }
 
-void fcitx::UnikeyEngine::save() {}
+void UnikeyEngine::save() {}
 
-std::string fcitx::UnikeyEngine::subMode(const fcitx::InputMethodEntry &,
-                                         fcitx::InputContext &) {
+std::string UnikeyEngine::subMode(const InputMethodEntry &, InputContext &) {
     return UkInputMethodI18NAnnotation::toString(*config_.im);
 }
-void fcitx::UnikeyEngine::updateMacroAction(InputContext *ic) {
+void UnikeyEngine::updateMacroAction(InputContext *ic) {
     macroAction_->setChecked(*config_.macro);
     macroAction_->setShortText(*config_.macro ? _("Macro Enabled")
                                               : _("Macro Disabled"));
     macroAction_->update(ic);
 }
 
-void fcitx::UnikeyEngine::updateSpellAction(InputContext *ic) {
+void UnikeyEngine::updateSpellAction(InputContext *ic) {
     spellCheckAction_->setChecked(*config_.spellCheck);
     spellCheckAction_->setShortText(*config_.spellCheck
                                         ? _("Spell Check Enabled")
@@ -459,7 +454,7 @@ void fcitx::UnikeyEngine::updateSpellAction(InputContext *ic) {
     spellCheckAction_->update(ic);
 }
 
-void fcitx::UnikeyEngine::updateInputMethodAction(InputContext *ic) {
+void UnikeyEngine::updateInputMethodAction(InputContext *ic) {
     for (size_t i = 0; i < inputMethodSubAction_.size(); i++) {
         inputMethodSubAction_[i]->setChecked(i ==
                                              static_cast<size_t>(*config_.im));
@@ -470,7 +465,7 @@ void fcitx::UnikeyEngine::updateInputMethodAction(InputContext *ic) {
     inputMethodAction_->update(ic);
 }
 
-void fcitx::UnikeyEngine::updateCharsetAction(InputContext *ic) {
+void UnikeyEngine::updateCharsetAction(InputContext *ic) {
     for (size_t i = 0; i < charsetSubAction_.size(); i++) {
         charsetSubAction_[i]->setChecked(i == static_cast<size_t>(*config_.oc));
         charsetSubAction_[i]->update(ic);
@@ -479,21 +474,21 @@ void fcitx::UnikeyEngine::updateCharsetAction(InputContext *ic) {
     charsetAction_->update(ic);
 }
 
-void fcitx::UnikeyEngine::updateUI(InputContext *ic) {
+void UnikeyEngine::updateUI(InputContext *ic) {
     updateInputMethodAction(ic);
     updateCharsetAction(ic);
     updateMacroAction(ic);
     updateSpellAction(ic);
 }
 
-void fcitx::UnikeyState::commit() {
+void UnikeyState::commit() {
     if (!preeditStr_.empty()) {
         ic_->commitString(preeditStr_);
     }
     reset();
 }
 
-void fcitx::UnikeyState::updatePreedit() {
+void UnikeyState::updatePreedit() {
     auto &inputPanel = ic_->inputPanel();
 
     inputPanel.reset();
@@ -511,5 +506,7 @@ void fcitx::UnikeyState::updatePreedit() {
     }
     ic_->updateUserInterface(UserInterfaceComponent::InputPanel);
 }
+
+} // namespace fcitx
 
 FCITX_ADDON_FACTORY(fcitx::UnikeyFactory)
