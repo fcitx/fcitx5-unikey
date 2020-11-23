@@ -13,7 +13,9 @@
 namespace fcitx {
 
 MacroEditorPlugin::MacroEditorPlugin(QObject *parent)
-    : FcitxQtConfigUIPlugin(parent) {}
+    : FcitxQtConfigUIPlugin(parent) {
+    registerDomain("fcitx5-unikey", FCITX_INSTALL_LOCALEDIR);
+}
 
 FcitxQtConfigUIWidget *MacroEditorPlugin::create(const QString &key) {
     Q_UNUSED(key);

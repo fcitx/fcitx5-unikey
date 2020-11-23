@@ -16,6 +16,7 @@ find_package(Gettext REQUIRED)
 
 include("${FCITX_INSTALL_CMAKECONFIG_DIR}/Fcitx5Utils/Fcitx5CompilerSettings.cmake")
 add_definitions(-DFCITX_GETTEXT_DOMAIN=\"fcitx5-unikey\")
+fcitx5_add_i18n_definition()
 
 if (ENABLE_QT)
   find_package(Qt5 5.7 REQUIRED COMPONENTS Core Gui Widgets)
@@ -28,8 +29,8 @@ add_subdirectory(unikey)
 add_subdirectory(src)
 add_subdirectory(data)
 
-fcitx5_translate_desktop_file(org.fcitx.fcitx5-unikey.metainfo.xml.in
-                              org.fcitx.fcitx5-unikey.metainfo.xml XML)
+fcitx5_translate_desktop_file(org.fcitx.Fcitx5.Addon.Unikey.metainfo.xml.in
+    org.fcitx.Fcitx5.Addon.Unikey.metainfo.xml XML)
 
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/org.fcitx.fcitx5-unikey.metainfo.xml" DESTINATION ${CMAKE_INSTALL_DATADIR}/metainfo)
 

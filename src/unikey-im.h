@@ -78,6 +78,7 @@ private:
 class UnikeyFactory : public AddonFactory {
 public:
     AddonInstance *create(AddonManager *manager) override {
+        registerDomain("fcitx5-unikey", FCITX_INSTALL_LOCALEDIR);
         return new UnikeyEngine(manager->instance());
     }
 };
