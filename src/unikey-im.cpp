@@ -236,7 +236,6 @@ void UnikeyEngine::activate(const InputMethodEntry &,
 void UnikeyEngine::deactivate(const InputMethodEntry &entry,
                               InputContextEvent &event) {
     auto &statusArea = event.inputContext()->statusArea();
-    statusArea.clearGroup(StatusGroup::InputMethod);
     reset(entry, event);
 }
 
