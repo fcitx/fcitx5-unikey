@@ -37,7 +37,7 @@ public:
 
     void setSubConfig(const std::string &path,
                       const fcitx::RawConfig &) override {
-        if (path == "reload_macro") {
+        if (path == "macro") {
             reloadMacroTable();
         }
     }
@@ -67,7 +67,7 @@ public:
 private:
     void populateConfig();
     void reloadMacroTable() {
-        auto path = StandardPath::global().locate(StandardPath::Type::Config,
+        auto path = StandardPath::global().locate(StandardPath::Type::PkgConfig,
                                                   "unikey/macro");
 
         if (!path.empty()) {

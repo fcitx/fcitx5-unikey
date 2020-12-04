@@ -105,7 +105,7 @@ void MacroEditor::addWordAccepted() {
 void MacroEditor::load() {
     table_ = new CMacroTable;
     table_->init();
-    auto path = StandardPath::global().locate(StandardPath::Type::Config,
+    auto path = StandardPath::global().locate(StandardPath::Type::PkgConfig,
                                               "unikey/macro");
     table_->loadFromFile(path.data());
     model_ = new MacroModel(this);
@@ -121,14 +121,11 @@ void MacroEditor::load() {
 
 void MacroEditor::save() {
     model_->save(table_);
-    StandardPath::global().safeSave(StandardPath::Type::Config, "unikey/macro",
-                                    [this](int fd) {
+    StandardPath::global().safeSave(StandardPath::Type::PkgConfig,
+                                    "unikey/macro", [this](int fd) {
                                         FILE *f = fdopen(fd, "w");
-                                        table_->writeToFp(f);
-                                        fclose(f);
-                                        return false;
+                                        return table_->writeToFp(f);
                                     });
-    saveSubConfig("fcitx://addon/config/unikey/reload_macro");
 }
 
 void MacroEditor::importMacro() {
