@@ -235,7 +235,6 @@ void UnikeyEngine::activate(const InputMethodEntry &,
 
 void UnikeyEngine::deactivate(const InputMethodEntry &entry,
                               InputContextEvent &event) {
-    auto &statusArea = event.inputContext()->statusArea();
     reset(entry, event);
 }
 
@@ -415,12 +414,7 @@ void UnikeyEngine::populateConfig() {
 void UnikeyEngine::reloadConfig() {
     readAsIni(config_, "conf/unikey.conf");
     populateConfig();
-    auto path = StandardPath::global().locate(StandardPath::Type::Config,
-                                              "unikey/macro");
-
-    if (!path.empty()) {
-        im_.loadMacroTable(path.data());
-    }
+    reloadMacroTable();
 }
 
 void UnikeyEngine::save() {}

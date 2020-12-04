@@ -35,6 +35,13 @@ public:
         reloadConfig();
     }
 
+    void setSubConfig(const std::string &path,
+                      const fcitx::RawConfig &) override {
+        if (path == "reload_macro") {
+            reloadMacroTable();
+        }
+    }
+
     void activate(const InputMethodEntry &entry,
                   InputContextEvent &event) override;
     void keyEvent(const InputMethodEntry &entry, KeyEvent &keyEvent) override;
@@ -59,6 +66,14 @@ public:
 
 private:
     void populateConfig();
+    void reloadMacroTable() {
+        auto path = StandardPath::global().locate(StandardPath::Type::Config,
+                                                  "unikey/macro");
+
+        if (!path.empty()) {
+            im_.loadMacroTable(path.data());
+        }
+    }
 
     UnikeyConfig config_;
     UnikeyInputMethod im_;

@@ -128,6 +128,7 @@ void MacroEditor::save() {
                                         fclose(f);
                                         return false;
                                     });
+    saveSubConfig("fcitx://addon/config/unikey/reload_macro");
 }
 
 void MacroEditor::importMacro() {
