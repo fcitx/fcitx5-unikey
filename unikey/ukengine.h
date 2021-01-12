@@ -92,7 +92,7 @@ protected:
     int m_keyCurrent;
     bool m_toEscape;
 
-    // varables valid in one session
+    // variables valid in one session
     unsigned char *m_pOutBuf;
     int *m_pOutSize;
     bool m_outputWritten;
