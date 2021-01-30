@@ -32,7 +32,7 @@ public:
     void setConfig(const RawConfig &config) override {
         config_.load(config, true);
         safeSaveAsIni(config_, "conf/unikey.conf");
-        reloadConfig();
+        populateConfig();
     }
 
     void setSubConfig(const std::string &path,

@@ -63,9 +63,7 @@ public:
     // call this to restore to original key strokes
     void restoreKeyStrokes();
 
-    int loadMacroTable(const char *fileName);
-
-    bool isAtWordBeginning();
+    bool isAtWordBeginning() const;
 
     int backspaces() const { return backspaces_; }
     int bufChars() const { return bufChars_; }

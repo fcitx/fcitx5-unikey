@@ -96,7 +96,7 @@ public:
     }
     void preedit(KeyEvent &keyEvent);
     void commit();
-    void syncState(KeySym sym);
+    void syncState(KeySym sym = FcitxKey_None);
     void updatePreedit();
 
     void eraseChars(int num_chars) {
@@ -273,6 +273,8 @@ void UnikeyState::preedit(KeyEvent &keyEvent) {
         sym == FcitxKey_KP_Enter ||
         (sym >= FcitxKey_Home && sym <= FcitxKey_Insert) ||
         (sym >= FcitxKey_KP_Home && sym <= FcitxKey_KP_Delete)) {
+        uic_.filter(0);
+        syncState();
         commit();
         return;
     } else if (state.test(KeyState::Super)) {
@@ -320,8 +322,6 @@ void UnikeyState::preedit(KeyEvent &keyEvent) {
         return;
     } else if (sym >= FcitxKey_space && sym <= FcitxKey_asciitilde) {
         // capture ascii printable char
-        unsigned int i = 0;
-
         uic_.setCapsState(state.test(KeyState::Shift),
                           state.test(KeyState::CapsLock));
 
@@ -332,8 +332,8 @@ void UnikeyState::preedit(KeyEvent &keyEvent) {
         // Because macro may change any word
         if (!*engine_->config().macro &&
             (uic_.isAtWordBeginning() || autoCommit_)) {
-            for (i = 0; i < sizeof(WordAutoCommit); i++) {
-                if (sym == WordAutoCommit[i]) {
+            for (auto wordAutoCommit : WordAutoCommit) {
+                if (sym == wordAutoCommit) {
                     uic_.putChar(sym);
                     autoCommit_ = true;
                     return;
@@ -371,12 +371,9 @@ void UnikeyState::preedit(KeyEvent &keyEvent) {
         syncState(sym);
 
         // commit string: if need
-        if (preeditStr_.length() > 0) {
-            unsigned int i;
-            for (i = 0; i < sizeof(WordBreakSyms); i++) {
-                if (WordBreakSyms[i] ==
-                        preeditStr_.at(preeditStr_.length() - 1) &&
-                    WordBreakSyms[i] == sym) {
+        if (!preeditStr_.empty()) {
+            for (auto wordBreakSym : WordBreakSyms) {
+                if (wordBreakSym == preeditStr_.back() && wordBreakSym == sym) {
                     commit();
                     return keyEvent.filterAndAccept();
                 }
@@ -492,8 +489,8 @@ void UnikeyState::syncState(KeySym sym) {
             latinToUtf(buf, uic_.buf(), uic_.bufChars(), &bufSize);
             preeditStr_.append((const char *)buf, CONVERT_BUF_SIZE - bufSize);
         }
-    } else if (sym != FcitxKey_Shift_L &&
-               sym != FcitxKey_Shift_R) // if ukengine not process
+    } else if (sym != FcitxKey_Shift_L && sym != FcitxKey_Shift_R &&
+               sym != FcitxKey_None) // if ukengine not process
     {
         preeditStr_.append(utf8::UCS4ToUTF8(sym));
     }

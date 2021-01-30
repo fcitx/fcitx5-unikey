@@ -246,7 +246,11 @@ void UkInputProcessor::useBuiltIn(UkKeyMapping *map) {
 //-------------------------------------------
 void UkInputProcessor::keyCodeToEvent(unsigned int keyCode, UkKeyEvent &ev) {
     ev.keyCode = keyCode;
-    if (keyCode > 255) {
+    if (keyCode == 0) {
+        ev.evType = vneNormal;
+        ev.vnSym = vnl_nonVnChar;
+        ev.chType = ukcWordBreak;
+    } else if (keyCode > 255) {
         ev.evType = vneNormal;
         ev.vnSym = IsoToVnLexi(keyCode);
         ev.chType = (ev.vnSym == vnl_nonVnChar) ? ukcNonVn : ukcVn;
@@ -285,14 +289,14 @@ void UkInputProcessor::keyCodeToSymbol(unsigned int keyCode, UkKeyEvent &ev) {
 }
 
 //-------------------------------------------
-UkCharType UkInputProcessor::getCharType(unsigned int keyCode) {
+UkCharType UkInputProcessor::getCharType(unsigned int keyCode) const {
     if (keyCode > 255)
         return (IsoToVnLexi(keyCode) == vnl_nonVnChar) ? ukcNonVn : ukcVn;
     return UkcMap[keyCode];
 }
 
 //-------------------------------------------
-void UkInputProcessor::getKeyMap(int map[256]) {
+void UkInputProcessor::getKeyMap(int map[256]) const {
     int i;
     for (i = 0; i < 256; i++)
         map[i] = m_keyMap[i];

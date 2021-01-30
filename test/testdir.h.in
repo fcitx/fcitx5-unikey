@@ -1,0 +1,12 @@
+/*
+* SPDX-FileCopyrightText: 2021~2021 CSSlayer <wengxt@gmail.com>
+*
+* SPDX-License-Identifier: GPL-2.0-or-later
+*/
+#ifndef _TEST_TESTDIR_H_
+#define _TEST_TESTDIR_H_
+
+#define TESTING_SOURCE_DIR "@CMAKE_SOURCE_DIR@"
+#define TESTING_BINARY_DIR "@CMAKE_BINARY_DIR@"
+
+#endif // _TEST_TESTDIR_H_

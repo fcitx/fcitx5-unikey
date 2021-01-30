@@ -1489,7 +1489,7 @@ int UkEngine::processHook(UkKeyEvent &ev) {
 }
 
 //----------------------------------------------------------
-int UkEngine::getTonePosition(VowelSeq vs, bool terminated) {
+int UkEngine::getTonePosition(VowelSeq vs, bool terminated) const {
     VowelSeqInfo &info = VSeqList[vs];
     if (info.len == 1)
         return 0;
@@ -2396,7 +2396,7 @@ int UkEngine::writeOutput(unsigned char *outBuf, int &outSize) {
 // Returns the number of backspaces needed to
 // go back from last to first
 //---------------------------------------------
-int UkEngine::getSeqSteps(int first, int last) {
+int UkEngine::getSeqSteps(int first, int last) const {
     StdVnChar stdChar;
 
     if (last < first)
@@ -2694,7 +2694,7 @@ int UkEngine::macroMatch(UkKeyEvent &ev) {
 
     // write the last input character
     StdVnChar vnChar;
-    if (outSize < *m_pOutSize) {
+    if (outSize < *m_pOutSize && ev.keyCode) {
         maxOutSize = *m_pOutSize - outSize;
         if (ev.vnSym != vnl_nonVnChar)
             vnChar = ev.vnSym + VnStdCharOffset;
@@ -2801,7 +2801,7 @@ std::once_flag setupFlag;
 void SetupUnikeyEngine() { std::call_once(setupFlag, SetupUnikeyEngineOnce); }
 
 //--------------------------------------------------
-bool UkEngine::atWordBeginning() {
+bool UkEngine::atWordBeginning() const {
     return (m_current < 0 || m_buffer[m_current].form == vnw_empty);
 }
 
@@ -2814,8 +2814,7 @@ int UkEngine::processWordEnd(UkKeyEvent &ev) {
     if (m_pCtrl->options.macroEnabled && macroMatch(ev))
         return 1;
 
-    if (!m_pCtrl->options.spellCheckEnabled || m_singleMode || m_current < 0 ||
-        m_keyRestoring) {
+    auto putKeyInBuffer = [this](UkKeyEvent &ev) {
         m_current++;
         WordInfo &entry = m_buffer[m_current];
         entry.form = vnw_empty;
@@ -2823,6 +2822,11 @@ int UkEngine::processWordEnd(UkKeyEvent &ev) {
         entry.keyCode = ev.keyCode;
         entry.vnSym = vnToLower(ev.vnSym);
         entry.caps = (entry.vnSym != ev.vnSym);
+    };
+
+    if (!m_pCtrl->options.spellCheckEnabled || m_singleMode || m_current < 0 ||
+        m_keyRestoring) {
+        putKeyInBuffer(ev);
         return 0;
     }
 
@@ -2835,17 +2839,13 @@ int UkEngine::processWordEnd(UkKeyEvent &ev) {
         }
     }
 
-    m_current++;
-    WordInfo &entry = m_buffer[m_current];
-    entry.form = vnw_empty;
-    entry.c1Offset = entry.c2Offset = entry.vOffset = -1;
-    entry.keyCode = ev.keyCode;
-    entry.vnSym = vnToLower(ev.vnSym);
-    entry.caps = (entry.vnSym != ev.vnSym);
+    putKeyInBuffer(ev);
 
     if (m_keyRestored && outSize < *m_pOutSize) {
-        m_pOutBuf[outSize] = ev.keyCode;
-        outSize++;
+        if (ev.keyCode) {
+            m_pOutBuf[outSize] = ev.keyCode;
+            outSize++;
+        }
         *m_pOutSize = outSize;
         return 1;
     }
@@ -2857,7 +2857,7 @@ int UkEngine::processWordEnd(UkKeyEvent &ev) {
 // Test if last word is a non-Vietnamese word, so that
 // the engine can restore key strokes if it is indeed not a Vietnamese word
 //---------------------------------------------------------------------------
-bool UkEngine::lastWordIsNonVn() {
+bool UkEngine::lastWordIsNonVn() const {
     if (m_current < 0)
         return false;
 
@@ -2900,7 +2900,7 @@ bool UkEngine::lastWordIsNonVn() {
 //---------------------------------------------------------------------------
 // Test if last word has a Vietnamese mark, that is tones, decorators
 //---------------------------------------------------------------------------
-bool UkEngine::lastWordHasVnMark() {
+bool UkEngine::lastWordHasVnMark() const {
     for (int i = m_current; i >= 0 && m_buffer[i].form != vnw_empty; i--) {
         VnLexiName sym = m_buffer[i].vnSym;
         if (sym != vnl_nonVnChar) {

@@ -118,6 +118,6 @@ void UnikeyInputContext::restoreKeyStrokes() {
     engine_.restoreKeyStrokes(backspaces_, buf_, bufChars_, output_);
 }
 
-bool UnikeyInputContext::isAtWordBeginning() {
+bool UnikeyInputContext::isAtWordBeginning() const {
     return engine_.atWordBeginning();
 }

@@ -49,7 +49,7 @@ public:
         m_keyCheckFunc = pFunc;
     }
 
-    bool atWordBeginning();
+    bool atWordBeginning() const;
 
     int process(unsigned int keyCode, int &backs, unsigned char *outBuf,
                 int &outSize, UkOutputType &outType);
@@ -127,15 +127,15 @@ protected:
     void prepareBuffer(); // make sure we have a least 10 entries available
     int writeOutput(unsigned char *outBuf, int &outSize);
     // int getSeqLength(int first, int last);
-    int getSeqSteps(int first, int last);
-    int getTonePosition(VowelSeq vs, bool terminated);
+    int getSeqSteps(int first, int last) const;
+    int getTonePosition(VowelSeq vs, bool terminated) const;
     void resetKeyBuf();
     int checkEscapeVIQR(UkKeyEvent &ev);
     int processNoSpellCheck(UkKeyEvent &ev);
     int processWordEnd(UkKeyEvent &ev);
     void synchKeyStrokeBuffer();
-    bool lastWordHasVnMark();
-    bool lastWordIsNonVn();
+    bool lastWordHasVnMark() const;
+    bool lastWordIsNonVn() const;
 };
 
 void SetupUnikeyEngine();

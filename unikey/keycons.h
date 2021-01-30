@@ -17,7 +17,7 @@
 
 #define CP_US_ANSI 1252
 
-typedef enum {
+enum UkInputMethod {
     UkTelex,
     UkVni,
     UkViqr,
@@ -25,10 +25,9 @@ typedef enum {
     UkUsrIM,
     UkSimpleTelex,
     UkSimpleTelex2
-} UkInputMethod;
-typedef struct _UnikeyOptions UnikeyOptions;
+};
 
-struct _UnikeyOptions {
+struct UnikeyOptions {
     int freeMarking;
     int modernStyle;
     int macroEnabled;

@@ -73,15 +73,15 @@ public:
 
     void init();
 
-    UkInputMethod getIM() { return m_im; }
+    UkInputMethod getIM() const { return m_im; }
 
     void keyCodeToEvent(unsigned int keyCode, UkKeyEvent &ev);
     void keyCodeToSymbol(unsigned int keyCode, UkKeyEvent &ev);
     int setIM(UkInputMethod im);
     int setIM(int map[256]);
-    void getKeyMap(int map[256]);
+    void getKeyMap(int map[256]) const;
 
-    UkCharType getCharType(unsigned int keyCode);
+    UkCharType getCharType(unsigned int keyCode) const;
 
 protected:
     static bool m_classInit;

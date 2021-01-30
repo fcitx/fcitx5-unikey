@@ -12,7 +12,9 @@ option(ENABLE_QT "Enable Qt based macro editor" On)
 
 find_package(PkgConfig REQUIRED)
 find_package(Fcitx5Core REQUIRED)
+find_package(Fcitx5Module REQUIRED COMPONENTS TestFrontend)
 find_package(Gettext REQUIRED)
+find_package(Pthread REQUIRED)
 
 include("${FCITX_INSTALL_CMAKECONFIG_DIR}/Fcitx5Utils/Fcitx5CompilerSettings.cmake")
 add_definitions(-DFCITX_GETTEXT_DOMAIN=\"fcitx5-unikey\")
@@ -28,6 +30,7 @@ add_subdirectory(po)
 add_subdirectory(unikey)
 add_subdirectory(src)
 add_subdirectory(data)
+add_subdirectory(test)
 
 fcitx5_translate_desktop_file(org.fcitx.Fcitx5.Addon.Unikey.metainfo.xml.in
     org.fcitx.Fcitx5.Addon.Unikey.metainfo.xml XML)
