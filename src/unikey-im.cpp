@@ -509,16 +509,15 @@ void UnikeyState::updatePreedit() {
 
     inputPanel.reset();
 
-    Text preedit(preeditStr_, TextFormatFlag::Underline);
-
-    if (preeditStr_.size()) {
+    if (!preeditStr_.empty()) {
+        Text preedit(preeditStr_, TextFormatFlag::Underline);
         preedit.setCursor(preeditStr_.size());
-    }
-    if (ic_->capabilityFlags().test(CapabilityFlag::Preedit)) {
-        inputPanel.setClientPreedit(preedit);
-        ic_->updatePreedit();
-    } else {
-        inputPanel.setPreedit(preedit);
+        if (ic_->capabilityFlags().test(CapabilityFlag::Preedit)) {
+            inputPanel.setClientPreedit(preedit);
+            ic_->updatePreedit();
+        } else {
+            inputPanel.setPreedit(preedit);
+        }
     }
     ic_->updateUserInterface(UserInterfaceComponent::InputPanel);
 }
