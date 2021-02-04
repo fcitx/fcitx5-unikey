@@ -95,6 +95,10 @@ public:
         } // end check last keyevent with shift
     }
     void preedit(KeyEvent &keyEvent);
+
+    // A function for handling the key that is ignored by unikey and should
+    // commit the buffer.
+    void handleIgnoredKey();
     void commit();
     void syncState(KeySym sym = FcitxKey_None);
     void updatePreedit();
@@ -273,9 +277,7 @@ void UnikeyState::preedit(KeyEvent &keyEvent) {
         sym == FcitxKey_KP_Enter ||
         (sym >= FcitxKey_Home && sym <= FcitxKey_Insert) ||
         (sym >= FcitxKey_KP_Home && sym <= FcitxKey_KP_Delete)) {
-        uic_.filter(0);
-        syncState();
-        commit();
+        handleIgnoredKey();
         return;
     } else if (state.test(KeyState::Super)) {
         return;
@@ -318,7 +320,7 @@ void UnikeyState::preedit(KeyEvent &keyEvent) {
         }
         return keyEvent.filterAndAccept();
     } else if (sym >= FcitxKey_KP_Multiply && sym <= FcitxKey_KP_9) {
-        commit();
+        handleIgnoredKey();
         return;
     } else if (sym >= FcitxKey_space && sym <= FcitxKey_asciitilde) {
         // capture ascii printable char
@@ -386,8 +388,7 @@ void UnikeyState::preedit(KeyEvent &keyEvent) {
     } // end capture printable char
 
     // non process key
-
-    commit();
+    handleIgnoredKey();
 }
 
 void UnikeyEngine::reset(const InputMethodEntry &, InputContextEvent &event) {
@@ -459,6 +460,12 @@ void UnikeyEngine::updateUI(InputContext *ic) {
     updateCharsetAction(ic);
     updateMacroAction(ic);
     updateSpellAction(ic);
+}
+
+void UnikeyState::handleIgnoredKey() {
+    uic_.filter(0);
+    syncState();
+    commit();
 }
 
 void UnikeyState::commit() {

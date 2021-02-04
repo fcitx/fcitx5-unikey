@@ -49,6 +49,7 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
         testfrontend->call<ITestFrontend::pushCommitExpectation>("aao");
         testfrontend->call<ITestFrontend::pushCommitExpectation>("aao");
         testfrontend->call<ITestFrontend::pushCommitExpectation>("aao");
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("aao");
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
                                                     false);
         RawConfig config;
@@ -111,6 +112,12 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("o"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("o"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key(FcitxKey_ssharp),
+                                                    false);
 
         dispatcher->schedule([dispatcher, instance]() {
             dispatcher->detach();
