@@ -4,12 +4,6 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  *
  */
-/*
- * SPDX-FileCopyrightText: 2020~2020 CSSlayer <wengxt@gmail.com>
- *
- * SPDX-License-Identifier: LGPL-2.1-or-later
- *
- */
 #include "testdir.h"
 #include "testfrontend_public.h"
 #include <fcitx-utils/eventdispatcher.h>
