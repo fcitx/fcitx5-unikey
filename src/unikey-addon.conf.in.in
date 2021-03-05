@@ -1,6 +1,7 @@
 [Addon]
 Name=Unikey Wrapper For Fcitx
 Category=InputMethod
+Version=@PROJECT_VERSION@
 Enabled=True
 Library=unikey
 Type=SharedLibrary

@@ -10,6 +10,7 @@ set_target_properties(unikey PROPERTIES PREFIX "")
 install(TARGETS unikey DESTINATION "${CMAKE_INSTALL_LIBDIR}/fcitx5")
 fcitx5_translate_desktop_file(unikey.conf.in unikey.conf)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/unikey.conf" DESTINATION "${CMAKE_INSTALL_DATADIR}/fcitx5/inputmethod")
-fcitx5_translate_desktop_file(unikey-addon.conf.in unikey-addon.conf)
+configure_file(unikey-addon.conf.in.in unikey-addon.conf.in)
+fcitx5_translate_desktop_file("${CMAKE_CURRENT_BINARY_DIR}/unikey-addon.conf.in" unikey-addon.conf)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/unikey-addon.conf" RENAME unikey.conf DESTINATION "${FCITX_INSTALL_PKGDATADIR}/addon")
 
