@@ -30,9 +30,9 @@ static const unsigned char WordBreakSyms[] = {
 
 static const unsigned char WordAutoCommit[] = {
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'b', 'c',
-    'f', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's',
+    'f', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'r', 's',
     't', 'v', 'x', 'z', 'B', 'C', 'F', 'H', 'J', 'K', 'L',
-    'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'X', 'Z'};
+    'M', 'N', 'P', 'R', 'S', 'T', 'V', 'X', 'Z'};
 
 namespace fcitx {
 
