@@ -514,11 +514,11 @@ void UnikeyState::updatePreedit() {
         preedit.setCursor(preeditStr_.size());
         if (ic_->capabilityFlags().test(CapabilityFlag::Preedit)) {
             inputPanel.setClientPreedit(preedit);
-            ic_->updatePreedit();
         } else {
             inputPanel.setPreedit(preedit);
         }
     }
+    ic_->updatePreedit();
     ic_->updateUserInterface(UserInterfaceComponent::InputPanel);
 }
 
