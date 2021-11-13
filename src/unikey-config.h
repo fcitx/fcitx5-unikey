@@ -47,7 +47,7 @@ FCITX_CONFIGURATION(
                                     _("Process W at word begin"), true};
     Option<bool> autoNonVnRestore{this, "AutoNonVnRestore",
                                   _("Auto restore keys with invalid words"),
-                                  false};
+                                  true};
     Option<bool> modernStyle{this, "ModernStyle",
                              _("Use oà, _uý (instead of òa, úy)"), false};
     Option<bool> freeMarking{this, "FreeMarking",
