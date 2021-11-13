@@ -6,6 +6,7 @@
  */
 
 #include "unikey-im.h"
+#include <fcitx-utils/charutils.h>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/utf8.h>
 #include <fcitx/inputcontext.h>
@@ -16,27 +17,35 @@
 #include <fcitx/userinterfacemanager.h>
 #include <vnconv.h>
 
+namespace fcitx {
+
+FCITX_DEFINE_LOG_CATEGORY(unikey, "unikey");
+#define FCITX_UNIKEY_DEBUG() FCITX_LOGC(unikey, Debug)
+
+namespace {
+
 constexpr auto CONVERT_BUF_SIZE = 1024;
+constexpr auto MAX_CONTEXT_SIZE = 20;
 static const unsigned int Unikey_OC[] = {
     CONV_CHARSET_XUTF8,  CONV_CHARSET_TCVN3,     CONV_CHARSET_VNIWIN,
     CONV_CHARSET_VIQR,   CONV_CHARSET_BKHCM2,    CONV_CHARSET_UNI_CSTRING,
     CONV_CHARSET_UNIREF, CONV_CHARSET_UNIREF_HEX};
-static const unsigned int NUM_OUTPUTCHARSET = FCITX_ARRAY_SIZE(Unikey_OC);
+static constexpr unsigned int NUM_OUTPUTCHARSET = FCITX_ARRAY_SIZE(Unikey_OC);
+static_assert(NUM_OUTPUTCHARSET == UkConvI18NAnnotation::enumLength);
 
 static const unsigned char WordBreakSyms[] = {
     ',', ';', ':', '.', '\"', '\'', '!', '?', ' ', '<', '>',
     '=', '+', '-', '*', '/',  '\\', '_', '~', '`', '@', '#',
     '$', '%', '^', '&', '(',  ')',  '{', '}', '[', ']', '|'};
 
-static const unsigned char WordAutoCommit[] = {
-    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'b', 'c',
-    'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's',
-    't', 'v', 'x', 'z', 'B', 'C', 'F', 'G', 'H', 'J', 'K', 'L',
-    'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'X', 'Z'};
-
-namespace fcitx {
-
-namespace {
+static bool isWordAutoCommit(unsigned char c) {
+    static const std::unordered_set<unsigned char> WordAutoCommit = {
+        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'b', 'c',
+        'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's',
+        't', 'v', 'x', 'z', 'B', 'C', 'F', 'G', 'H', 'J', 'K', 'L',
+        'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'X', 'Z'};
+    return WordAutoCommit.count(c);
+}
 
 // code from x-unikey, for convert charset that not is XUtf-8
 int latinToUtf(unsigned char *dst, const unsigned char *src, int inSize,
@@ -126,6 +135,67 @@ public:
         updatePreedit();
         lastShiftPressed_ = FcitxKey_None;
     }
+
+    void rebuildFromSurroundingText() {
+        if (mayRebuildStateFromSurroundingText_) {
+            mayRebuildStateFromSurroundingText_ = false;
+        } else {
+            return;
+        }
+
+        if (!*engine_->config().surroundingText) {
+            return;
+        }
+
+        if (!uic_.isAtWordBeginning()) {
+            return;
+        }
+
+        if (!ic_->capabilityFlags().test(CapabilityFlag::SurroundingText) ||
+            !ic_->surroundingText().isValid()) {
+            return;
+        }
+        // We need text before the cursor.
+        const auto &text = ic_->surroundingText().text();
+        auto cursor = ic_->surroundingText().cursor();
+        auto length = utf8::lengthValidated(text);
+        if (length == utf8::INVALID_LENGTH) {
+            return;
+        }
+        if (cursor <= 0 && cursor > length) {
+            return;
+        }
+
+        uint32_t lastCharBeforeCursor;
+        auto start = utf8::nextNChar(text.begin(), cursor - 1);
+        auto end = utf8::getNextChar(start, text.end(), &lastCharBeforeCursor);
+        if (lastCharBeforeCursor == utf8::INVALID_CHAR ||
+            lastCharBeforeCursor == utf8::NOT_ENOUGH_SPACE) {
+            return;
+        }
+        if (std::distance(start, end) != 1 ||
+            !isWordAutoCommit(lastCharBeforeCursor) ||
+            charutils::isdigit(lastCharBeforeCursor)) {
+            return;
+        }
+
+        // Reverse search for word auto commit.
+        // all char for isWordAutoCommit == true would be ascii.
+        while (start != text.begin() && isWordAutoCommit(*start) &&
+               !charutils::isdigit(lastCharBeforeCursor) &&
+               std::distance(start, end) < MAX_CONTEXT_SIZE) {
+            --start;
+        }
+        FCITX_UNIKEY_DEBUG()
+            << "Rebuild surrounding with: "
+            << std::string_view(&*start, std::distance(start, end));
+        for (; start != end; ++start) {
+            uic_.putChar(*start);
+            autoCommit_ = true;
+        }
+    }
+
+    bool mayRebuildStateFromSurroundingText_ = false;
 
 private:
     UnikeyEngine *engine_;
@@ -221,6 +291,15 @@ UnikeyEngine::UnikeyEngine(Instance *instance)
         }));
     uiManager.registerAction("unikey-macro", macroAction_.get());
 
+    eventWatchers_.emplace_back(instance_->watchEvent(
+        EventType::InputContextSurroundingTextUpdated,
+        EventWatcherPhase::PostInputMethod, [this](Event &event) {
+            auto &icEvent = static_cast<InputContextEvent &>(event);
+            auto *ic = icEvent.inputContext();
+            auto *state = ic->propertyFor(&factory_);
+            state->mayRebuildStateFromSurroundingText_ = true;
+        }));
+
     reloadConfig();
 }
 
@@ -234,7 +313,12 @@ void UnikeyEngine::activate(const InputMethodEntry &,
     statusArea.addAction(StatusGroup::InputMethod, spellCheckAction_.get());
     statusArea.addAction(StatusGroup::InputMethod, macroAction_.get());
 
-    updateUI(event.inputContext());
+    auto *ic = event.inputContext();
+    updateUI(ic);
+    auto *state = ic->propertyFor(&factory_);
+    if (ic->capabilityFlags().test(CapabilityFlag::SurroundingText)) {
+        state->mayRebuildStateFromSurroundingText_ = true;
+    }
 }
 
 void UnikeyEngine::deactivate(const InputMethodEntry &entry,
@@ -245,6 +329,7 @@ void UnikeyEngine::deactivate(const InputMethodEntry &entry,
 void UnikeyEngine::keyEvent(const InputMethodEntry &, KeyEvent &keyEvent) {
     auto ic = keyEvent.inputContext();
     auto state = ic->propertyFor(&factory_);
+    state->rebuildFromSurroundingText();
     state->keyEvent(keyEvent);
 }
 
@@ -334,12 +419,10 @@ void UnikeyState::preedit(KeyEvent &keyEvent) {
         // Because macro may change any word
         if (!*engine_->config().macro &&
             (uic_.isAtWordBeginning() || autoCommit_)) {
-            for (auto wordAutoCommit : WordAutoCommit) {
-                if (sym == wordAutoCommit) {
-                    uic_.putChar(sym);
-                    autoCommit_ = true;
-                    return;
-                }
+            if (isWordAutoCommit(sym)) {
+                uic_.putChar(sym);
+                autoCommit_ = true;
+                return;
             }
         } // end auto commit
 
@@ -394,6 +477,12 @@ void UnikeyState::preedit(KeyEvent &keyEvent) {
 void UnikeyEngine::reset(const InputMethodEntry &, InputContextEvent &event) {
     auto state = event.inputContext()->propertyFor(&factory_);
     state->reset();
+    if (event.type() == EventType::InputContextReset) {
+        if (event.inputContext()->capabilityFlags().test(
+                CapabilityFlag::SurroundingText)) {
+            state->mayRebuildStateFromSurroundingText_ = true;
+        }
+    }
 }
 
 void UnikeyEngine::populateConfig() {

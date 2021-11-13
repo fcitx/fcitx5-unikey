@@ -52,6 +52,9 @@ FCITX_CONFIGURATION(
                              _("Use oà, _uý (instead of òa, úy)"), false};
     Option<bool> freeMarking{this, "FreeMarking",
                              _("Allow type with more freedom"), true};
+    Option<bool> surroundingText{
+        this, "SurroundingText",
+        _("Restore typing state from surrounding text"), true};
     ExternalOption macroEditor{this, "MacroEditor", _("Macro Editor"),
                                "fcitx://config/addon/unikey/macro"};);
 

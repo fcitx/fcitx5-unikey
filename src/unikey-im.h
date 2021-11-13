@@ -88,6 +88,8 @@ private:
     std::unique_ptr<SimpleAction> spellCheckAction_;
     std::unique_ptr<SimpleAction> macroAction_;
     std::vector<ScopedConnection> connections_;
+    std::vector<std::unique_ptr<fcitx::HandlerTableEntry<fcitx::EventHandler>>>
+        eventWatchers_;
 };
 
 class UnikeyFactory : public AddonFactory {
