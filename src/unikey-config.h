@@ -41,7 +41,7 @@ FCITX_CONFIGURATION(
         this, "InputMethod", _("Input Method"), UkTelex};
     OptionWithAnnotation<UkConv, UkConvI18NAnnotation> oc{
         this, "OutputCharset", _("Output Charset"), UkConv::XUTF8};
-    Option<bool> spellCheck{this, "SpellCheck", _("Enable spell check"), false};
+    Option<bool> spellCheck{this, "SpellCheck", _("Enable spell check"), true};
     Option<bool> macro{this, "Macro", "Enable Macro", true};
     Option<bool> process_w_at_begin{this, "ProcessWAtBegin",
                                     _("Process W at word begin"), true};
