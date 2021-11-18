@@ -47,6 +47,8 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+space"),
                                                     false);
         RawConfig config;
+        config.setValueByPath("SpellCheck", "False");
+        unikey->setConfig(config);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("w"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("o"), false);
