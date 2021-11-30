@@ -599,9 +599,12 @@ void UnikeyState::updatePreedit() {
     inputPanel.reset();
 
     if (!preeditStr_.empty()) {
-        Text preedit(preeditStr_, TextFormatFlag::Underline);
+        const auto useClientPreedit =
+            ic_->capabilityFlags().test(CapabilityFlag::Preedit);
+        Text preedit(preeditStr_, useClientPreedit ? TextFormatFlag::Underline
+                                                   : TextFormatFlag::NoFlag);
         preedit.setCursor(preeditStr_.size());
-        if (ic_->capabilityFlags().test(CapabilityFlag::Preedit)) {
+        if (useClientPreedit) {
             inputPanel.setClientPreedit(preedit);
         } else {
             inputPanel.setPreedit(preedit);
