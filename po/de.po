@@ -5,14 +5,15 @@
 # Translators:
 # csslayer <wengxt@gmail.com>, 2018
 # mar well <m.wellendorf@gmx.de>, 2018
+# Ettore Atalan <atalanttore@googlemail.com>, 2022
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2020-11-02 15:55-0800\n"
+"POT-Creation-Date: 2022-01-15 20:24+0000\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
-"Last-Translator: mar well <m.wellendorf@gmx.de>, 2018\n"
+"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>, 2022\n"
 "Language-Team: German (https://www.transifex.com/fcitx/teams/12005/de/)\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -22,75 +23,75 @@ msgstr ""
 
 #. i18n: file: macro-editor/editor.ui:36
 #. i18n: ectx: property (text), widget (QPushButton, addButton)
-#: rc.cpp:6 rc.cpp:33
+#: rc.cpp:15
 #, kde-format
 msgid "&Add"
 msgstr "&Hinzufügen"
 
 #. i18n: file: macro-editor/editor.ui:47
 #. i18n: ectx: property (text), widget (QPushButton, deleteButton)
-#: rc.cpp:9 rc.cpp:36
+#: rc.cpp:18
 #, kde-format
 msgid "&Delete"
 msgstr "&Löschen"
 
 #. i18n: file: macro-editor/editor.ui:87
 #. i18n: ectx: property (text), widget (QPushButton, exportButton)
-#: rc.cpp:18 rc.cpp:45
+#: rc.cpp:27
 #, kde-format
 msgid "&Export"
 msgstr "&Export"
 
 #. i18n: file: macro-editor/editor.ui:76
 #. i18n: ectx: property (text), widget (QPushButton, importButton)
-#: rc.cpp:15 rc.cpp:42
+#: rc.cpp:24
 #, kde-format
 msgid "&Import"
 msgstr "&Import"
 
 #. i18n: file: macro-editor/editor.ui:58
 #. i18n: ectx: property (text), widget (QPushButton, clearButton)
-#: rc.cpp:12 rc.cpp:39
+#: rc.cpp:21
 #, kde-format
 msgid "De&lete All"
 msgstr "De&lete All"
 
 #. i18n: file: macro-editor/dialog.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, Dialog)
-#: rc.cpp:21 rc.cpp:48
+#: rc.cpp:3
 #, kde-format
 msgid "Dialog"
 msgstr "Dialog"
 
 #. i18n: file: macro-editor/dialog.ui:32
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: rc.cpp:27 rc.cpp:54
+#: rc.cpp:9
 #, kde-format
 msgid "Macro:"
 msgstr "Makro:"
 
-#: org.fcitx.fcitx5-unikey.metainfo.xml.in:7 src/unikey.conf.in:3
+#: org.fcitx.Fcitx5.Addon.Unikey.metainfo.xml.in:7 src/unikey.conf.in:3
 msgid "Unikey"
 msgstr "Unikey"
 
 #. i18n: file: macro-editor/editor.ui:14
 #. i18n: ectx: property (windowTitle), widget (QWidget, Editor)
-#: rc.cpp:3 rc.cpp:30
+#: rc.cpp:12
 #, kde-format
 msgid "Unikey Macro Editor"
 msgstr "Unikey Makro Editor"
 
-#: src/unikey-addon.conf.in:3
+#: src/unikey-addon.conf.in.in:3
 msgid "Unikey Wrapper For Fcitx"
 msgstr "Unikey Wrapper für Fcitx"
 
-#: org.fcitx.fcitx5-unikey.metainfo.xml.in:8
+#: org.fcitx.Fcitx5.Addon.Unikey.metainfo.xml.in:8
 msgid "Vietnamese input method"
-msgstr ""
+msgstr "Vietnamesische Eingabemethode"
 
 #. i18n: file: macro-editor/dialog.ui:25
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: rc.cpp:24 rc.cpp:51
+#: rc.cpp:6
 #, kde-format
 msgid "Word:"
 msgstr "Wort:"
