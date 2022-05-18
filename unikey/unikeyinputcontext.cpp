@@ -30,11 +30,10 @@ UnikeyInputMethod::UnikeyInputMethod()
     SetupUnikeyEngine();
     sharedMem_->input.init();
     sharedMem_->macStore.init();
-    sharedMem_->vietKey = 1;
-    sharedMem_->usrKeyMapLoaded = 0;
+    sharedMem_->vietKey = true;
+    sharedMem_->usrKeyMapLoaded = false;
     setInputMethod(UkTelex);
     setOutputCharset(CONV_CHARSET_XUTF8);
-    sharedMem_->initialized = 1;
     CreateDefaultUnikeyOptions(&sharedMem_->options);
 }
 

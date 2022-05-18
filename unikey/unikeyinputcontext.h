@@ -37,7 +37,6 @@ public:
 private:
     FCITX_DEFINE_SIGNAL(UnikeyInputMethod, Reset);
     std::unique_ptr<UkSharedMem> sharedMem_;
-    ;
 };
 
 class UnikeyInputContext {

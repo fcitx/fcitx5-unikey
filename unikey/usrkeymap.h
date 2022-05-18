@@ -7,16 +7,16 @@
 #ifndef __UNIKEY_USER_KEY_MAP_H
 #define __UNIKEY_USER_KEY_MAP_H
 
+#include <cstdio>
 #include "inputproc.h"
 struct UkKeyMapPair {
     unsigned char key;
     int action;
 };
 
-DllInterface int UkLoadKeyMap(const char *fileName, int keyMap[256]);
-DllInterface int UkLoadKeyOrderMap(const char *fileName, UkKeyMapPair *pMap,
-                                   int *pMapCount);
-DllInterface int UkStoreKeyOrderMap(const char *fileName, UkKeyMapPair *pMap,
-                                    int mapCount);
+DllInterface void UkLoadKeyMap(FILE *f, int keyMap[256]);
+DllInterface void UkLoadKeyOrderMap(FILE *f, UkKeyMapPair *pMap,
+                                    int *pMapCount);
+DllInterface void UkStoreKeyOrderMap(FILE *f, UkKeyMapPair *pMap, int mapCount);
 
 #endif

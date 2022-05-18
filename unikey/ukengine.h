@@ -16,12 +16,11 @@
 // This is a shared object among processes, do not put any pointer in it
 struct UkSharedMem {
     // states
-    int initialized;
-    int vietKey;
+    bool vietKey;
 
     UnikeyOptions options;
     UkInputProcessor input;
-    int usrKeyMapLoaded;
+    bool usrKeyMapLoaded;
     int usrKeyMap[256];
     int charsetId;
 

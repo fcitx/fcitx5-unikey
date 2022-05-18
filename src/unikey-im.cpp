@@ -6,6 +6,8 @@
  */
 
 #include "unikey-im.h"
+#include "usrkeymap.h"
+#include "vnconv.h"
 #include <fcitx-utils/charutils.h>
 #include <fcitx-utils/standardpath.h>
 #include <fcitx-utils/utf8.h>
@@ -15,7 +17,7 @@
 #include <fcitx/menu.h>
 #include <fcitx/statusarea.h>
 #include <fcitx/userinterfacemanager.h>
-#include <vnconv.h>
+#include <fcntl.h>
 
 namespace fcitx {
 
@@ -500,6 +502,17 @@ void UnikeyEngine::populateConfig() {
 
 void UnikeyEngine::reloadConfig() {
     readAsIni(config_, "conf/unikey.conf");
+    // Keymap need to be reloaded before populateConfig.
+    auto keymapFile = StandardPath::global().open(StandardPath::Type::PkgConfig,
+                                                  "unikey/keymap.txt", O_RDONLY);
+    if (keymapFile.isValid()) {
+        UniqueFilePtr fp{fdopen(keymapFile.fd(), "rb")};
+
+        UkLoadKeyMap(fp.get(), im_.sharedMem()->usrKeyMap);
+        im_.sharedMem()->usrKeyMapLoaded = true;
+    } else {
+        im_.sharedMem()->usrKeyMapLoaded = false;
+    }
     populateConfig();
     reloadMacroTable();
 }

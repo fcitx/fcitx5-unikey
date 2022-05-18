@@ -4,13 +4,13 @@
  * SPDX-License-Identifier: LGPL-2.0-or-later
  */
 
-#include <iostream>
-#include <stdio.h>
-#include <string.h>
-using namespace std;
-
 #include "usrkeymap.h"
-#include <ctype.h>
+#include <cstdio>
+#include <cstring>
+#include <fcitx-utils/misc.h>
+#include <iostream>
+
+using namespace std;
 
 int getLabelIndex(int action);
 void initKeyMap(int keyMap[256]);
@@ -93,11 +93,10 @@ static int parseNameValue(char *line, char **name, char **value) {
 }
 
 //-----------------------------------------------------
-DllExport int UkLoadKeyMap(const char *fileName, int keyMap[256]) {
+DllExport void UkLoadKeyMap(FILE *f, int keyMap[256]) {
     int i, mapCount;
     UkKeyMapPair orderMap[256];
-    if (!UkLoadKeyOrderMap(fileName, orderMap, &mapCount))
-        return 0;
+    UkLoadKeyOrderMap(f, orderMap, &mapCount);
 
     initKeyMap(keyMap);
     for (i = 0; i < mapCount; i++) {
@@ -106,44 +105,31 @@ DllExport int UkLoadKeyMap(const char *fileName, int keyMap[256]) {
             keyMap[tolower(orderMap[i].key)] = orderMap[i].action;
         }
     }
-    return 1;
 }
 
 //------------------------------------------------------------------
-DllExport int UkLoadKeyOrderMap(const char *fileName, UkKeyMapPair *pMap,
-                                int *pMapCount) {
-    FILE *f;
-    char *buf;
+DllExport void UkLoadKeyOrderMap(FILE *f, UkKeyMapPair *pMap, int *pMapCount) {
     char *name, *value;
     size_t len;
-    int i, bufSize, lineCount;
+    int i, lineCount = 0;
     unsigned char c;
-    int mapCount;
+    int mapCount = 0;
     int keyMap[256];
 
-    f = fopen(fileName, "r");
-    if (f == 0) {
-        cerr << "Failed to open file: " << fileName << endl;
-        return 0;
-    }
-
     initKeyMap(keyMap);
-    bufSize = 256;
-    buf = new char[bufSize];
 
-    lineCount = 0;
-    mapCount = 0;
-    while (!feof(f)) {
-        if (fgets((char *)buf, bufSize, f) == 0)
-            break;
+    fcitx::UniqueCPtr<char> clineBuf;
+    size_t bufSize = 0;
+    while (getline(clineBuf, &bufSize, f) >= 0) {
         lineCount++;
+        char *buf = clineBuf.get();
         len = strlen(buf);
         if (len == 0)
             break;
 
         if (buf[len - 1] == '\n')
             buf[len - 1] = 0;
-        if (parseNameValue(buf, (char **)&name, (char **)&value)) {
+        if (parseNameValue(buf, &name, &value)) {
             if (strlen(name) == 1) {
                 for (i = 0; i < UkEvLabelCount; i++) {
                     if (strcmp(UkEvLabelList[i].label, value) == 0) {
@@ -176,12 +162,8 @@ DllExport int UkLoadKeyOrderMap(const char *fileName, UkKeyMapPair *pMap,
             }
         }
     }
-    delete[] buf;
-    fclose(f);
 
     *pMapCount = mapCount;
-
-    return 1;
 }
 
 //-------------------------------------------
@@ -192,32 +174,20 @@ void initKeyMap(int keyMap[256]) {
 }
 
 const char *UkKeyMapHeader = "; This is UniKey user-defined key mapping file, "
-                             "generated from UniKey (Windows)\n\n";
+                             "generated from UniKey (Fcitx 5)\n\n";
 
-DllExport int UkStoreKeyOrderMap(const char *fileName, UkKeyMapPair *pMap,
-                                 int mapCount) {
-    FILE *f;
+DllExport void UkStoreKeyOrderMap(FILE *f, UkKeyMapPair *pMap, int mapCount) {
     int i;
     int labelIndex;
-    char line[128];
-
-    f = fopen(fileName, "wt");
-    if (f == 0) {
-        cerr << "Failed to open file: " << fileName << endl;
-        return 0;
-    }
 
     fputs(UkKeyMapHeader, f);
     for (i = 0; i < mapCount; i++) {
         labelIndex = getLabelIndex(pMap[i].action);
         if (labelIndex != -1) {
-            sprintf(line, "%c = %s\n", pMap[i].key,
+            fprintf(f, "%c = %s\n", pMap[i].key,
                     UkEvLabelList[labelIndex].label);
-            fputs(line, f);
         }
     }
-    fclose(f);
-    return 1;
 }
 
 int getLabelIndex(int event) {
