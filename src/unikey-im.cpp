@@ -502,19 +502,23 @@ void UnikeyEngine::populateConfig() {
 
 void UnikeyEngine::reloadConfig() {
     readAsIni(config_, "conf/unikey.conf");
+    reloadKeymap();
+    populateConfig();
+    reloadMacroTable();
+}
+
+void UnikeyEngine::reloadKeymap() {
     // Keymap need to be reloaded before populateConfig.
     auto keymapFile = StandardPath::global().open(StandardPath::Type::PkgConfig,
                                                   "unikey/keymap.txt", O_RDONLY);
     if (keymapFile.isValid()) {
-        UniqueFilePtr fp{fdopen(keymapFile.fd(), "rb")};
+        UniqueFilePtr fp = fs::openFD(keymapFile, "rb");
 
         UkLoadKeyMap(fp.get(), im_.sharedMem()->usrKeyMap);
         im_.sharedMem()->usrKeyMapLoaded = true;
     } else {
         im_.sharedMem()->usrKeyMapLoaded = false;
     }
-    populateConfig();
-    reloadMacroTable();
 }
 
 void UnikeyEngine::save() {}

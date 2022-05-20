@@ -19,7 +19,9 @@
 namespace fcitx {
 namespace unikey {
 
-MacroEditor::MacroEditor(QWidget *parent) : FcitxQtConfigUIWidget(parent) {
+MacroEditor::MacroEditor(QWidget *parent)
+    : FcitxQtConfigUIWidget(parent), table_(std::make_unique<CMacroTable>()),
+      model_(new MacroModel(this)) {
     setupUi(this);
 
     connect(addButton, &QPushButton::clicked, this, &MacroEditor::addWord);
@@ -31,6 +33,14 @@ MacroEditor::MacroEditor(QWidget *parent) : FcitxQtConfigUIWidget(parent) {
             &MacroEditor::importMacro);
     connect(exportButton, &QPushButton::clicked, this,
             &MacroEditor::exportMacro);
+    table_->init();
+    macroTableView->horizontalHeader()->setStretchLastSection(true);
+    macroTableView->verticalHeader()->setVisible(false);
+    macroTableView->setModel(model_);
+    connect(macroTableView->selectionModel(),
+            &QItemSelectionModel::selectionChanged, this,
+            &MacroEditor::itemFocusChanged);
+    connect(model_, &MacroModel::needSaveChanged, this, &MacroEditor::changed);
     load();
     itemFocusChanged();
 }
@@ -103,28 +113,19 @@ void MacroEditor::addWordAccepted() {
 }
 
 void MacroEditor::load() {
-    table_ = new CMacroTable;
-    table_->init();
     auto path = StandardPath::global().locate(StandardPath::Type::PkgConfig,
                                               "unikey/macro");
     table_->loadFromFile(path.data());
-    model_ = new MacroModel(this);
-    model_->load(table_);
-    macroTableView->horizontalHeader()->setStretchLastSection(true);
-    macroTableView->verticalHeader()->setVisible(false);
-    macroTableView->setModel(model_);
-    connect(macroTableView->selectionModel(),
-            &QItemSelectionModel::selectionChanged, this,
-            &MacroEditor::itemFocusChanged);
-    connect(model_, &MacroModel::needSaveChanged, this, &MacroEditor::changed);
+    model_->load(table_.get());
 }
 
 void MacroEditor::save() {
-    model_->save(table_);
+    model_->save(table_.get());
     StandardPath::global().safeSave(StandardPath::Type::PkgConfig,
-                                    "unikey/macro", [this](int fd) {
-                                        FILE *f = fdopen(fd, "w");
-                                        return table_->writeToFp(f);
+                                    "unikey/macro", [this](int fd) -> bool {
+                                        UnixFD unixFD(fd);
+                                        auto f = fs::openFD(unixFD, "wb");
+                                        return table_->writeToFp(f.release());
                                     });
 }
 

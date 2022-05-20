@@ -97,6 +97,7 @@ void SetupInputClassifierTable();
 
 DllInterface extern UkKeyMapping TelexMethodMapping[];
 DllInterface extern UkKeyMapping SimpleTelexMethodMapping[];
+DllInterface extern UkKeyMapping SimpleTelex2MethodMapping[];
 DllInterface extern UkKeyMapping VniMethodMapping[];
 DllInterface extern UkKeyMapping VIQRMethodMapping[];
 DllInterface extern UkKeyMapping MsViMethodMapping[];

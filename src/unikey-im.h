@@ -39,6 +39,10 @@ public:
                       const fcitx::RawConfig &) override {
         if (path == "macro") {
             reloadMacroTable();
+        } else if (path == "keymap.txt") {
+            reloadKeymap();
+            // Need to populate again if old keymap is not valid.
+            populateConfig();
         }
     }
 
@@ -74,6 +78,7 @@ private:
             im_.loadMacroTable(path.data());
         }
     }
+    void reloadKeymap();
 
     UnikeyConfig config_;
     UnikeyInputMethod im_;

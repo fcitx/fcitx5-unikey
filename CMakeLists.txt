@@ -23,8 +23,9 @@ fcitx5_add_i18n_definition()
 
 if (ENABLE_QT)
   find_package(Qt5 5.7 REQUIRED COMPONENTS Core Gui Widgets)
-  find_package(Fcitx5Qt5WidgetsAddons REQUIRED)
+  find_package(Fcitx5Qt5WidgetsAddons 5.0.12 REQUIRED)
   add_subdirectory(macro-editor)
+  add_subdirectory(keymap-editor)
 endif (ENABLE_QT)
 
 add_subdirectory(po)

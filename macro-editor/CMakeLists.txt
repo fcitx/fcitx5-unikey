@@ -7,10 +7,6 @@ set(MACRO_EDITOR_SRCS
     dialog.cpp
     )
 
-if (NOT ENABLE_QT)
-    return()
-endif (NOT ENABLE_QT)
-
 add_library(fcitx5-unikey-macro-editor
   MODULE ${MACRO_EDITOR_SRCS})
 set_target_properties(fcitx5-unikey-macro-editor PROPERTIES

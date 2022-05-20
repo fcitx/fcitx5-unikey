@@ -39,7 +39,7 @@ private slots:
     void exportFileSelected();
 
 private:
-    CMacroTable *table_;
+    std::unique_ptr<CMacroTable> table_;
     MacroModel *model_;
 };
 } // namespace unikey

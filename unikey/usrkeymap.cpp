@@ -94,27 +94,24 @@ static bool parseNameValue(std::string_view line, std::string_view *name,
 
 //-----------------------------------------------------
 DllExport void UkLoadKeyMap(FILE *f, int keyMap[256]) {
-    int i, mapCount;
-    UkKeyMapPair orderMap[256];
-    UkLoadKeyOrderMap(f, orderMap, &mapCount);
-
+    std::vector<UkKeyMapping> orderMap = UkLoadKeyOrderMap(f);
     initKeyMap(keyMap);
-    for (i = 0; i < mapCount; i++) {
-        keyMap[orderMap[i].key] = orderMap[i].action;
-        if (orderMap[i].action < vneCount) {
-            keyMap[tolower(orderMap[i].key)] = orderMap[i].action;
+    for (const auto &item : orderMap) {
+        keyMap[item.key] = item.action;
+        if (item.action < vneCount) {
+            keyMap[tolower(item.key)] = item.action;
         }
     }
 }
 
 //------------------------------------------------------------------
-DllExport void UkLoadKeyOrderMap(FILE *f, UkKeyMapPair *pMap, int *pMapCount) {
+DllExport std::vector<UkKeyMapping> UkLoadKeyOrderMap(FILE *f) {
     size_t lineCount = 0;
-    int mapCount = 0;
     int keyMap[256];
 
     initKeyMap(keyMap);
 
+    std::vector<UkKeyMapping> pMap;
     fcitx::UniqueCPtr<char> clineBuf;
     size_t bufSize = 0;
     while (getline(clineBuf, &bufSize, f) >= 0) {
@@ -150,30 +147,29 @@ DllExport void UkLoadKeyOrderMap(FILE *f, UkKeyMapPair *pMap, int *pMapCount) {
             // cout << "key: " << c << " value: " <<
             // UkEvLabelList[i].ev << endl; //DEBUG
             keyMap[c] = UkEvLabelList[i].ev;
-            pMap[mapCount].action = UkEvLabelList[i].ev;
+            UkKeyMapping newPair;
+            newPair.action = UkEvLabelList[i].ev;
             if (keyMap[c] < vneCount) {
-                pMap[mapCount].key = toupper(c);
+                newPair.key = toupper(c);
                 keyMap[toupper(c)] = UkEvLabelList[i].ev;
             } else {
-                pMap[mapCount].key = c;
+                newPair.key = c;
             }
-            mapCount++;
+            pMap.push_back(newPair);
         }
     }
-
-    *pMapCount = mapCount;
+    return pMap;
 }
 
-DllExport void UkStoreKeyOrderMap(FILE *f, UkKeyMapPair *pMap, int mapCount) {
-    int i;
+DllExport void UkStoreKeyOrderMap(FILE *f,
+                                  const std::vector<UkKeyMapping> &pMap) {
     int labelIndex;
 
     fputs(UkKeyMapHeader, f);
-    for (i = 0; i < mapCount; i++) {
-        labelIndex = getLabelIndex(pMap[i].action);
+    for (const auto &item : pMap) {
+        labelIndex = getLabelIndex(item.action);
         if (labelIndex != -1) {
-            fprintf(f, "%c = %s\n", pMap[i].key,
-                    UkEvLabelList[labelIndex].label);
+            fprintf(f, "%c = %s\n", item.key, UkEvLabelList[labelIndex].label);
         }
     }
 }
