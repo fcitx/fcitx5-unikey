@@ -55,11 +55,13 @@ FCITX_CONFIGURATION(
     Option<bool> surroundingText{
         this, "SurroundingText",
         _("Restore typing state from surrounding text"), true};
+#ifdef ENABLE_QT
     ExternalOption macroEditor{this, "MacroEditor", _("Macro Editor"),
                                "fcitx://config/addon/unikey/macro"};
     ExternalOption keymapEditor{this, "KeymapEditor", _("Keymap Editor"),
-                                "fcitx://config/addon/unikey/keymap.txt"};);
-
+                                "fcitx://config/addon/unikey/keymap.txt"};
+#endif
+);
 } // namespace fcitx
 
 #endif // _FCITX5_UNIKEY_UNIKEY_CONFIG_H_
