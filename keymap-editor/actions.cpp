@@ -13,7 +13,7 @@ const std::vector<std::tuple<std::string, int, int>> &actionNames() {
             {N_("Remove existing tone"), vneTone0, AC_Tone},
             {N_("Tone ' (acute)"), vneTone1, AC_Tone},
             {N_("Tone ` (grave)"), vneTone2, AC_Tone},
-            {N_("Tone ̉ (hook above)"), vneTone3, AC_Tone},
+            {N_("Tone ◌̉ (hook above)"), vneTone3, AC_Tone},
             {N_("Tone ~ (tilde)"), vneTone4, AC_Tone},
             {N_("Tone . (dot below)"), vneTone5, AC_Tone},
             {N_("Escape key"), vneEscChar, AC_Tone},
