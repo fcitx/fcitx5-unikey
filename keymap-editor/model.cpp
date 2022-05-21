@@ -111,6 +111,7 @@ void KeymapModel::moveUp(int row) {
     }
     std::swap(list_[row - 1], list_[row]);
     endMoveRows();
+    setNeedSave(true);
 }
 
 void KeymapModel::moveDown(int row) {
@@ -122,6 +123,7 @@ void KeymapModel::moveDown(int row) {
     }
     std::swap(list_[row], list_[row + 1]);
     endMoveRows();
+    setNeedSave(true);
 }
 
 void KeymapModel::deleteItem(int row) {
