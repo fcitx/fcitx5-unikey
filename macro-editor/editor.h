@@ -9,6 +9,7 @@
 
 #include "ui_editor.h"
 #include <fcitxqtconfiguiwidget.h>
+#include <memory>
 
 class CMacroTable;
 
