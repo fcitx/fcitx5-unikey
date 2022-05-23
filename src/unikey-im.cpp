@@ -509,8 +509,8 @@ void UnikeyEngine::reloadConfig() {
 
 void UnikeyEngine::reloadKeymap() {
     // Keymap need to be reloaded before populateConfig.
-    auto keymapFile = StandardPath::global().open(StandardPath::Type::PkgConfig,
-                                                  "unikey/keymap.txt", O_RDONLY);
+    auto keymapFile = StandardPath::global().open(
+        StandardPath::Type::PkgConfig, "unikey/keymap.txt", O_RDONLY);
     if (keymapFile.isValid()) {
         UniqueFilePtr fp = fs::openFD(keymapFile, "rb");
 
