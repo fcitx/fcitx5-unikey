@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-05-22 20:24+0000\n"
+"POT-Creation-Date: 2022-05-23 20:24+0000\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2022\n"
 "Language-Team: Russian (https://www.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -72,7 +72,7 @@ msgstr "&Загрузка"
 
 #: keymap-editor/actions.cpp:38
 msgid "A with breve [A(]"
-msgstr "A с кратким [A(]"
+msgstr "A с бреве [A(]"
 
 #: keymap-editor/actions.cpp:36
 msgid "A with circumflex [A^]"
@@ -359,7 +359,7 @@ msgstr "Тон ~ (тильда)"
 
 #: keymap-editor/actions.cpp:16
 msgid "Tone ◌̉ (hook above)"
-msgstr "Тон ◌̉ (крючок над)"
+msgstr "Тон ◌̉ (крючок выше)"
 
 #: keymap-editor/actions.cpp:46
 msgid "U with horn [U+]"
