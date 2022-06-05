@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-06-04 20:24+0000\n"
+"POT-Creation-Date: 2022-06-05 20:24+0000\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
 "Last-Translator: Junghee Lee <daemul72@gmail.com>, 2022\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
@@ -67,7 +67,7 @@ msgstr "가져오기(&I)"
 #: rc.cpp:12
 #, kde-format
 msgid "&Load"
-msgstr ""
+msgstr "불러오기(&L)"
 
 #: keymap-editor/actions.cpp:38
 msgid "A with breve [A(]"
@@ -94,7 +94,7 @@ msgstr ""
 
 #: src/unikey-config.h:29
 msgid "BK HCM 2"
-msgstr ""
+msgstr "BK HCM 2"
 
 #: keymap-editor/actions.cpp:30
 msgid "Breve: A becomes A("
@@ -109,14 +109,14 @@ msgstr ""
 
 #: src/unikey-config.h:30
 msgid "CString"
-msgstr ""
+msgstr "CString"
 
 #. i18n: file: keymap-editor/editor.ui:67
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: rc.cpp:18
 #, kde-format
 msgid "Category:"
-msgstr ""
+msgstr "범주:"
 
 #: keymap-editor/editor.cpp:58
 msgid "Character complements"
@@ -172,7 +172,7 @@ msgstr ""
 
 #: keymap-editor/actions.cpp:19
 msgid "Escape key"
-msgstr ""
+msgstr "Esc 키"
 
 #: keymap-editor/actions.cpp:25
 msgid "Horn-Breve: U, O, A, become U+, O+, A("
@@ -196,40 +196,40 @@ msgstr ""
 
 #: src/unikey-config.h:41 src/unikey-im.cpp:222
 msgid "Input Method"
-msgstr ""
+msgstr "입력기"
 
 #. i18n: file: keymap-editor/editor.ui:30
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: rc.cpp:9
 #, kde-format
 msgid "Input Method:"
-msgstr ""
+msgstr "입력기:"
 
 #. i18n: file: keymap-editor/editor.ui:101
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: rc.cpp:24
 #, kde-format
 msgid "Key"
-msgstr ""
+msgstr "키"
 
 #. i18n: file: keymap-editor/editor.ui:61
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: rc.cpp:15
 #, kde-format
 msgid "Key definition"
-msgstr ""
+msgstr "키 정의"
 
 #: keymap-editor/model.cpp:32
 msgid "Keymap"
-msgstr ""
+msgstr "키맵"
 
 #: src/unikey-config.h:61
 msgid "Keymap Editor"
-msgstr ""
+msgstr "키맵 편집기"
 
 #: macro-editor/model.cpp:27 src/unikey-im.cpp:285
 msgid "Macro"
-msgstr ""
+msgstr "매크로"
 
 #: src/unikey-im.cpp:532
 msgid "Macro Disabled"
@@ -237,7 +237,7 @@ msgstr ""
 
 #: src/unikey-config.h:59
 msgid "Macro Editor"
-msgstr ""
+msgstr "매크로 편집기"
 
 #: src/unikey-im.cpp:531
 msgid "Macro Enabled"
@@ -259,14 +259,14 @@ msgstr ""
 #: rc.cpp:33
 #, kde-format
 msgid "Move &Down"
-msgstr ""
+msgstr "아래로 이동(&D)"
 
 #. i18n: file: keymap-editor/editor.ui:139
 #. i18n: ectx: property (text), widget (QPushButton, moveUpButton)
 #: rc.cpp:30
 #, kde-format
 msgid "Move &Up"
-msgstr ""
+msgstr "위로 이동(&U)"
 
 #: src/unikey-config.h:30
 msgid "NCR Decimal"
@@ -330,7 +330,7 @@ msgstr ""
 
 #: src/unikey-config.h:28
 msgid "TCVN3"
-msgstr ""
+msgstr "TCVN3"
 
 #: keymap-editor/editor.cpp:50 src/unikey-config.h:33
 msgid "Telex"
@@ -400,19 +400,19 @@ msgstr ""
 
 #: keymap-editor/editor.cpp:52 src/unikey-config.h:29 src/unikey-config.h:34
 msgid "VIQR"
-msgstr ""
+msgstr "VIQR"
 
 #: keymap-editor/editor.cpp:51 src/unikey-config.h:33
 msgid "VNI"
-msgstr ""
+msgstr "VNI"
 
 #: src/unikey-config.h:29
 msgid "VNI Win"
-msgstr ""
+msgstr "VNI Win"
 
 #: keymap-editor/editor.cpp:59
 msgid "Vietnamese characters"
-msgstr ""
+msgstr "베트남 문자"
 
 #: org.fcitx.Fcitx5.Addon.Unikey.metainfo.xml.in:8
 msgid "Vietnamese input method"
