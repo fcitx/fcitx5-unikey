@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-06-05 20:24+0000\n"
+"POT-Creation-Date: 2022-06-20 20:24+0000\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
 "Last-Translator: Junghee Lee <daemul72@gmail.com>, 2022\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
@@ -396,7 +396,7 @@ msgstr ""
 
 #: src/unikey-config.h:35
 msgid "UserIM"
-msgstr ""
+msgstr "사용자입력기"
 
 #: keymap-editor/editor.cpp:52 src/unikey-config.h:29 src/unikey-config.h:34
 msgid "VIQR"
@@ -420,7 +420,7 @@ msgstr "베트남어 입력기"
 
 #: keymap-editor/model.cpp:34 macro-editor/model.cpp:29
 msgid "Word"
-msgstr ""
+msgstr "단어"
 
 #. i18n: file: macro-editor/dialog.ui:25
 #. i18n: ectx: property (text), widget (QLabel, label)
