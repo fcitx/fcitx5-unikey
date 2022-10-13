@@ -1267,10 +1267,13 @@ int UkEngine::processHookWithUO(UkKeyEvent &ev) {
     default: // vneHookAll, vneHookUO:
         if (v[0] == vnl_u) {
             if (v[1] == vnl_o || v[1] == vnl_or) {
-                // uo -> uo+ if prefixed by "th"
+                // uo -> uo+ if prefixed by "h", "kh", "th", or stand alone
                 if ((vs == vs_uo || vs == vs_uor) && vEnd == m_current &&
-                    m_buffer[m_current].form == vnw_cv &&
-                    m_buffer[m_current - 2].cseq == cs_th) {
+                    (m_buffer[m_current].form == vnw_cv &&
+                        (m_buffer[m_current - 2].cseq == cs_h  ||
+                         m_buffer[m_current - 2].cseq == cs_kh ||
+                         m_buffer[m_current - 2].cseq == cs_th   ) ||
+                    m_buffer[m_current].form == vnw_v)) {
                     newVs = vs_uoh;
                     markChange(vStart + 1);
                     m_buffer[vStart + 1].vnSym = vnl_oh;
