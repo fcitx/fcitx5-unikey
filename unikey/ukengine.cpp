@@ -1269,11 +1269,11 @@ int UkEngine::processHookWithUO(UkKeyEvent &ev) {
             if (v[1] == vnl_o || v[1] == vnl_or) {
                 // uo -> uo+ if prefixed by "h", "kh", "th", or stand alone
                 if ((vs == vs_uo || vs == vs_uor) && vEnd == m_current &&
-                    (m_buffer[m_current].form == vnw_cv &&
+                    ((m_buffer[m_current].form == vnw_cv &&
                         (m_buffer[m_current - 2].cseq == cs_h  ||
                          m_buffer[m_current - 2].cseq == cs_kh ||
-                         m_buffer[m_current - 2].cseq == cs_th   ) ||
-                    m_buffer[m_current].form == vnw_v)) {
+                         m_buffer[m_current - 2].cseq == cs_th   )) ||
+                     m_buffer[m_current].form == vnw_v)) {
                     newVs = vs_uoh;
                     markChange(vStart + 1);
                     m_buffer[vStart + 1].vnSym = vnl_oh;
@@ -1907,6 +1907,7 @@ int UkEngine::processAppend(UkKeyEvent &ev) {
 //----------------------------------------------------------
 int UkEngine::appendVowel(UkKeyEvent &ev) {
     bool autoCompleted = false;
+    bool complexEvent = false;
 
     m_current++;
     WordInfo &entry = m_buffer[m_current];
@@ -1959,9 +1960,27 @@ int UkEngine::appendVowel(UkKeyEvent &ev) {
     case vnw_v:
     case vnw_cv:
         vs = prev.vseq;
+
         prevTonePos = (m_current - 1) - (VSeqList[vs].len - 1) +
                       getTonePosition(vs, true);
         tone = m_buffer[prevTonePos].tone;
+
+        // u+o/uo+ + u/i -> u+o+ + u/i
+        if ((vs == vs_uoh || vs == vs_uho) &&
+             (lowerSym == vnl_i || lowerSym == vnl_u)) {
+            if (vs == vs_uho) {
+                markChange(m_current - 1);
+                prev.vnSym = vnl_oh;
+                prev.vseq = vs_uhoh;
+            } else {
+                markChange(m_current - 2);
+                m_buffer[m_current - 2].vnSym = vnl_uh;
+                m_buffer[m_current - 2].vseq = vs_uh;
+            }
+
+            vs = vs_uhoh;
+            complexEvent = true;
+        }
 
         if (lowerSym != canSym && tone != 0) // new sym has a tone, but there's
                                              // is already a preceeding tone
@@ -2053,6 +2072,10 @@ int UkEngine::appendVowel(UkKeyEvent &ev) {
         }
 
         break;
+    }
+
+    if (complexEvent) {
+        return 1;
     }
 
     if (!autoCompleted && (m_pCtrl->charsetId != CONV_CHARSET_UNI_CSTRING) &&
