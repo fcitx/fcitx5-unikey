@@ -5,15 +5,15 @@
 # Translators:
 # csslayer <wengxt@gmail.com>, 2018
 # Bon Keun Seo <scobyseo@gmail.com>, 2021
-# Junghee Lee <daemul72@gmail.com>, 2022
+# JungHee Lee <daemul72@gmail.com>, 2022
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-06-20 20:24+0000\n"
+"POT-Creation-Date: 2022-10-29 20:25+0000\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
-"Last-Translator: Junghee Lee <daemul72@gmail.com>, 2022\n"
+"Last-Translator: JungHee Lee <daemul72@gmail.com>, 2022\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
@@ -82,7 +82,7 @@ msgstr ""
 #: rc.cpp:21
 #, kde-format
 msgid "Action:"
-msgstr ""
+msgstr "동작:"
 
 #: src/unikey-config.h:54
 msgid "Allow type with more freedom"
@@ -164,11 +164,11 @@ msgstr ""
 
 #: src/unikey-config.h:45
 msgid "Enable Macro"
-msgstr ""
+msgstr "매크로 활성화"
 
 #: src/unikey-config.h:44
 msgid "Enable spell check"
-msgstr ""
+msgstr "철자 검사 활성화"
 
 #: keymap-editor/actions.cpp:19
 msgid "Escape key"
@@ -233,7 +233,7 @@ msgstr "매크로"
 
 #: src/unikey-im.cpp:532
 msgid "Macro Disabled"
-msgstr ""
+msgstr "매크로 비활성화됨"
 
 #: src/unikey-config.h:59
 msgid "Macro Editor"
@@ -241,7 +241,7 @@ msgstr "매크로 편집기"
 
 #: src/unikey-im.cpp:531
 msgid "Macro Enabled"
-msgstr ""
+msgstr "매크로 활성화됨"
 
 #. i18n: file: macro-editor/dialog.ui:32
 #. i18n: ectx: property (text), widget (QLabel, label_2)
@@ -252,7 +252,7 @@ msgstr "매크로"
 
 #: keymap-editor/editor.cpp:53 src/unikey-config.h:34
 msgid "Microsoft Vietnamese"
-msgstr ""
+msgstr "Microsoft 베트남어"
 
 #. i18n: file: keymap-editor/editor.ui:150
 #. i18n: ectx: property (text), widget (QPushButton, moveDownButton)
@@ -274,7 +274,7 @@ msgstr ""
 
 #: src/unikey-config.h:31
 msgid "NCR Hex"
-msgstr ""
+msgstr "NCR Hex"
 
 #: keymap-editor/actions.cpp:42
 msgid "O with circumflex [O^]"
@@ -306,23 +306,23 @@ msgstr ""
 
 #: keymap-editor/editor.cpp:54 src/unikey-config.h:35
 msgid "Simple Telex"
-msgstr ""
+msgstr "간소한 Telex"
 
 #: keymap-editor/editor.cpp:55 src/unikey-config.h:36
 msgid "Simple Telex2"
-msgstr ""
+msgstr "간소한 Telex2"
 
 #: src/unikey-im.cpp:540
 msgid "Spell Check Disabled"
-msgstr ""
+msgstr "철자 검사 비활성화됨"
 
 #: src/unikey-im.cpp:539
 msgid "Spell Check Enabled"
-msgstr ""
+msgstr "철자 검사 활성화됨"
 
 #: src/unikey-im.cpp:273
 msgid "Spell check"
-msgstr ""
+msgstr "철자 검사"
 
 #: keymap-editor/actions.cpp:31
 msgid "Stroke: D becomes -D"
@@ -334,7 +334,7 @@ msgstr "TCVN3"
 
 #: keymap-editor/editor.cpp:50 src/unikey-config.h:33
 msgid "Telex"
-msgstr ""
+msgstr "Telex"
 
 #: keymap-editor/actions.cpp:14
 msgid "Tone ' (acute)"
