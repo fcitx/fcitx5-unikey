@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-10-26 20:25+0000\n"
+"POT-Creation-Date: 2022-10-31 20:25+0000\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
 "Last-Translator: Zen Fas, 2022\n"
 "Language-Team: Vietnamese (https://www.transifex.com/fcitx/teams/12005/vi/)\n"
@@ -411,7 +411,7 @@ msgstr "VNI Win"
 
 #: keymap-editor/editor.cpp:59
 msgid "Vietnamese characters"
-msgstr "Các chữ cái tiếng Việt"
+msgstr "Chữ cái tiếng Việt"
 
 #: org.fcitx.Fcitx5.Addon.Unikey.metainfo.xml.in:8
 msgid "Vietnamese input method"
