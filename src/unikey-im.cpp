@@ -325,6 +325,10 @@ void UnikeyEngine::activate(const InputMethodEntry &,
 
 void UnikeyEngine::deactivate(const InputMethodEntry &entry,
                               InputContextEvent &event) {
+    if (event.type() == EventType::InputContextSwitchInputMethod) {
+        auto *state = event.inputContext()->propertyFor(&factory_);
+        state->commit();
+    }
     reset(entry, event);
 }
 
