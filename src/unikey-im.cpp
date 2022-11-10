@@ -35,10 +35,13 @@ static const unsigned int Unikey_OC[] = {
 static constexpr unsigned int NUM_OUTPUTCHARSET = FCITX_ARRAY_SIZE(Unikey_OC);
 static_assert(NUM_OUTPUTCHARSET == UkConvI18NAnnotation::enumLength);
 
-static const unsigned char WordBreakSyms[] = {
+static bool isWordBreakSym(unsigned char c) {
+    static const std::unordered_set<unsigned char> WordBreakSym = {
     ',', ';', ':', '.', '\"', '\'', '!', '?', ' ', '<', '>',
     '=', '+', '-', '*', '/',  '\\', '_', '~', '`', '@', '#',
     '$', '%', '^', '&', '(',  ')',  '{', '}', '[', ']', '|'};
+    return WordBreakSym.count(c);
+}
 
 static bool isWordAutoCommit(unsigned char c) {
     static const std::unordered_set<unsigned char> WordAutoCommit = {
@@ -183,11 +186,15 @@ public:
 
         // Reverse search for word auto commit.
         // all char for isWordAutoCommit == true would be ascii.
-        while (start != text.begin() && isWordAutoCommit(*start) &&
-               !charutils::isdigit(lastCharBeforeCursor) &&
-               std::distance(start, end) < MAX_CONTEXT_SIZE) {
+        while (start != text.begin() && isWordAutoCommit(*std::prev(start)) &&
+               std::distance(std::prev(start), end) < MAX_CONTEXT_SIZE) {
             --start;
         }
+        // ignore if previous sym is not valid
+        if (start != text.begin() && !isWordBreakSym(*std::prev(start))) {
+            return;
+        }
+
         FCITX_UNIKEY_DEBUG()
             << "Rebuild surrounding with: "
             << std::string_view(&*start, std::distance(start, end));
@@ -463,11 +470,9 @@ void UnikeyState::preedit(KeyEvent &keyEvent) {
 
         // commit string: if need
         if (!preeditStr_.empty()) {
-            for (auto wordBreakSym : WordBreakSyms) {
-                if (wordBreakSym == preeditStr_.back() && wordBreakSym == sym) {
-                    commit();
-                    return keyEvent.filterAndAccept();
-                }
+            if (isWordBreakSym(sym)) {
+                commit();
+                return keyEvent.filterAndAccept();
             }
         }
         // end commit string
