@@ -35,10 +35,7 @@ static const unsigned int Unikey_OC[] = {
 static constexpr unsigned int NUM_OUTPUTCHARSET = FCITX_ARRAY_SIZE(Unikey_OC);
 static_assert(NUM_OUTPUTCHARSET == UkConvI18NAnnotation::enumLength);
 
-static const unsigned char WordBreakSyms[] = {
-    ',', ';', ':', '.', '\"', '\'', '!', '?', ' ', '<', '>',
-    '=', '+', '-', '*', '/',  '\\', '_', '~', '`', '@', '#',
-    '$', '%', '^', '&', '(',  ')',  '{', '}', '[', ']', '|'};
+static bool isWordBreakSym(unsigned char c) { return WordBreakSyms.count(c); }
 
 static bool isWordAutoCommit(unsigned char c) {
     static const std::unordered_set<unsigned char> WordAutoCommit = {
@@ -47,6 +44,18 @@ static bool isWordAutoCommit(unsigned char c) {
         't', 'v', 'x', 'z', 'B', 'C', 'F', 'G', 'H', 'J', 'K', 'L',
         'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'X', 'Z'};
     return WordAutoCommit.count(c);
+}
+
+static bool isVniChar(uint32_t c) {
+    static const std::unordered_set<uint32_t> vniChar = []() {
+        std::unordered_set<uint32_t> result;
+        for (int i = 0; i < vnl_lastChar; i++) {
+            result.insert(UnicodeComposite[i]);
+        }
+        return result;
+    }();
+
+    return vniChar.count(c);
 }
 
 // code from x-unikey, for convert charset that not is XUtf-8
@@ -145,7 +154,10 @@ public:
             return;
         }
 
-        if (!*engine_->config().surroundingText) {
+        // Check if output charset is utf8, otherwise it doesn't make much
+        // sense.
+        if (!*engine_->config().surroundingText ||
+            *engine_->config().oc != UkConv::XUTF8) {
             return;
         }
 
@@ -157,7 +169,7 @@ public:
             !ic_->surroundingText().isValid()) {
             return;
         }
-        // We need text before the cursor.
+        // We need the character before the cursor.
         const auto &text = ic_->surroundingText().text();
         auto cursor = ic_->surroundingText().cursor();
         auto length = utf8::lengthValidated(text);
@@ -175,22 +187,43 @@ public:
             lastCharBeforeCursor == utf8::NOT_ENOUGH_SPACE) {
             return;
         }
+
+        const auto isValidStateCharacter = [](char c) {
+            return isWordAutoCommit(c) && !charutils::isdigit(c);
+        };
+
         if (std::distance(start, end) != 1 ||
-            !isWordAutoCommit(lastCharBeforeCursor) ||
-            charutils::isdigit(lastCharBeforeCursor)) {
+            !isValidStateCharacter(lastCharBeforeCursor)) {
             return;
         }
 
         // Reverse search for word auto commit.
         // all char for isWordAutoCommit == true would be ascii.
-        while (start != text.begin() && isWordAutoCommit(*start) &&
-               !charutils::isdigit(lastCharBeforeCursor) &&
+        while (start != text.begin() && isValidStateCharacter(*start) &&
                std::distance(start, end) < MAX_CONTEXT_SIZE) {
             --start;
         }
+
+        // The loop will move the character on to an invalid character, if it
+        // doesn't by pass the start point. Need to add by one to move it to the
+        // starting point we expect.
+        if (!isValidStateCharacter(*start)) {
+            ++start;
+        }
+
+        assert(isValidStateCharacter(*start) && start >= text.begin());
+
+        // Check if surrounding is not in a bigger part of word.
+        if (start != text.begin()) {
+            auto chr = utf8::getLastChar(text.begin(), start);
+            if (isVniChar(chr)) {
+                return;
+            }
+        }
+
         FCITX_UNIKEY_DEBUG()
-            << "Rebuild surrounding with: "
-            << std::string_view(&*start, std::distance(start, end));
+            << "Rebuild surrounding with: \""
+            << std::string_view(&*start, std::distance(start, end)) << "\"";
         for (; start != end; ++start) {
             uic_.putChar(*start);
             autoCommit_ = true;
@@ -463,11 +496,9 @@ void UnikeyState::preedit(KeyEvent &keyEvent) {
 
         // commit string: if need
         if (!preeditStr_.empty()) {
-            for (auto wordBreakSym : WordBreakSyms) {
-                if (wordBreakSym == preeditStr_.back() && wordBreakSym == sym) {
-                    commit();
-                    return keyEvent.filterAndAccept();
-                }
+            if (preeditStr_.back() == sym && isWordBreakSym(sym)) {
+                commit();
+                return keyEvent.filterAndAccept();
             }
         }
         // end commit string

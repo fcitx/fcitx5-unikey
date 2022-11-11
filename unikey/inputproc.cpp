@@ -4,7 +4,9 @@
  * SPDX-License-Identifier: LGPL-2.0-or-later
  */
 #include "inputproc.h"
+#include <array>
 #include <iostream>
+#include <unordered_set>
 
 using namespace std;
 
@@ -15,7 +17,7 @@ unsigned char WordBreakSyms[] = {
     '_', '~', '`', '@', '#', '$', '%', '^', '&', '(', ')', '{', '}', '[', ']'};
 */
 
-unsigned char WordBreakSyms[] = {
+const std::unordered_set<unsigned char> WordBreakSyms = {
     ',', ';', ':', '.', '\"', '\'', '!',  '?', ' ', '<',
     '>', '=', '+', '-', '*',  '/',  '\\', '_', '@', '#',
     '$', '%', '&', '(', ')',  '{',  '}',  '[', ']', '|'}; // we excluded ~, `, ^
@@ -155,9 +157,8 @@ void SetupInputClassifierTable() {
     UkcMap[(unsigned char)'w'] = ukcNonVn;
     UkcMap[(unsigned char)'W'] = ukcNonVn;
 
-    int count = sizeof(WordBreakSyms) / sizeof(unsigned char);
-    for (i = 0; i < count; i++)
-        UkcMap[WordBreakSyms[i]] = ukcWordBreak;
+    for (auto wordBreakSym : WordBreakSyms)
+        UkcMap[wordBreakSym] = ukcWordBreak;
 
     // Calculate IsoVnLexiMap
     for (i = 0; i < 256; i++) {

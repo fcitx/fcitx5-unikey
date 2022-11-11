@@ -8,6 +8,7 @@
 
 #include "keycons.h"
 #include "vnlexi.h"
+#include <unordered_set>
 
 #if defined(_WIN32)
 #define DllExport __declspec(dllexport)
@@ -106,5 +107,7 @@ extern VnLexiName IsoVnLexiMap[];
 inline VnLexiName IsoToVnLexi(unsigned int keyCode) {
     return (keyCode >= 256) ? vnl_nonVnChar : IsoVnLexiMap[keyCode];
 }
+
+extern const std::unordered_set<unsigned char> WordBreakSyms;
 
 #endif

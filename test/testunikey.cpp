@@ -1750,6 +1750,8 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
         auto *testfrontend = instance->addonManager().addon("testfrontend");
         auto uuid =
             testfrontend->call<ITestFrontend::createInputContext>("testapp");
+        auto ic = instance->inputContextManager().findByUUID(uuid);
+        ic->setCapabilityFlags(CapabilityFlag::SurroundingText);
         testfrontend->call<ITestFrontend::pushCommitExpectation>("ăo ");
         testfrontend->call<ITestFrontend::pushCommitExpectation>("âo ");
         testfrontend->call<ITestFrontend::pushCommitExpectation>("ăo ");
@@ -1849,6 +1851,26 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
             testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"),
                                                         false);
         }
+
+        ic->reset();
+        ic->surroundingText().setText("q", 1, 1);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("uẻ");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("u"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("e"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("r"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
+        ic->reset();
+        ic->surroundingText().setText("reset", 5, 5);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("e");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("e"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("e");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("e"), false);
+        instance->deactivate();
 
         dispatcher->schedule([dispatcher, instance]() {
             dispatcher->detach();
