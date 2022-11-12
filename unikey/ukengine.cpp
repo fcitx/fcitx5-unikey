@@ -1270,9 +1270,9 @@ int UkEngine::processHookWithUO(UkKeyEvent &ev) {
                 // uo -> uo+ if prefixed by "h", "kh", "th", or stand alone
                 if ((vs == vs_uo || vs == vs_uor) && vEnd == m_current &&
                     ((m_buffer[m_current].form == vnw_cv &&
-                        (m_buffer[m_current - 2].cseq == cs_h  ||
-                         m_buffer[m_current - 2].cseq == cs_kh ||
-                         m_buffer[m_current - 2].cseq == cs_th   )) ||
+                      (m_buffer[m_current - 2].cseq == cs_h ||
+                       m_buffer[m_current - 2].cseq == cs_kh ||
+                       m_buffer[m_current - 2].cseq == cs_th)) ||
                      m_buffer[m_current].form == vnw_v)) {
                     newVs = vs_uoh;
                     markChange(vStart + 1);
@@ -1967,7 +1967,7 @@ int UkEngine::appendVowel(UkKeyEvent &ev) {
 
         // u+o/uo+ + u/i -> u+o+ + u/i
         if ((vs == vs_uoh || vs == vs_uho) &&
-             (lowerSym == vnl_i || lowerSym == vnl_u)) {
+            (lowerSym == vnl_i || lowerSym == vnl_u)) {
             if (vs == vs_uho) {
                 markChange(m_current - 1);
                 prev.vnSym = vnl_oh;
