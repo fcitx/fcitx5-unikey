@@ -641,6 +641,7 @@ std::map<std::string, std::string> expectedTelexData{
     {"iuxx", "iux"},
     {"ix", "ĩ"},
     {"ixx", "ix"},
+    {"huwou", "hươu"},
     {"o", "o"},
     {"oc", "oc"},
     // {"ocf", "òc"},
