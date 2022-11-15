@@ -912,12 +912,16 @@ bool isValidCV(ConSeq c, VowelSeq v) {
 
     VowelSeqInfo &vInfo = VSeqList[v];
 
+    // gi doesn't go with i
+    // qu doesn't go with u, uh
+    // q  doesn't go with any vowel
     if ((c == cs_gi && vInfo.v[0] == vnl_i) ||
-        (c == cs_qu && vInfo.v[0] == vnl_u))
-        return false; // gi doesn't go with i, qu doesn't go with u
+        (c == cs_qu && (vInfo.v[0] == vnl_u || vInfo.v[0] == vnl_uh)) ||
+        (c == cs_q ))
+        return false;
 
+    // k can only go with the following vowel sequences
     if (c == cs_k) {
-        // k can only go with the following vowel sequences
         static VowelSeq kVseq[] = {vs_e,   vs_i,    vs_y,  vs_er, vs_eo,
                                    vs_eu,  vs_eru,  vs_ia, vs_ie, vs_ier,
                                    vs_ieu, vs_ieru, vs_nil};
