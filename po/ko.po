@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-10-29 20:25+0000\n"
+"POT-Creation-Date: 2022-11-18 20:25+0000\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
 "Last-Translator: JungHee Lee <daemul72@gmail.com>, 2022\n"
 "Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
@@ -194,7 +194,7 @@ msgstr ""
 msgid "Horn: U, O become U+, O+"
 msgstr ""
 
-#: src/unikey-config.h:41 src/unikey-im.cpp:222
+#: src/unikey-config.h:41 src/unikey-im.cpp:255
 msgid "Input Method"
 msgstr "입력기"
 
@@ -223,23 +223,23 @@ msgstr "키 정의"
 msgid "Keymap"
 msgstr "키맵"
 
-#: src/unikey-config.h:61
+#: src/unikey-config.h:63
 msgid "Keymap Editor"
 msgstr "키맵 편집기"
 
-#: macro-editor/model.cpp:27 src/unikey-im.cpp:285
+#: macro-editor/model.cpp:27 src/unikey-im.cpp:318
 msgid "Macro"
 msgstr "매크로"
 
-#: src/unikey-im.cpp:532
+#: src/unikey-im.cpp:567
 msgid "Macro Disabled"
 msgstr "매크로 비활성화됨"
 
-#: src/unikey-config.h:59
+#: src/unikey-config.h:61
 msgid "Macro Editor"
 msgstr "매크로 편집기"
 
-#: src/unikey-im.cpp:531
+#: src/unikey-im.cpp:566
 msgid "Macro Enabled"
 msgstr "매크로 활성화됨"
 
@@ -288,7 +288,7 @@ msgstr ""
 msgid "Output Charset"
 msgstr ""
 
-#: src/unikey-im.cpp:248
+#: src/unikey-im.cpp:281
 msgid "Output charset"
 msgstr ""
 
@@ -312,15 +312,15 @@ msgstr "간소한 Telex"
 msgid "Simple Telex2"
 msgstr "간소한 Telex2"
 
-#: src/unikey-im.cpp:540
+#: src/unikey-im.cpp:575
 msgid "Spell Check Disabled"
 msgstr "철자 검사 비활성화됨"
 
-#: src/unikey-im.cpp:539
+#: src/unikey-im.cpp:574
 msgid "Spell Check Enabled"
 msgstr "철자 검사 활성화됨"
 
-#: src/unikey-im.cpp:273
+#: src/unikey-im.cpp:306
 msgid "Spell check"
 msgstr "철자 검사"
 
@@ -362,6 +362,10 @@ msgstr ""
 
 #: keymap-editor/actions.cpp:46
 msgid "U with horn [U+]"
+msgstr ""
+
+#: src/unikey-config.h:59
+msgid "Underline the preedit text"
 msgstr ""
 
 #: src/unikey-config.h:28

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-06-12 20:25+0000\n"
+"POT-Creation-Date: 2022-11-18 20:25+0000\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
 "Last-Translator: roxfr <roxfr@outlook.fr>, 2022\n"
 "Language-Team: French (https://www.transifex.com/fcitx/teams/12005/fr/)\n"
@@ -193,7 +193,7 @@ msgstr "Klaxon : U devient U+"
 msgid "Horn: U, O become U+, O+"
 msgstr "Corne : U, O deviennent U+, O+"
 
-#: src/unikey-config.h:41 src/unikey-im.cpp:222
+#: src/unikey-config.h:41 src/unikey-im.cpp:255
 msgid "Input Method"
 msgstr "Méthode de saisie"
 
@@ -222,23 +222,23 @@ msgstr "Définition de clé"
 msgid "Keymap"
 msgstr "Keymap"
 
-#: src/unikey-config.h:61
+#: src/unikey-config.h:63
 msgid "Keymap Editor"
 msgstr "Éditeur de Keymap"
 
-#: macro-editor/model.cpp:27 src/unikey-im.cpp:285
+#: macro-editor/model.cpp:27 src/unikey-im.cpp:318
 msgid "Macro"
 msgstr "Macro"
 
-#: src/unikey-im.cpp:532
+#: src/unikey-im.cpp:567
 msgid "Macro Disabled"
 msgstr "Macro désactivée"
 
-#: src/unikey-config.h:59
+#: src/unikey-config.h:61
 msgid "Macro Editor"
 msgstr "Éditeur de macros"
 
-#: src/unikey-im.cpp:531
+#: src/unikey-im.cpp:566
 msgid "Macro Enabled"
 msgstr "Macro activée"
 
@@ -287,7 +287,7 @@ msgstr "O avec klaxon [O+]"
 msgid "Output Charset"
 msgstr "Jeu de caractères de sortie"
 
-#: src/unikey-im.cpp:248
+#: src/unikey-im.cpp:281
 msgid "Output charset"
 msgstr "Jeu de caractères de sortie"
 
@@ -311,15 +311,15 @@ msgstr "Télex simple"
 msgid "Simple Telex2"
 msgstr "Télex2 simple"
 
-#: src/unikey-im.cpp:540
+#: src/unikey-im.cpp:575
 msgid "Spell Check Disabled"
 msgstr "Vérification orthographique désactivée"
 
-#: src/unikey-im.cpp:539
+#: src/unikey-im.cpp:574
 msgid "Spell Check Enabled"
 msgstr "Vérification orthographique activée"
 
-#: src/unikey-im.cpp:273
+#: src/unikey-im.cpp:306
 msgid "Spell check"
 msgstr "Vérification orthographique"
 
@@ -362,6 +362,10 @@ msgstr "Tonalité ◌̉ (crochet au-dessus)"
 #: keymap-editor/actions.cpp:46
 msgid "U with horn [U+]"
 msgstr "U avec klaxon [U+]"
+
+#: src/unikey-config.h:59
+msgid "Underline the preedit text"
+msgstr ""
 
 #: src/unikey-config.h:28
 msgid "Unicode"

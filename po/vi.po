@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-10-31 20:25+0000\n"
+"POT-Creation-Date: 2022-11-18 20:25+0000\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
 "Last-Translator: Zen Fas, 2022\n"
 "Language-Team: Vietnamese (https://www.transifex.com/fcitx/teams/12005/vi/)\n"
@@ -193,7 +193,7 @@ msgstr "Dấu móc: U thành Ư"
 msgid "Horn: U, O become U+, O+"
 msgstr "Dấu móc: U, O thành Ư, Ơ"
 
-#: src/unikey-config.h:41 src/unikey-im.cpp:222
+#: src/unikey-config.h:41 src/unikey-im.cpp:255
 msgid "Input Method"
 msgstr "Kiểu gõ"
 
@@ -222,23 +222,23 @@ msgstr "Định nghĩa phím"
 msgid "Keymap"
 msgstr "Phím"
 
-#: src/unikey-config.h:61
+#: src/unikey-config.h:63
 msgid "Keymap Editor"
 msgstr "Biên tập bàn phím"
 
-#: macro-editor/model.cpp:27 src/unikey-im.cpp:285
+#: macro-editor/model.cpp:27 src/unikey-im.cpp:318
 msgid "Macro"
 msgstr "Gõ tắt"
 
-#: src/unikey-im.cpp:532
+#: src/unikey-im.cpp:567
 msgid "Macro Disabled"
 msgstr "Tắt gõ tắt"
 
-#: src/unikey-config.h:59
+#: src/unikey-config.h:61
 msgid "Macro Editor"
 msgstr "Bảng gõ tắt"
 
-#: src/unikey-im.cpp:531
+#: src/unikey-im.cpp:566
 msgid "Macro Enabled"
 msgstr "Cho phép gõ tắt"
 
@@ -287,7 +287,7 @@ msgstr "Chữ [Ơ]"
 msgid "Output Charset"
 msgstr "Bảng Mã"
 
-#: src/unikey-im.cpp:248
+#: src/unikey-im.cpp:281
 msgid "Output charset"
 msgstr "Bảng mã"
 
@@ -311,15 +311,15 @@ msgstr "Simple Telex"
 msgid "Simple Telex2"
 msgstr "Simple Telex2"
 
-#: src/unikey-im.cpp:540
+#: src/unikey-im.cpp:575
 msgid "Spell Check Disabled"
 msgstr "Tắt kiểm tra chính tả"
 
-#: src/unikey-im.cpp:539
+#: src/unikey-im.cpp:574
 msgid "Spell Check Enabled"
 msgstr "Bật kiểm tra chính tả"
 
-#: src/unikey-im.cpp:273
+#: src/unikey-im.cpp:306
 msgid "Spell check"
 msgstr "Kiểm tra chính tả"
 
@@ -362,6 +362,10 @@ msgstr "Dấu hỏi"
 #: keymap-editor/actions.cpp:46
 msgid "U with horn [U+]"
 msgstr "Chữ [Ư]"
+
+#: src/unikey-config.h:59
+msgid "Underline the preedit text"
+msgstr ""
 
 #: src/unikey-config.h:28
 msgid "Unicode"

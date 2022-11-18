@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-05-21 05:58+0000\n"
+"POT-Creation-Date: 2022-11-18 20:25+0000\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
 "Last-Translator: Ettore Atalan <atalanttore@googlemail.com>, 2022\n"
 "Language-Team: German (https://www.transifex.com/fcitx/teams/12005/de/)\n"
@@ -28,14 +28,14 @@ msgstr ""
 msgid "&Add"
 msgstr "&Hinzufügen"
 
-#. i18n: file: keymap-editor/editor.ui:114
+#. i18n: file: keymap-editor/editor.ui:128
 #. i18n: ectx: property (text), widget (QPushButton, addButton)
 #: rc.cpp:27
 #, kde-format
 msgid "&Add / Update"
 msgstr ""
 
-#. i18n: file: keymap-editor/editor.ui:147
+#. i18n: file: keymap-editor/editor.ui:161
 #. i18n: ectx: property (text), widget (QPushButton, deleteButton)
 #. i18n: file: macro-editor/editor.ui:47
 #. i18n: ectx: property (text), widget (QPushButton, deleteButton)
@@ -44,7 +44,7 @@ msgstr ""
 msgid "&Delete"
 msgstr "&Löschen"
 
-#. i18n: file: keymap-editor/editor.ui:187
+#. i18n: file: keymap-editor/editor.ui:201
 #. i18n: ectx: property (text), widget (QPushButton, exportButton)
 #. i18n: file: macro-editor/editor.ui:87
 #. i18n: ectx: property (text), widget (QPushButton, exportButton)
@@ -53,7 +53,7 @@ msgstr "&Löschen"
 msgid "&Export"
 msgstr "&Export"
 
-#. i18n: file: keymap-editor/editor.ui:176
+#. i18n: file: keymap-editor/editor.ui:190
 #. i18n: ectx: property (text), widget (QPushButton, importButton)
 #. i18n: file: macro-editor/editor.ui:76
 #. i18n: ectx: property (text), widget (QPushButton, importButton)
@@ -77,7 +77,7 @@ msgstr ""
 msgid "A with circumflex [A^]"
 msgstr ""
 
-#. i18n: file: keymap-editor/editor.ui:77
+#. i18n: file: keymap-editor/editor.ui:84
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: rc.cpp:21
 #, kde-format
@@ -142,7 +142,7 @@ msgstr ""
 msgid "D with stroke [-D]"
 msgstr ""
 
-#. i18n: file: keymap-editor/editor.ui:158
+#. i18n: file: keymap-editor/editor.ui:172
 #. i18n: ectx: property (text), widget (QPushButton, clearButton)
 #. i18n: file: macro-editor/editor.ui:58
 #. i18n: ectx: property (text), widget (QPushButton, clearButton)
@@ -194,7 +194,7 @@ msgstr ""
 msgid "Horn: U, O become U+, O+"
 msgstr ""
 
-#: src/unikey-config.h:41 src/unikey-im.cpp:222
+#: src/unikey-config.h:41 src/unikey-im.cpp:255
 msgid "Input Method"
 msgstr ""
 
@@ -205,7 +205,7 @@ msgstr ""
 msgid "Input Method:"
 msgstr ""
 
-#. i18n: file: keymap-editor/editor.ui:87
+#. i18n: file: keymap-editor/editor.ui:101
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: rc.cpp:24
 #, kde-format
@@ -223,23 +223,23 @@ msgstr ""
 msgid "Keymap"
 msgstr ""
 
-#: src/unikey-config.h:60
+#: src/unikey-config.h:63
 msgid "Keymap Editor"
 msgstr ""
 
-#: macro-editor/model.cpp:27 src/unikey-im.cpp:285
+#: macro-editor/model.cpp:27 src/unikey-im.cpp:318
 msgid "Macro"
 msgstr ""
 
-#: src/unikey-im.cpp:532
+#: src/unikey-im.cpp:567
 msgid "Macro Disabled"
 msgstr ""
 
-#: src/unikey-config.h:58
+#: src/unikey-config.h:61
 msgid "Macro Editor"
 msgstr ""
 
-#: src/unikey-im.cpp:531
+#: src/unikey-im.cpp:566
 msgid "Macro Enabled"
 msgstr ""
 
@@ -254,14 +254,14 @@ msgstr "Makro:"
 msgid "Microsoft Vietnamese"
 msgstr ""
 
-#. i18n: file: keymap-editor/editor.ui:136
+#. i18n: file: keymap-editor/editor.ui:150
 #. i18n: ectx: property (text), widget (QPushButton, moveDownButton)
 #: rc.cpp:33
 #, kde-format
 msgid "Move &Down"
 msgstr ""
 
-#. i18n: file: keymap-editor/editor.ui:125
+#. i18n: file: keymap-editor/editor.ui:139
 #. i18n: ectx: property (text), widget (QPushButton, moveUpButton)
 #: rc.cpp:30
 #, kde-format
@@ -288,7 +288,7 @@ msgstr ""
 msgid "Output Charset"
 msgstr ""
 
-#: src/unikey-im.cpp:248
+#: src/unikey-im.cpp:281
 msgid "Output charset"
 msgstr ""
 
@@ -312,15 +312,15 @@ msgstr ""
 msgid "Simple Telex2"
 msgstr ""
 
-#: src/unikey-im.cpp:540
+#: src/unikey-im.cpp:575
 msgid "Spell Check Disabled"
 msgstr ""
 
-#: src/unikey-im.cpp:539
+#: src/unikey-im.cpp:574
 msgid "Spell Check Enabled"
 msgstr ""
 
-#: src/unikey-im.cpp:273
+#: src/unikey-im.cpp:306
 msgid "Spell check"
 msgstr ""
 
@@ -362,6 +362,10 @@ msgstr ""
 
 #: keymap-editor/actions.cpp:46
 msgid "U with horn [U+]"
+msgstr ""
+
+#: src/unikey-config.h:59
+msgid "Underline the preedit text"
 msgstr ""
 
 #: src/unikey-config.h:28

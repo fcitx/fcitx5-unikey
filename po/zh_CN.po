@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-05-21 20:24+0000\n"
+"POT-Creation-Date: 2022-11-18 20:25+0000\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2022\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -194,7 +194,7 @@ msgstr "触角：U 变为 U+"
 msgid "Horn: U, O become U+, O+"
 msgstr "触角：U，O 变为 U+，O+"
 
-#: src/unikey-config.h:41 src/unikey-im.cpp:222
+#: src/unikey-config.h:41 src/unikey-im.cpp:255
 msgid "Input Method"
 msgstr "输入法"
 
@@ -223,23 +223,23 @@ msgstr "按键定义"
 msgid "Keymap"
 msgstr "按键映射"
 
-#: src/unikey-config.h:61
+#: src/unikey-config.h:63
 msgid "Keymap Editor"
 msgstr "按键映射编辑器"
 
-#: macro-editor/model.cpp:27 src/unikey-im.cpp:285
+#: macro-editor/model.cpp:27 src/unikey-im.cpp:318
 msgid "Macro"
 msgstr "宏"
 
-#: src/unikey-im.cpp:532
+#: src/unikey-im.cpp:567
 msgid "Macro Disabled"
 msgstr "宏已禁用"
 
-#: src/unikey-config.h:59
+#: src/unikey-config.h:61
 msgid "Macro Editor"
 msgstr "宏编辑器"
 
-#: src/unikey-im.cpp:531
+#: src/unikey-im.cpp:566
 msgid "Macro Enabled"
 msgstr "宏已启用"
 
@@ -288,7 +288,7 @@ msgstr "带触角的 O [O+]"
 msgid "Output Charset"
 msgstr "输出字符集"
 
-#: src/unikey-im.cpp:248
+#: src/unikey-im.cpp:281
 msgid "Output charset"
 msgstr "输出字符集"
 
@@ -312,15 +312,15 @@ msgstr "简化 Telex"
 msgid "Simple Telex2"
 msgstr "简化 Telex2"
 
-#: src/unikey-im.cpp:540
+#: src/unikey-im.cpp:575
 msgid "Spell Check Disabled"
 msgstr "拼写检查已禁用"
 
-#: src/unikey-im.cpp:539
+#: src/unikey-im.cpp:574
 msgid "Spell Check Enabled"
 msgstr "拼写检查已启用"
 
-#: src/unikey-im.cpp:273
+#: src/unikey-im.cpp:306
 msgid "Spell check"
 msgstr "拼写检查"
 
@@ -363,6 +363,10 @@ msgstr "声调 ◌̉ (上钩符)"
 #: keymap-editor/actions.cpp:46
 msgid "U with horn [U+]"
 msgstr "带触角的 U [U+]"
+
+#: src/unikey-config.h:59
+msgid "Underline the preedit text"
+msgstr ""
 
 #: src/unikey-config.h:28
 msgid "Unicode"
