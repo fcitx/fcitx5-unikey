@@ -917,7 +917,7 @@ bool isValidCV(ConSeq c, VowelSeq v) {
     // q  doesn't go with any vowel
     if ((c == cs_gi && vInfo.v[0] == vnl_i) ||
         (c == cs_qu && (vInfo.v[0] == vnl_u || vInfo.v[0] == vnl_uh)) ||
-        (c == cs_q ))
+        (c == cs_q))
         return false;
 
     // k can only go with the following vowel sequences
