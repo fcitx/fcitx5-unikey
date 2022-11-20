@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-11-18 20:25+0000\n"
+"POT-Creation-Date: 2022-11-20 06:33+0000\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
 "Last-Translator: csslayer <wengxt@gmail.com>, 2022\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
@@ -366,7 +366,7 @@ msgstr "带触角的 U [U+]"
 
 #: src/unikey-config.h:59
 msgid "Underline the preedit text"
-msgstr ""
+msgstr "预编辑文本显示下划线"
 
 #: src/unikey-config.h:28
 msgid "Unicode"
