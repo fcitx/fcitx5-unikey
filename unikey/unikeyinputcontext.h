@@ -52,6 +52,9 @@ public:
     void filter(unsigned int ch);
     void putChar(unsigned int ch); // put new char without filtering
 
+    // call to rebuild preedit from surrounding char
+    void rebuildChar(VnLexiName ch);
+
     // call this before UnikeyFilter for correctly processing some TELEX
     // shortcuts
     void setCapsState(int shiftPressed, int CapsLockOn);

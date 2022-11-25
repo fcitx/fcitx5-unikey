@@ -1874,10 +1874,24 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("e"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
 
-        testfrontend->call<ITestFrontend::pushCommitExpectation>("e");
-        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("e"), false);
-        instance->deactivate();
+        config.setValueByPath("ModifySurroundingText", "True");
+        unikey->setConfig(config);
 
+        ic->reset();
+        ic->surroundingText().setText("nga", 3, 3);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("ngả");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("r"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
+        ic->reset();
+        ic->surroundingText().setText("ngả nghieng", 11, 11);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("nghiêng");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("e"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
+        instance->deactivate();
         dispatcher->schedule([dispatcher, instance]() {
             dispatcher->detach();
             instance->exit();

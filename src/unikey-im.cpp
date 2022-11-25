@@ -27,7 +27,7 @@ FCITX_DEFINE_LOG_CATEGORY(unikey, "unikey");
 namespace {
 
 constexpr auto CONVERT_BUF_SIZE = 1024;
-constexpr auto MAX_CONTEXT_SIZE = 20;
+constexpr auto MAX_LENGTH_VNWORD = 7;
 static const unsigned int Unikey_OC[] = {
     CONV_CHARSET_XUTF8,  CONV_CHARSET_TCVN3,     CONV_CHARSET_VNIWIN,
     CONV_CHARSET_VIQR,   CONV_CHARSET_BKHCM2,    CONV_CHARSET_UNI_CSTRING,
@@ -46,16 +46,28 @@ static bool isWordAutoCommit(unsigned char c) {
     return WordAutoCommit.count(c);
 }
 
-static bool isVniChar(uint32_t c) {
-    static const std::unordered_set<uint32_t> vniChar = []() {
-        std::unordered_set<uint32_t> result;
+static VnLexiName charToVnLexi(uint32_t ch) {
+    static const std::unordered_map<uint32_t, VnLexiName> map = []() {
+        std::unordered_map<uint32_t, VnLexiName> result;
         for (int i = 0; i < vnl_lastChar; i++) {
-            result.insert(UnicodeComposite[i]);
+            result.insert({UnicodeTable[i], static_cast<VnLexiName>(i)});
         }
         return result;
     }();
 
-    return vniChar.count(c);
+    if (auto search = map.find(ch); search != map.end()) {
+        return search->second;
+    } else {
+        return vnl_nonVnChar;
+    }
+}
+
+static bool isVnChar(uint32_t ch, VnLexiName *ret = nullptr) {
+    VnLexiName lexi = charToVnLexi(ch);
+    if (ret) {
+        *ret = lexi;
+    }
+    return (lexi != vnl_nonVnChar);
 }
 
 // code from x-unikey, for convert charset that not is XUtf-8
@@ -103,6 +115,10 @@ public:
             return;
         }
 
+        if (keyEvent.key().isSimple() &&
+            !keyEvent.rawKey().check(FcitxKey_space)) {
+            rebuildPreedit();
+        }
         preedit(keyEvent);
 
         // check last keyevent with shift
@@ -156,7 +172,9 @@ public:
 
         // Check if output charset is utf8, otherwise it doesn't make much
         // sense.
+        // conflict with the rebuildPreedit feature
         if (!*engine_->config().surroundingText ||
+            *engine_->config().modifySurroundingText ||
             *engine_->config().oc != UkConv::XUTF8) {
             return;
         }
@@ -200,7 +218,7 @@ public:
         // Reverse search for word auto commit.
         // all char for isWordAutoCommit == true would be ascii.
         while (start != text.begin() && isValidStateCharacter(*start) &&
-               std::distance(start, end) < MAX_CONTEXT_SIZE) {
+               std::distance(start, end) < MAX_LENGTH_VNWORD) {
             --start;
         }
 
@@ -216,7 +234,7 @@ public:
         // Check if surrounding is not in a bigger part of word.
         if (start != text.begin()) {
             auto chr = utf8::getLastChar(text.begin(), start);
-            if (isVniChar(chr)) {
+            if (isVnChar(chr)) {
                 return;
             }
         }
@@ -228,6 +246,65 @@ public:
             uic_.putChar(*start);
             autoCommit_ = true;
         }
+    }
+
+    // After rebuild preedit, make sure nothing else calls commit
+    void rebuildPreedit() {
+        if (!*engine_->config().modifySurroundingText ||
+            *engine_->config().oc != UkConv::XUTF8) {
+            return;
+        }
+
+        if (!uic_.isAtWordBeginning()) {
+            return;
+        }
+
+        if (!ic_->capabilityFlags().test(CapabilityFlag::SurroundingText) ||
+            !ic_->surroundingText().isValid() ||
+            !ic_->surroundingText().selectedText().empty()) {
+            return;
+        }
+
+        const auto &text = ic_->surroundingText().text();
+        auto cursor = ic_->surroundingText().cursor();
+        auto length = utf8::lengthValidated(text);
+        if (length == utf8::INVALID_LENGTH) {
+            return;
+        }
+        if (cursor <= 0 && cursor > length) {
+            return;
+        }
+
+        // get the last word before the cursor
+        std::vector<VnLexiName> chars;
+
+        VnLexiName ch;
+        unsigned int minStart =
+            std::max(0, (int)cursor - MAX_LENGTH_VNWORD - 1);
+        auto start = utf8::nextNChar(text.begin(), minStart);
+        auto end = utf8::nextNChar(start, cursor - minStart);
+        auto prev = end;
+        for (unsigned int i = 1; i <= cursor - minStart; ++i) {
+            prev = utf8::nextNChar(start, cursor - minStart - i);
+            if (isVnChar(utf8::getChar(prev, end), &ch)) {
+                chars.insert(chars.begin(), ch);
+            } else {
+                break;
+            }
+        }
+
+        length = chars.size();
+        if (length <= 0 || length > MAX_LENGTH_VNWORD) {
+            return;
+        }
+
+        for (auto ch : chars) {
+            uic_.rebuildChar(ch);
+            syncState();
+        }
+
+        ic_->deleteSurroundingText(-length, length);
+        updatePreedit();
     }
 
     bool mayRebuildStateFromSurroundingText_ = false;
@@ -457,7 +534,9 @@ void UnikeyState::preedit(KeyEvent &keyEvent) {
         // (like consonant - phu am) if macro enabled, then not auto commit.
         // Because macro may change any word
         if (!*engine_->config().macro &&
-            (uic_.isAtWordBeginning() || autoCommit_)) {
+            (uic_.isAtWordBeginning() || autoCommit_) &&
+            // conflict with the rebuildPreedit feature
+            !*engine_->config().modifySurroundingText) {
             if (isWordAutoCommit(sym)) {
                 uic_.putChar(sym);
                 autoCommit_ = true;
