@@ -6,14 +6,15 @@
 # csslayer <wengxt@gmail.com>, 2018
 # 黃柏諺 <s8321414@gmail.com>, 2018
 # bruh, 2020
+# Neko ◣ 0xFF, 2022
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-11-18 20:25+0000\n"
+"POT-Creation-Date: 2022-12-17 20:25+0000\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
-"Last-Translator: bruh, 2020\n"
+"Last-Translator: Neko ◣ 0xFF, 2022\n"
 "Language-Team: Chinese (Taiwan) (https://www.transifex.com/fcitx/teams/12005/"
 "zh_TW/)\n"
 "Language: zh_TW\n"
@@ -34,7 +35,7 @@ msgstr "新增 (&A)"
 #: rc.cpp:27
 #, kde-format
 msgid "&Add / Update"
-msgstr ""
+msgstr "加入 / 更新(&A)"
 
 #. i18n: file: keymap-editor/editor.ui:161
 #. i18n: ectx: property (text), widget (QPushButton, deleteButton)
@@ -68,7 +69,7 @@ msgstr "匯入 (&I)"
 #: rc.cpp:12
 #, kde-format
 msgid "&Load"
-msgstr ""
+msgstr "戴入(&L)"
 
 #: keymap-editor/actions.cpp:38
 msgid "A with breve [A(]"
@@ -83,7 +84,7 @@ msgstr ""
 #: rc.cpp:21
 #, kde-format
 msgid "Action:"
-msgstr ""
+msgstr "動作:"
 
 #: src/unikey-config.h:54
 msgid "Allow type with more freedom"
@@ -95,7 +96,7 @@ msgstr ""
 
 #: src/unikey-config.h:29
 msgid "BK HCM 2"
-msgstr ""
+msgstr "BK HCM 2"
 
 #: keymap-editor/actions.cpp:30
 msgid "Breve: A becomes A("
@@ -106,22 +107,22 @@ msgstr ""
 #: rc.cpp:6
 #, kde-format
 msgid "Built-in Input Methods"
-msgstr ""
+msgstr "内建輸入法"
 
 #: src/unikey-config.h:30
 msgid "CString"
-msgstr ""
+msgstr "CString"
 
 #. i18n: file: keymap-editor/editor.ui:67
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: rc.cpp:18
 #, kde-format
 msgid "Category:"
-msgstr ""
+msgstr "類別:"
 
 #: keymap-editor/editor.cpp:58
 msgid "Character complements"
-msgstr ""
+msgstr "字元補充"
 
 #: keymap-editor/actions.cpp:20
 msgid "Circumflex for all applicable characters"
@@ -165,15 +166,15 @@ msgstr ""
 
 #: src/unikey-config.h:45
 msgid "Enable Macro"
-msgstr ""
+msgstr "啟用巨集"
 
 #: src/unikey-config.h:44
 msgid "Enable spell check"
-msgstr ""
+msgstr "啟用拼字檢查"
 
 #: keymap-editor/actions.cpp:19
 msgid "Escape key"
-msgstr ""
+msgstr "Esc 键"
 
 #: keymap-editor/actions.cpp:25
 msgid "Horn-Breve: U, O, A, become U+, O+, A("
@@ -197,52 +198,52 @@ msgstr ""
 
 #: src/unikey-config.h:41 src/unikey-im.cpp:255
 msgid "Input Method"
-msgstr ""
+msgstr "輸入法"
 
 #. i18n: file: keymap-editor/editor.ui:30
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: rc.cpp:9
 #, kde-format
 msgid "Input Method:"
-msgstr ""
+msgstr "輸入法:"
 
 #. i18n: file: keymap-editor/editor.ui:101
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: rc.cpp:24
 #, kde-format
 msgid "Key"
-msgstr ""
+msgstr "按鍵"
 
 #. i18n: file: keymap-editor/editor.ui:61
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: rc.cpp:15
 #, kde-format
 msgid "Key definition"
-msgstr ""
+msgstr "按鍵定義"
 
 #: keymap-editor/model.cpp:32
 msgid "Keymap"
-msgstr ""
+msgstr "按键映射"
 
 #: src/unikey-config.h:63
 msgid "Keymap Editor"
-msgstr ""
+msgstr "按键映射编辑器"
 
 #: macro-editor/model.cpp:27 src/unikey-im.cpp:318
 msgid "Macro"
-msgstr ""
+msgstr "巨集"
 
 #: src/unikey-im.cpp:567
 msgid "Macro Disabled"
-msgstr ""
+msgstr "巨集已停用"
 
 #: src/unikey-config.h:61
 msgid "Macro Editor"
-msgstr ""
+msgstr "巨集編輯器"
 
 #: src/unikey-im.cpp:566
 msgid "Macro Enabled"
-msgstr ""
+msgstr "巨集已啟用"
 
 #. i18n: file: macro-editor/dialog.ui:32
 #. i18n: ectx: property (text), widget (QLabel, label_2)
@@ -253,29 +254,29 @@ msgstr "巨集："
 
 #: keymap-editor/editor.cpp:53 src/unikey-config.h:34
 msgid "Microsoft Vietnamese"
-msgstr ""
+msgstr "微軟越南文"
 
 #. i18n: file: keymap-editor/editor.ui:150
 #. i18n: ectx: property (text), widget (QPushButton, moveDownButton)
 #: rc.cpp:33
 #, kde-format
 msgid "Move &Down"
-msgstr ""
+msgstr "下移(&D)"
 
 #. i18n: file: keymap-editor/editor.ui:139
 #. i18n: ectx: property (text), widget (QPushButton, moveUpButton)
 #: rc.cpp:30
 #, kde-format
 msgid "Move &Up"
-msgstr ""
+msgstr "上移(&U)"
 
 #: src/unikey-config.h:30
 msgid "NCR Decimal"
-msgstr ""
+msgstr "NCR 十進制"
 
 #: src/unikey-config.h:31
 msgid "NCR Hex"
-msgstr ""
+msgstr "NCR 十六進制"
 
 #: keymap-editor/actions.cpp:42
 msgid "O with circumflex [O^]"
@@ -287,11 +288,11 @@ msgstr ""
 
 #: src/unikey-config.h:43
 msgid "Output Charset"
-msgstr ""
+msgstr "輸出字元集"
 
 #: src/unikey-im.cpp:281
 msgid "Output charset"
-msgstr ""
+msgstr "輸出字元集"
 
 #: src/unikey-config.h:47
 msgid "Process W at word begin"
@@ -307,23 +308,23 @@ msgstr ""
 
 #: keymap-editor/editor.cpp:54 src/unikey-config.h:35
 msgid "Simple Telex"
-msgstr ""
+msgstr "簡易 Telex"
 
 #: keymap-editor/editor.cpp:55 src/unikey-config.h:36
 msgid "Simple Telex2"
-msgstr ""
+msgstr "簡易 Telex2"
 
 #: src/unikey-im.cpp:575
 msgid "Spell Check Disabled"
-msgstr ""
+msgstr "拼字檢查已停用"
 
 #: src/unikey-im.cpp:574
 msgid "Spell Check Enabled"
-msgstr ""
+msgstr "拼字檢查已啟用"
 
 #: src/unikey-im.cpp:306
 msgid "Spell check"
-msgstr ""
+msgstr "拼字檢查"
 
 #: keymap-editor/actions.cpp:31
 msgid "Stroke: D becomes -D"
@@ -331,11 +332,11 @@ msgstr ""
 
 #: src/unikey-config.h:28
 msgid "TCVN3"
-msgstr ""
+msgstr "TCVN3"
 
 #: keymap-editor/editor.cpp:50 src/unikey-config.h:33
 msgid "Telex"
-msgstr ""
+msgstr "Telex"
 
 #: keymap-editor/actions.cpp:14
 msgid "Tone ' (acute)"
@@ -367,11 +368,11 @@ msgstr ""
 
 #: src/unikey-config.h:59
 msgid "Underline the preedit text"
-msgstr ""
+msgstr "在預編輯文本下劃線"
 
 #: src/unikey-config.h:28
 msgid "Unicode"
-msgstr ""
+msgstr "Unicode"
 
 #: org.fcitx.Fcitx5.Addon.Unikey.metainfo.xml.in:7 src/unikey.conf.in:3
 msgid "Unikey"
@@ -382,7 +383,7 @@ msgstr "Unikey"
 #: keymap-editor/editor.cpp:103 rc.cpp:3
 #, kde-format
 msgid "Unikey Keymap Editor"
-msgstr ""
+msgstr "Unikey 按键映射編輯器"
 
 #. i18n: file: macro-editor/editor.ui:14
 #. i18n: ectx: property (windowTitle), widget (QWidget, Editor)
@@ -397,27 +398,27 @@ msgstr "Fcitx 的 Unikey 封裝"
 
 #: src/unikey-config.h:52
 msgid "Use oà, _uý (instead of òa, úy)"
-msgstr ""
+msgstr "使用 oà, _uý（而非 òa, úy）"
 
 #: src/unikey-config.h:35
 msgid "UserIM"
-msgstr ""
+msgstr "使用者輸入法"
 
 #: keymap-editor/editor.cpp:52 src/unikey-config.h:29 src/unikey-config.h:34
 msgid "VIQR"
-msgstr ""
+msgstr "VIQR"
 
 #: keymap-editor/editor.cpp:51 src/unikey-config.h:33
 msgid "VNI"
-msgstr ""
+msgstr "VNI"
 
 #: src/unikey-config.h:29
 msgid "VNI Win"
-msgstr ""
+msgstr "VNI Win"
 
 #: keymap-editor/editor.cpp:59
 msgid "Vietnamese characters"
-msgstr ""
+msgstr "越南文字元"
 
 #: org.fcitx.Fcitx5.Addon.Unikey.metainfo.xml.in:8
 msgid "Vietnamese input method"
@@ -425,7 +426,7 @@ msgstr "越南語輸入法"
 
 #: keymap-editor/model.cpp:34 macro-editor/model.cpp:29
 msgid "Word"
-msgstr ""
+msgstr "單字"
 
 #. i18n: file: macro-editor/dialog.ui:25
 #. i18n: ectx: property (text), widget (QLabel, label)
