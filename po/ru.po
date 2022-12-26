@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-11-19 20:25+0000\n"
+"POT-Creation-Date: 2022-12-26 20:31+0000\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2022\n"
 "Language-Team: Russian (https://www.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -177,11 +177,11 @@ msgstr "Клавиша Escape"
 
 #: keymap-editor/actions.cpp:25
 msgid "Horn-Breve: U, O, A, become U+, O+, A("
-msgstr "Рог-Бреве: U, O, A, становится U+, O+, A("
+msgstr "Рожок-Бреве: U, O, A, становится U+, O+, A("
 
 #: keymap-editor/actions.cpp:32
 msgid "Horn-Breve: U, O, A, become U+, O+, A(, or create U+"
-msgstr "Рог-Бреве: U, O, A, становится U+, O+, A(, или создать U+"
+msgstr "Рожок-Бреве: U, O, A, становится U+, O+, A(, или создать U+"
 
 #: keymap-editor/actions.cpp:29
 msgid "Horn: O becomes O+"
@@ -283,7 +283,7 @@ msgstr "O с циркумфлексом [O^]"
 
 #: keymap-editor/actions.cpp:44
 msgid "O with horn [O+]"
-msgstr "O с рогом [O+]"
+msgstr "O с рожком [O+]"
 
 #: src/unikey-config.h:43
 msgid "Output Charset"
@@ -363,7 +363,7 @@ msgstr "Тон ◌̉ (крючок выше)"
 
 #: keymap-editor/actions.cpp:46
 msgid "U with horn [U+]"
-msgstr "U с рогом [U+]"
+msgstr "U с рожком [U+]"
 
 #: src/unikey-config.h:59
 msgid "Underline the preedit text"
@@ -456,8 +456,8 @@ msgstr "о с циркумфлексом [о^]"
 
 #: keymap-editor/actions.cpp:45
 msgid "o with horn [o+]"
-msgstr "o с рогом [o+]"
+msgstr "o с рожком [o+]"
 
 #: keymap-editor/actions.cpp:47
 msgid "u with horn [u+]"
-msgstr "u с рогом [u+]"
+msgstr "u с рожком [u+]"
