@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-12-26 20:31+0000\n"
+"POT-Creation-Date: 2023-01-04 20:25+0000\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
 "Last-Translator: Dmitry <dmitrydmitry761@gmail.com>, 2022\n"
 "Language-Team: Russian (https://www.transifex.com/fcitx/teams/12005/ru/)\n"
@@ -84,6 +84,10 @@ msgstr "A с циркумфлексом [A^]"
 #, kde-format
 msgid "Action:"
 msgstr "Действие:"
+
+#: src/unikey-config.h:60
+msgid "Allow to modify surrounding text (experimental)"
+msgstr ""
 
 #: src/unikey-config.h:54
 msgid "Allow type with more freedom"
@@ -195,7 +199,7 @@ msgstr "Рожок: U становится U+"
 msgid "Horn: U, O become U+, O+"
 msgstr "Рожок: U, O становится U+, O+"
 
-#: src/unikey-config.h:41 src/unikey-im.cpp:255
+#: src/unikey-config.h:41 src/unikey-im.cpp:331
 msgid "Input Method"
 msgstr "Метод ввода"
 
@@ -224,23 +228,23 @@ msgstr "Определение клавиши"
 msgid "Keymap"
 msgstr "Раскладка"
 
-#: src/unikey-config.h:63
+#: src/unikey-config.h:66
 msgid "Keymap Editor"
 msgstr "Редактор раскладки"
 
-#: macro-editor/model.cpp:27 src/unikey-im.cpp:318
+#: macro-editor/model.cpp:27 src/unikey-im.cpp:394
 msgid "Macro"
 msgstr "Макрос"
 
-#: src/unikey-im.cpp:567
+#: src/unikey-im.cpp:645
 msgid "Macro Disabled"
 msgstr "Макрос отключен"
 
-#: src/unikey-config.h:61
+#: src/unikey-config.h:64
 msgid "Macro Editor"
 msgstr "Редактор макросов"
 
-#: src/unikey-im.cpp:566
+#: src/unikey-im.cpp:644
 msgid "Macro Enabled"
 msgstr "Макрос включен"
 
@@ -289,7 +293,7 @@ msgstr "O с рожком [O+]"
 msgid "Output Charset"
 msgstr "Кодировка на выходе"
 
-#: src/unikey-im.cpp:281
+#: src/unikey-im.cpp:357
 msgid "Output charset"
 msgstr "Выходная кодировка"
 
@@ -313,15 +317,15 @@ msgstr "Простой Telex"
 msgid "Simple Telex2"
 msgstr "Простой Telex2"
 
-#: src/unikey-im.cpp:575
+#: src/unikey-im.cpp:653
 msgid "Spell Check Disabled"
 msgstr "Проверка орфографии отключена"
 
-#: src/unikey-im.cpp:574
+#: src/unikey-im.cpp:652
 msgid "Spell Check Enabled"
 msgstr "Проверка орфографии включена"
 
-#: src/unikey-im.cpp:306
+#: src/unikey-im.cpp:382
 msgid "Spell check"
 msgstr "Проверка орфографии"
 
@@ -365,7 +369,7 @@ msgstr "Тон ◌̉ (крючок выше)"
 msgid "U with horn [U+]"
 msgstr "U с рожком [U+]"
 
-#: src/unikey-config.h:59
+#: src/unikey-config.h:62
 msgid "Underline the preedit text"
 msgstr "Подчеркнуть предварительно отредактированный текст"
 

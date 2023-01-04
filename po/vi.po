@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-11-19 20:25+0000\n"
+"POT-Creation-Date: 2023-01-04 20:25+0000\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
 "Last-Translator: trmdi, 2022\n"
 "Language-Team: Vietnamese (https://www.transifex.com/fcitx/teams/12005/vi/)\n"
@@ -83,6 +83,10 @@ msgstr "Chữ [Â]"
 #, kde-format
 msgid "Action:"
 msgstr "Hành động:"
+
+#: src/unikey-config.h:60
+msgid "Allow to modify surrounding text (experimental)"
+msgstr ""
 
 #: src/unikey-config.h:54
 msgid "Allow type with more freedom"
@@ -194,7 +198,7 @@ msgstr "Dấu móc: U thành Ư"
 msgid "Horn: U, O become U+, O+"
 msgstr "Dấu móc: U, O thành Ư, Ơ"
 
-#: src/unikey-config.h:41 src/unikey-im.cpp:255
+#: src/unikey-config.h:41 src/unikey-im.cpp:331
 msgid "Input Method"
 msgstr "Kiểu gõ"
 
@@ -223,23 +227,23 @@ msgstr "Định nghĩa phím"
 msgid "Keymap"
 msgstr "Phím"
 
-#: src/unikey-config.h:63
+#: src/unikey-config.h:66
 msgid "Keymap Editor"
 msgstr "Biên tập bàn phím"
 
-#: macro-editor/model.cpp:27 src/unikey-im.cpp:318
+#: macro-editor/model.cpp:27 src/unikey-im.cpp:394
 msgid "Macro"
 msgstr "Gõ tắt"
 
-#: src/unikey-im.cpp:567
+#: src/unikey-im.cpp:645
 msgid "Macro Disabled"
 msgstr "Tắt gõ tắt"
 
-#: src/unikey-config.h:61
+#: src/unikey-config.h:64
 msgid "Macro Editor"
 msgstr "Bảng gõ tắt"
 
-#: src/unikey-im.cpp:566
+#: src/unikey-im.cpp:644
 msgid "Macro Enabled"
 msgstr "Cho phép gõ tắt"
 
@@ -288,7 +292,7 @@ msgstr "Chữ [Ơ]"
 msgid "Output Charset"
 msgstr "Bảng Mã"
 
-#: src/unikey-im.cpp:281
+#: src/unikey-im.cpp:357
 msgid "Output charset"
 msgstr "Bảng mã"
 
@@ -312,15 +316,15 @@ msgstr "Simple Telex"
 msgid "Simple Telex2"
 msgstr "Simple Telex2"
 
-#: src/unikey-im.cpp:575
+#: src/unikey-im.cpp:653
 msgid "Spell Check Disabled"
 msgstr "Tắt kiểm tra chính tả"
 
-#: src/unikey-im.cpp:574
+#: src/unikey-im.cpp:652
 msgid "Spell Check Enabled"
 msgstr "Bật kiểm tra chính tả"
 
-#: src/unikey-im.cpp:306
+#: src/unikey-im.cpp:382
 msgid "Spell check"
 msgstr "Kiểm tra chính tả"
 
@@ -364,7 +368,7 @@ msgstr "Dấu hỏi"
 msgid "U with horn [U+]"
 msgstr "Chữ [Ư]"
 
-#: src/unikey-config.h:59
+#: src/unikey-config.h:62
 msgid "Underline the preedit text"
 msgstr "Gạch chân từ đang viết"
 

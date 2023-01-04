@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-12-17 20:25+0000\n"
+"POT-Creation-Date: 2023-01-04 20:25+0000\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
 "Last-Translator: Neko ◣ 0xFF, 2022\n"
 "Language-Team: Chinese (Taiwan) (https://www.transifex.com/fcitx/teams/12005/"
@@ -85,6 +85,10 @@ msgstr ""
 #, kde-format
 msgid "Action:"
 msgstr "動作:"
+
+#: src/unikey-config.h:60
+msgid "Allow to modify surrounding text (experimental)"
+msgstr ""
 
 #: src/unikey-config.h:54
 msgid "Allow type with more freedom"
@@ -196,7 +200,7 @@ msgstr ""
 msgid "Horn: U, O become U+, O+"
 msgstr ""
 
-#: src/unikey-config.h:41 src/unikey-im.cpp:255
+#: src/unikey-config.h:41 src/unikey-im.cpp:331
 msgid "Input Method"
 msgstr "輸入法"
 
@@ -225,23 +229,23 @@ msgstr "按鍵定義"
 msgid "Keymap"
 msgstr "按键映射"
 
-#: src/unikey-config.h:63
+#: src/unikey-config.h:66
 msgid "Keymap Editor"
 msgstr "按键映射编辑器"
 
-#: macro-editor/model.cpp:27 src/unikey-im.cpp:318
+#: macro-editor/model.cpp:27 src/unikey-im.cpp:394
 msgid "Macro"
 msgstr "巨集"
 
-#: src/unikey-im.cpp:567
+#: src/unikey-im.cpp:645
 msgid "Macro Disabled"
 msgstr "巨集已停用"
 
-#: src/unikey-config.h:61
+#: src/unikey-config.h:64
 msgid "Macro Editor"
 msgstr "巨集編輯器"
 
-#: src/unikey-im.cpp:566
+#: src/unikey-im.cpp:644
 msgid "Macro Enabled"
 msgstr "巨集已啟用"
 
@@ -290,7 +294,7 @@ msgstr ""
 msgid "Output Charset"
 msgstr "輸出字元集"
 
-#: src/unikey-im.cpp:281
+#: src/unikey-im.cpp:357
 msgid "Output charset"
 msgstr "輸出字元集"
 
@@ -314,15 +318,15 @@ msgstr "簡易 Telex"
 msgid "Simple Telex2"
 msgstr "簡易 Telex2"
 
-#: src/unikey-im.cpp:575
+#: src/unikey-im.cpp:653
 msgid "Spell Check Disabled"
 msgstr "拼字檢查已停用"
 
-#: src/unikey-im.cpp:574
+#: src/unikey-im.cpp:652
 msgid "Spell Check Enabled"
 msgstr "拼字檢查已啟用"
 
-#: src/unikey-im.cpp:306
+#: src/unikey-im.cpp:382
 msgid "Spell check"
 msgstr "拼字檢查"
 
@@ -366,7 +370,7 @@ msgstr ""
 msgid "U with horn [U+]"
 msgstr ""
 
-#: src/unikey-config.h:59
+#: src/unikey-config.h:62
 msgid "Underline the preedit text"
 msgstr "在預編輯文本下劃線"
 

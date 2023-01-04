@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2022-11-18 20:25+0000\n"
+"POT-Creation-Date: 2023-01-04 20:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -76,6 +76,10 @@ msgstr ""
 #: rc.cpp:21
 #, kde-format
 msgid "Action:"
+msgstr ""
+
+#: src/unikey-config.h:60
+msgid "Allow to modify surrounding text (experimental)"
 msgstr ""
 
 #: src/unikey-config.h:54
@@ -188,7 +192,7 @@ msgstr ""
 msgid "Horn: U, O become U+, O+"
 msgstr ""
 
-#: src/unikey-config.h:41 src/unikey-im.cpp:255
+#: src/unikey-config.h:41 src/unikey-im.cpp:331
 msgid "Input Method"
 msgstr ""
 
@@ -217,23 +221,23 @@ msgstr ""
 msgid "Keymap"
 msgstr ""
 
-#: src/unikey-config.h:63
+#: src/unikey-config.h:66
 msgid "Keymap Editor"
 msgstr ""
 
-#: macro-editor/model.cpp:27 src/unikey-im.cpp:318
+#: macro-editor/model.cpp:27 src/unikey-im.cpp:394
 msgid "Macro"
 msgstr ""
 
-#: src/unikey-im.cpp:567
+#: src/unikey-im.cpp:645
 msgid "Macro Disabled"
 msgstr ""
 
-#: src/unikey-config.h:61
+#: src/unikey-config.h:64
 msgid "Macro Editor"
 msgstr ""
 
-#: src/unikey-im.cpp:566
+#: src/unikey-im.cpp:644
 msgid "Macro Enabled"
 msgstr ""
 
@@ -282,7 +286,7 @@ msgstr ""
 msgid "Output Charset"
 msgstr ""
 
-#: src/unikey-im.cpp:281
+#: src/unikey-im.cpp:357
 msgid "Output charset"
 msgstr ""
 
@@ -306,15 +310,15 @@ msgstr ""
 msgid "Simple Telex2"
 msgstr ""
 
-#: src/unikey-im.cpp:575
+#: src/unikey-im.cpp:653
 msgid "Spell Check Disabled"
 msgstr ""
 
-#: src/unikey-im.cpp:574
+#: src/unikey-im.cpp:652
 msgid "Spell Check Enabled"
 msgstr ""
 
-#: src/unikey-im.cpp:306
+#: src/unikey-im.cpp:382
 msgid "Spell check"
 msgstr ""
 
@@ -358,7 +362,7 @@ msgstr ""
 msgid "U with horn [U+]"
 msgstr ""
 
-#: src/unikey-config.h:59
+#: src/unikey-config.h:62
 msgid "Underline the preedit text"
 msgstr ""
 
