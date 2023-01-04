@@ -9,6 +9,7 @@
 #include <mutex>
 #include <stdlib.h>
 #include <string.h>
+#include <unordered_map>
 
 /*
 #if defined(_WIN32)
@@ -1566,6 +1567,7 @@ int UkEngine::processTone(UkKeyEvent &ev) {
 
     int toneOffset = getTonePosition(vs, vEnd == m_current);
     int tonePos = vEnd - (info.len - 1) + toneOffset;
+
     if (m_buffer[tonePos].tone == 0 && ev.tone == 0)
         return processAppend(ev);
 
@@ -2385,6 +2387,60 @@ int UkEngine::process(unsigned int keyCode, int &backs, unsigned char *outBuf,
     outType = m_outType;
 
     return ret;
+}
+//----------------------------------------------------------
+void UkEngine::rebuildChar(VnLexiName ch, int &backs, unsigned char *outBuf,
+                           int &outSize) {
+    static const std::unordered_map<VnLexiName, UkKeyEvName> map{
+        {vnl_Ar, vneRoof_a}, {vnl_Ab, vneBowl},   {vnl_DD, vneDd},
+        {vnl_Er, vneRoof_e}, {vnl_Or, vneRoof_o}, {vnl_Oh, vneHook_o},
+        {vnl_Uh, vneHook_u}};
+
+    if (ch == vnl_nonVnChar) {
+        return;
+    }
+
+    prepareBuffer();
+    m_backs = 0;
+    m_changePos = m_current + 1;
+    m_pOutBuf = outBuf;
+    m_pOutSize = &outSize;
+
+    UkKeyEvent ev;
+
+    auto rootChar = StdVnRootChar[ch];
+    auto noToneChar = StdVnNoTone[ch];
+
+    auto keyCode = UnicodeTable[rootChar];
+    m_pCtrl->input.keyCodeToEvent(keyCode, ev);
+
+    // root char
+    processAppend(ev);
+
+    // add root char to key strokes
+    m_keyCurrent++;
+    m_keyStrokes[m_keyCurrent].ev = ev;
+    m_keyStrokes[m_keyCurrent].converted = true;
+
+    // modify vowel
+    auto it =
+        map.find(noToneChar % 2 == 0 ? static_cast<VnLexiName>(noToneChar)
+                                     : static_cast<VnLexiName>(noToneChar - 1));
+    if (it != map.end()) {
+        ev.evType = it->second;
+        (this->*UkKeyProcList[ev.evType])(ev);
+    }
+
+    // tone
+    auto tone = (ch - noToneChar) / 2;
+    if (tone >= 1 && tone <= 5) {
+        ev.evType = vneTone0 + tone;
+        ev.tone = tone;
+        (this->*UkKeyProcList[ev.evType])(ev);
+    }
+
+    backs = m_backs;
+    writeOutput(outBuf, outSize);
 }
 
 //----------------------------------------------------------

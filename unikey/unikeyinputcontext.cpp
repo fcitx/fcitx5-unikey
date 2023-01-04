@@ -102,6 +102,12 @@ void UnikeyInputContext::putChar(unsigned int ch) {
 }
 
 //--------------------------------------------
+void UnikeyInputContext::rebuildChar(VnLexiName ch) {
+    bufChars_ = sizeof(buf_);
+    engine_.rebuildChar(ch, backspaces_, buf_, bufChars_);
+}
+
+//--------------------------------------------
 void UnikeyInputContext::resetBuf() { engine_.reset(); }
 
 //--------------------------------------------
