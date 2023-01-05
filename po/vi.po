@@ -5,15 +5,15 @@
 # Translators:
 # csslayer <wengxt@gmail.com>, 2018
 # Zen Fas, 2022
-# trmdi, 2022
+# trmdi, 2023
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-01-04 20:25+0000\n"
+"POT-Creation-Date: 2023-01-05 20:25+0000\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
-"Last-Translator: trmdi, 2022\n"
+"Last-Translator: trmdi, 2023\n"
 "Language-Team: Vietnamese (https://www.transifex.com/fcitx/teams/12005/vi/)\n"
 "Language: vi\n"
 "MIME-Version: 1.0\n"
@@ -86,7 +86,7 @@ msgstr "Hành động:"
 
 #: src/unikey-config.h:60
 msgid "Allow to modify surrounding text (experimental)"
-msgstr ""
+msgstr "Cho phép sửa từ đã gõ (thử nghiệm)"
 
 #: src/unikey-config.h:54
 msgid "Allow type with more freedom"
