@@ -6,7 +6,7 @@
 #ifndef BYTE_IO_STREAM_H
 #define BYTE_IO_STREAM_H
 
-//#include "vnconv.h"
+// #include "vnconv.h"
 #include <stdio.h>
 
 typedef unsigned char UKBYTE;
