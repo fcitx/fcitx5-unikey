@@ -7,15 +7,16 @@
 # 黃柏諺 <s8321414@gmail.com>, 2018
 # bruh, 2020
 # Neko ◣ 0xFF, 2022
+# Lau YeeYu, 2023
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-01-04 20:25+0000\n"
+"POT-Creation-Date: 2023-04-25 20:24+0000\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
-"Last-Translator: Neko ◣ 0xFF, 2022\n"
-"Language-Team: Chinese (Taiwan) (https://www.transifex.com/fcitx/teams/12005/"
+"Last-Translator: Lau YeeYu, 2023\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/fcitx/teams/12005/"
 "zh_TW/)\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +29,7 @@ msgstr ""
 #: rc.cpp:60
 #, kde-format
 msgid "&Add"
-msgstr "新增 (&A)"
+msgstr "新增(&A)"
 
 #. i18n: file: keymap-editor/editor.ui:128
 #. i18n: ectx: property (text), widget (QPushButton, addButton)
@@ -44,7 +45,7 @@ msgstr "加入 / 更新(&A)"
 #: rc.cpp:36 rc.cpp:63
 #, kde-format
 msgid "&Delete"
-msgstr "刪除 (&D)"
+msgstr "刪除(&D)"
 
 #. i18n: file: keymap-editor/editor.ui:201
 #. i18n: ectx: property (text), widget (QPushButton, exportButton)
@@ -53,7 +54,7 @@ msgstr "刪除 (&D)"
 #: rc.cpp:45 rc.cpp:72
 #, kde-format
 msgid "&Export"
-msgstr "匯出 (&E)"
+msgstr "匯出(&E)"
 
 #. i18n: file: keymap-editor/editor.ui:190
 #. i18n: ectx: property (text), widget (QPushButton, importButton)
@@ -62,7 +63,7 @@ msgstr "匯出 (&E)"
 #: rc.cpp:42 rc.cpp:69
 #, kde-format
 msgid "&Import"
-msgstr "匯入 (&I)"
+msgstr "匯入(&I)"
 
 #. i18n: file: keymap-editor/editor.ui:47
 #. i18n: ectx: property (text), widget (QPushButton, loadButton)
@@ -88,15 +89,15 @@ msgstr "動作:"
 
 #: src/unikey-config.h:60
 msgid "Allow to modify surrounding text (experimental)"
-msgstr ""
+msgstr "允許修改光標周圍的文本（實驗性）"
 
 #: src/unikey-config.h:54
 msgid "Allow type with more freedom"
-msgstr ""
+msgstr "允許更自由的輸入"
 
 #: src/unikey-config.h:49
 msgid "Auto restore keys with invalid words"
-msgstr ""
+msgstr "自動回覆無效的單字"
 
 #: src/unikey-config.h:29
 msgid "BK HCM 2"
@@ -155,7 +156,7 @@ msgstr ""
 #: rc.cpp:39 rc.cpp:66
 #, kde-format
 msgid "De&lete All"
-msgstr "全部刪除 (&L)"
+msgstr "全部刪除(&L)"
 
 #. i18n: file: macro-editor/dialog.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, Dialog)
@@ -304,11 +305,11 @@ msgstr ""
 
 #: keymap-editor/actions.cpp:13
 msgid "Remove existing tone"
-msgstr ""
+msgstr "移除已有聲調"
 
 #: src/unikey-config.h:57
 msgid "Restore typing state from surrounding text"
-msgstr ""
+msgstr "透過前後文字重建輸入狀態"
 
 #: keymap-editor/editor.cpp:54 src/unikey-config.h:35
 msgid "Simple Telex"
