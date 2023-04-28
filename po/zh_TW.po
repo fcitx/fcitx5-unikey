@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-04-25 20:24+0000\n"
+"POT-Creation-Date: 2023-04-28 20:24+0000\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
 "Last-Translator: Lau YeeYu, 2023\n"
 "Language-Team: Chinese (Taiwan) (https://app.transifex.com/fcitx/teams/12005/"
@@ -74,11 +74,11 @@ msgstr "戴入(&L)"
 
 #: keymap-editor/actions.cpp:38
 msgid "A with breve [A(]"
-msgstr ""
+msgstr "帶短音符的 A [A(]"
 
 #: keymap-editor/actions.cpp:36
 msgid "A with circumflex [A^]"
-msgstr ""
+msgstr "帶抑揚符的 A [A^]"
 
 #. i18n: file: keymap-editor/editor.ui:84
 #. i18n: ectx: property (text), widget (QLabel, label_4)
@@ -105,7 +105,7 @@ msgstr "BK HCM 2"
 
 #: keymap-editor/actions.cpp:30
 msgid "Breve: A becomes A("
-msgstr ""
+msgstr "短音符： A 變成 A("
 
 #. i18n: file: keymap-editor/editor.ui:24
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
@@ -131,23 +131,23 @@ msgstr "字元補充"
 
 #: keymap-editor/actions.cpp:20
 msgid "Circumflex for all applicable characters"
-msgstr ""
+msgstr "為所有適用的字符添加抑揚符"
 
 #: keymap-editor/actions.cpp:22
 msgid "Circumflex: A becomes A^"
-msgstr ""
+msgstr "抑揚符：A 變為 A^"
 
 #: keymap-editor/actions.cpp:23
 msgid "Circumflex: E becomes E^"
-msgstr ""
+msgstr "抑揚符：E 變為 E^"
 
 #: keymap-editor/actions.cpp:24
 msgid "Circumflex: O becomes O^"
-msgstr ""
+msgstr "抑揚符：O 變為 O^"
 
 #: keymap-editor/actions.cpp:34
 msgid "D with stroke [-D]"
-msgstr ""
+msgstr "帶刪節線的 D [-D]"
 
 #. i18n: file: keymap-editor/editor.ui:172
 #. i18n: ectx: property (text), widget (QPushButton, clearButton)
@@ -167,7 +167,7 @@ msgstr "對話框"
 
 #: keymap-editor/actions.cpp:40
 msgid "E with circumflex [E^]"
-msgstr ""
+msgstr "帶抑揚符的 E [E^]"
 
 #: src/unikey-config.h:45
 msgid "Enable Macro"
@@ -183,23 +183,23 @@ msgstr "Esc 键"
 
 #: keymap-editor/actions.cpp:25
 msgid "Horn-Breve: U, O, A, become U+, O+, A("
-msgstr ""
+msgstr "觸角-短音符：U, O, A 變為 U+, O+, A("
 
 #: keymap-editor/actions.cpp:32
 msgid "Horn-Breve: U, O, A, become U+, O+, A(, or create U+"
-msgstr ""
+msgstr "觸角-短音符：U, O, A 變為 U+, O+, A(, 或者添加 U+"
 
 #: keymap-editor/actions.cpp:29
 msgid "Horn: O becomes O+"
-msgstr ""
+msgstr "觸角：O 變成 O+"
 
 #: keymap-editor/actions.cpp:28
 msgid "Horn: U becomes U+"
-msgstr ""
+msgstr "觸角：U 變成 U+"
 
 #: keymap-editor/actions.cpp:27
 msgid "Horn: U, O become U+, O+"
-msgstr ""
+msgstr "觸角：U, O 變成 U+, O+"
 
 #: src/unikey-config.h:41 src/unikey-im.cpp:331
 msgid "Input Method"
@@ -285,11 +285,11 @@ msgstr "NCR 十六進制"
 
 #: keymap-editor/actions.cpp:42
 msgid "O with circumflex [O^]"
-msgstr ""
+msgstr "帶抑揚符的 O [A^]"
 
 #: keymap-editor/actions.cpp:44
 msgid "O with horn [O+]"
-msgstr ""
+msgstr "帶觸角的 O [O+]"
 
 #: src/unikey-config.h:43
 msgid "Output Charset"
@@ -301,7 +301,7 @@ msgstr "輸出字元集"
 
 #: src/unikey-config.h:47
 msgid "Process W at word begin"
-msgstr ""
+msgstr "處理單詞開頭的 W"
 
 #: keymap-editor/actions.cpp:13
 msgid "Remove existing tone"
@@ -333,7 +333,7 @@ msgstr "拼字檢查"
 
 #: keymap-editor/actions.cpp:31
 msgid "Stroke: D becomes -D"
-msgstr ""
+msgstr "刪節線：D 變成 -D"
 
 #: src/unikey-config.h:28
 msgid "TCVN3"
@@ -345,31 +345,31 @@ msgstr "Telex"
 
 #: keymap-editor/actions.cpp:14
 msgid "Tone ' (acute)"
-msgstr ""
+msgstr "聲調 ' (尖音符)"
 
 #: keymap-editor/actions.cpp:18
 msgid "Tone . (dot below)"
-msgstr ""
+msgstr "聲調 . (下句點)"
 
 #: keymap-editor/actions.cpp:15
 msgid "Tone ` (grave)"
-msgstr ""
+msgstr "聲調 ` (重音符)"
 
 #: keymap-editor/editor.cpp:57
 msgid "Tone marks"
-msgstr ""
+msgstr "聲調符號"
 
 #: keymap-editor/actions.cpp:17
 msgid "Tone ~ (tilde)"
-msgstr ""
+msgstr "聲調 ~ (波浪符)"
 
 #: keymap-editor/actions.cpp:16
 msgid "Tone ◌̉ (hook above)"
-msgstr ""
+msgstr "聲調 ◌̉ (上鈎符)"
 
 #: keymap-editor/actions.cpp:46
 msgid "U with horn [U+]"
-msgstr ""
+msgstr "帶觸角的 U [U+]"
 
 #: src/unikey-config.h:62
 msgid "Underline the preedit text"
@@ -442,28 +442,28 @@ msgstr "字詞："
 
 #: keymap-editor/actions.cpp:39
 msgid "a with breve [a(]"
-msgstr ""
+msgstr "帶短音符的 a [a(]"
 
 #: keymap-editor/actions.cpp:37
 msgid "a with circumflex [a^]"
-msgstr ""
+msgstr "帶揚抑符的 a [a^]"
 
 #: keymap-editor/actions.cpp:35
 msgid "d with stroke [-d]"
-msgstr ""
+msgstr "帶刪減線的 d [-d]"
 
 #: keymap-editor/actions.cpp:41
 msgid "e with circumflex [e^]"
-msgstr ""
+msgstr "帶揚抑符的 e [e^]"
 
 #: keymap-editor/actions.cpp:43
 msgid "o with circumflex [o^]"
-msgstr ""
+msgstr "帶揚抑符的 o [o^]"
 
 #: keymap-editor/actions.cpp:45
 msgid "o with horn [o+]"
-msgstr ""
+msgstr "帶觸角的 o [o+]"
 
 #: keymap-editor/actions.cpp:47
 msgid "u with horn [u+]"
-msgstr ""
+msgstr "帶觸角的 u [u+]"
