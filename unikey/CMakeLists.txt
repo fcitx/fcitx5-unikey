@@ -15,5 +15,5 @@ set(UNIKEY_SRCS
 
 add_library(unikey-lib STATIC ${UNIKEY_SRCS})
 target_link_libraries(unikey-lib Fcitx5::Utils)
-set_target_properties(unikey-lib PROPERTIES COMPILE_FLAGS "-fPIC")
+set_target_properties(unikey-lib PROPERTIES POSITION_INDEPENDENT_CODE ON)
 target_include_directories(unikey-lib PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>")
