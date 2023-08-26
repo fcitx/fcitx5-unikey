@@ -11,10 +11,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-01-15 20:25+0000\n"
+"POT-Creation-Date: 2023-08-26 20:24+0000\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
 "Last-Translator: rocka, 2023\n"
-"Language-Team: Chinese (China) (https://www.transifex.com/fcitx/teams/12005/"
+"Language-Team: Chinese (China) (https://app.transifex.com/fcitx/teams/12005/"
 "zh_CN/)\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
@@ -375,7 +375,7 @@ msgstr "预编辑文本显示下划线"
 
 #: src/unikey-config.h:28
 msgid "Unicode"
-msgstr "统一码"
+msgstr "Unicode"
 
 #: org.fcitx.Fcitx5.Addon.Unikey.metainfo.xml.in:7 src/unikey.conf.in:3
 msgid "Unikey"
