@@ -47,7 +47,7 @@ QVariant KeymapModel::data(const QModelIndex &index, int role) const {
 
     if (role == Qt::DisplayRole) {
         if (index.column() == 0) {
-            return QString(list_[index.row()].key);
+            return QString(QChar(list_[index.row()].key));
         } else if (index.column() == 1) {
             return QString::fromStdString(
                 _(actionName(list_[index.row()].action)));
