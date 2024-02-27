@@ -11,7 +11,7 @@ include(ECMUninstallTarget)
 option(ENABLE_QT "Enable Qt based macro editor" On)
 option(ENABLE_TEST "Build Test" On)
 option(ENABLE_COVERAGE "Build the project with gcov support (Need ENABLE_TEST=On)" Off)
-option(USE_QT6 "Use Qt6" Off)
+option(USE_QT6 "Use Qt6" On)
 
 find_package(PkgConfig REQUIRED)
 find_package(Fcitx5Core 5.0.16 REQUIRED)
