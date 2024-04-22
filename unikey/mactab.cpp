@@ -26,7 +26,7 @@ char *MacCompareStartMem;
 
 #define STD_TO_LOWER(x)                                                        \
     (((x) >= VnStdCharOffset &&                                                \
-      (x) < (VnStdCharOffset + TOTAL_ALPHA_VNCHARS) && !((x)&1))               \
+      (x) < (VnStdCharOffset + TOTAL_ALPHA_VNCHARS) && !((x) & 1))             \
          ? (x + 1)                                                             \
          : (x))
 
