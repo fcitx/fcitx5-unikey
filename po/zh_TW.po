@@ -7,15 +7,16 @@
 # 黃柏諺 <s8321414@gmail.com>, 2018
 # bruh, 2020
 # Neko ◣ 0xFF, 2022
-# Lau YeeYu, 2023
+# Yiyu Liu, 2023
+# Kisaragi Hiu <flyingfeather1501@gmail.com>, 2024
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-04-28 20:24+0000\n"
+"POT-Creation-Date: 2024-07-08 20:24+0000\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
-"Last-Translator: Lau YeeYu, 2023\n"
+"Last-Translator: Kisaragi Hiu <flyingfeather1501@gmail.com>, 2024\n"
 "Language-Team: Chinese (Taiwan) (https://app.transifex.com/fcitx/teams/12005/"
 "zh_TW/)\n"
 "Language: zh_TW\n"
@@ -70,7 +71,7 @@ msgstr "匯入(&I)"
 #: rc.cpp:12
 #, kde-format
 msgid "&Load"
-msgstr "戴入(&L)"
+msgstr "載入(&L)"
 
 #: keymap-editor/actions.cpp:38
 msgid "A with breve [A(]"
@@ -85,11 +86,11 @@ msgstr "帶抑揚符的 A [A^]"
 #: rc.cpp:21
 #, kde-format
 msgid "Action:"
-msgstr "動作:"
+msgstr "動作："
 
 #: src/unikey-config.h:60
 msgid "Allow to modify surrounding text (experimental)"
-msgstr "允許修改光標周圍的文本（實驗性）"
+msgstr "允許修改游標周圍的文本（實驗性）"
 
 #: src/unikey-config.h:54
 msgid "Allow type with more freedom"
@@ -97,7 +98,7 @@ msgstr "允許更自由的輸入"
 
 #: src/unikey-config.h:49
 msgid "Auto restore keys with invalid words"
-msgstr "自動回覆無效的單字"
+msgstr "自動還原包含無效單字的鍵"
 
 #: src/unikey-config.h:29
 msgid "BK HCM 2"
@@ -123,7 +124,7 @@ msgstr "CString"
 #: rc.cpp:18
 #, kde-format
 msgid "Category:"
-msgstr "類別:"
+msgstr "類別："
 
 #: keymap-editor/editor.cpp:58
 msgid "Character complements"
@@ -131,7 +132,7 @@ msgstr "字元補充"
 
 #: keymap-editor/actions.cpp:20
 msgid "Circumflex for all applicable characters"
-msgstr "為所有適用的字符添加抑揚符"
+msgstr "為所有適用的字元添加抑揚符"
 
 #: keymap-editor/actions.cpp:22
 msgid "Circumflex: A becomes A^"
@@ -179,7 +180,7 @@ msgstr "啟用拼字檢查"
 
 #: keymap-editor/actions.cpp:19
 msgid "Escape key"
-msgstr "Esc 键"
+msgstr "Esc 鍵"
 
 #: keymap-editor/actions.cpp:25
 msgid "Horn-Breve: U, O, A, become U+, O+, A("
@@ -210,7 +211,7 @@ msgstr "輸入法"
 #: rc.cpp:9
 #, kde-format
 msgid "Input Method:"
-msgstr "輸入法:"
+msgstr "輸入法："
 
 #. i18n: file: keymap-editor/editor.ui:101
 #. i18n: ectx: property (text), widget (QLabel, label_2)
@@ -228,11 +229,11 @@ msgstr "按鍵定義"
 
 #: keymap-editor/model.cpp:32
 msgid "Keymap"
-msgstr "按键映射"
+msgstr "按鍵映射"
 
 #: src/unikey-config.h:66
 msgid "Keymap Editor"
-msgstr "按键映射编辑器"
+msgstr "按鍵映射編輯器"
 
 #: macro-editor/model.cpp:27 src/unikey-im.cpp:394
 msgid "Macro"
@@ -388,7 +389,7 @@ msgstr "Unikey"
 #: keymap-editor/editor.cpp:103 rc.cpp:3
 #, kde-format
 msgid "Unikey Keymap Editor"
-msgstr "Unikey 按键映射編輯器"
+msgstr "Unikey 按鍵映射編輯器"
 
 #. i18n: file: macro-editor/editor.ui:14
 #. i18n: ectx: property (windowTitle), widget (QWidget, Editor)
