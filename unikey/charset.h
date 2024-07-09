@@ -70,8 +70,8 @@ const unsigned char PadEllipsis = '.';
 
 class DllInterface VnCharset {
 public:
-    virtual void startInput(){};
-    virtual void startOutput(){};
+    virtual void startInput() {}
+    virtual void startOutput() {}
     //	virtual UKBYTE *nextInput(UKBYTE *input, int inLen, StdVnChar & stdChar,
     // int & bytesRead) = 0;
     virtual int nextInput(ByteInStream &is, StdVnChar &stdChar,
@@ -106,7 +106,7 @@ public:
 //--------------------------------------------------
 class VnInternalCharset : public VnCharset {
 public:
-    VnInternalCharset(){};
+    VnInternalCharset() {}
     virtual int nextInput(ByteInStream &is, StdVnChar &stdChar, int &bytesRead);
     virtual int putChar(ByteOutStream &os, StdVnChar stdChar, int &outLen);
     virtual int elementSize();

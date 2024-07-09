@@ -16,7 +16,7 @@ typedef unsigned int UKDWORD;
 //----------------------------------------------------
 class ByteStream {
 public:
-    virtual ~ByteStream(){};
+    virtual ~ByteStream() {}
 };
 
 //----------------------------------------------------
