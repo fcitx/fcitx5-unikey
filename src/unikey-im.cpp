@@ -6,38 +6,69 @@
  */
 
 #include "unikey-im.h"
+#include "unikey-config.h"
+#include "unikeyinputcontext.h"
 #include "usrkeymap.h"
 #include "vnconv.h"
+#include <cassert>
+#include <cstddef>
+#include <cstdint>
+#include <cstring>
+#include <fcitx-config/iniparser.h>
+#include <fcitx-utils/capabilityflags.h>
 #include <fcitx-utils/charutils.h>
+#include <fcitx-utils/fs.h>
+#include <fcitx-utils/i18n.h>
+#include <fcitx-utils/key.h>
+#include <fcitx-utils/keysym.h>
+#include <fcitx-utils/log.h>
+#include <fcitx-utils/macros.h>
+#include <fcitx-utils/misc.h>
 #include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/textformatflags.h>
 #include <fcitx-utils/utf8.h>
+#include <fcitx/action.h>
+#include <fcitx/addoninstance.h>
+#include <fcitx/event.h>
 #include <fcitx/inputcontext.h>
 #include <fcitx/inputcontextmanager.h>
+#include <fcitx/inputmethodentry.h>
 #include <fcitx/inputpanel.h>
+#include <fcitx/instance.h>
 #include <fcitx/menu.h>
 #include <fcitx/statusarea.h>
+#include <fcitx/text.h>
+#include <fcitx/userinterface.h>
 #include <fcitx/userinterfacemanager.h>
 #include <fcntl.h>
+#include <iterator>
+#include <memory>
+#include <string>
+#include <string_view>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
+
+#define FCITX_UNIKEY_DEBUG() FCITX_LOGC(::fcitx::unikey, Debug)
 
 namespace fcitx {
 
-FCITX_DEFINE_LOG_CATEGORY(unikey, "unikey");
-#define FCITX_UNIKEY_DEBUG() FCITX_LOGC(unikey, Debug)
-
 namespace {
+
+FCITX_DEFINE_LOG_CATEGORY(unikey, "unikey");
 
 constexpr auto CONVERT_BUF_SIZE = 1024;
 constexpr auto MAX_LENGTH_VNWORD = 7;
-static const unsigned int Unikey_OC[] = {
-    CONV_CHARSET_XUTF8,  CONV_CHARSET_TCVN3,     CONV_CHARSET_VNIWIN,
-    CONV_CHARSET_VIQR,   CONV_CHARSET_BKHCM2,    CONV_CHARSET_UNI_CSTRING,
-    CONV_CHARSET_UNIREF, CONV_CHARSET_UNIREF_HEX};
-static constexpr unsigned int NUM_OUTPUTCHARSET = FCITX_ARRAY_SIZE(Unikey_OC);
+const unsigned int Unikey_OC[] = {CONV_CHARSET_XUTF8,  CONV_CHARSET_TCVN3,
+                                  CONV_CHARSET_VNIWIN, CONV_CHARSET_VIQR,
+                                  CONV_CHARSET_BKHCM2, CONV_CHARSET_UNI_CSTRING,
+                                  CONV_CHARSET_UNIREF, CONV_CHARSET_UNIREF_HEX};
+constexpr unsigned int NUM_OUTPUTCHARSET = FCITX_ARRAY_SIZE(Unikey_OC);
 static_assert(NUM_OUTPUTCHARSET == UkConvI18NAnnotation::enumLength);
 
-static bool isWordBreakSym(unsigned char c) { return WordBreakSyms.count(c); }
+bool isWordBreakSym(unsigned char c) { return WordBreakSyms.count(c); }
 
-static bool isWordAutoCommit(unsigned char c) {
+bool isWordAutoCommit(unsigned char c) {
     static const std::unordered_set<unsigned char> WordAutoCommit = {
         '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'b', 'c',
         'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's',
@@ -46,7 +77,7 @@ static bool isWordAutoCommit(unsigned char c) {
     return WordAutoCommit.count(c);
 }
 
-static VnLexiName charToVnLexi(uint32_t ch) {
+VnLexiName charToVnLexi(uint32_t ch) {
     static const std::unordered_map<uint32_t, VnLexiName> map = []() {
         std::unordered_map<uint32_t, VnLexiName> result;
         for (int i = 0; i < vnl_lastChar; i++) {
@@ -61,7 +92,7 @@ static VnLexiName charToVnLexi(uint32_t ch) {
     return vnl_nonVnChar;
 }
 
-static bool isVnChar(uint32_t ch) { return charToVnLexi(ch) != vnl_nonVnChar; }
+bool isVnChar(uint32_t ch) { return charToVnLexi(ch) != vnl_nonVnChar; }
 
 // code from x-unikey, for convert charset that not is XUtf-8
 int latinToUtf(unsigned char *dst, const unsigned char *src, int inSize,
@@ -76,8 +107,9 @@ int latinToUtf(unsigned char *dst, const unsigned char *src, int inSize,
         ch = *src++;
         if (ch < 0x80) {
             outLeft -= 1;
-            if (outLeft >= 0)
+            if (outLeft >= 0) {
                 *dst++ = ch;
+            }
         } else {
             outLeft -= 2;
             if (outLeft >= 0) {
@@ -133,7 +165,8 @@ public:
     void updatePreedit();
 
     void eraseChars(int num_chars) {
-        int i, k;
+        int i;
+        int k;
         unsigned char c;
         k = num_chars;
 
@@ -337,7 +370,7 @@ UnikeyEngine::UnikeyEngine(Instance *instance)
     for (UkInputMethod im : {UkTelex, UkVni, UkViqr, UkMsVi, UkUsrIM,
                              UkSimpleTelex, UkSimpleTelex2}) {
         inputMethodSubAction_.emplace_back(std::make_unique<SimpleAction>());
-        auto action = inputMethodSubAction_.back().get();
+        auto *action = inputMethodSubAction_.back().get();
         action->setShortText(UkInputMethodI18NAnnotation::toString(im));
         action->setCheckable(true);
         uiManager.registerAction(
@@ -364,7 +397,7 @@ UnikeyEngine::UnikeyEngine(Instance *instance)
                         UkConv::VIQR, UkConv::BKHCM2, UkConv::UNI_CSTRING,
                         UkConv::UNIREF, UkConv::UNIREF_HEX}) {
         charsetSubAction_.emplace_back(std::make_unique<SimpleAction>());
-        auto action = charsetSubAction_.back().get();
+        auto *action = charsetSubAction_.back().get();
         action->setShortText(UkConvI18NAnnotation::toString(conv));
         action->setCheckable(true);
         connections_.emplace_back(action->connect<SimpleAction::Activated>(
@@ -416,7 +449,7 @@ UnikeyEngine::UnikeyEngine(Instance *instance)
 
 UnikeyEngine::~UnikeyEngine() {}
 
-void UnikeyEngine::activate(const InputMethodEntry &,
+void UnikeyEngine::activate(const InputMethodEntry & /*entry*/,
                             InputContextEvent &event) {
     auto &statusArea = event.inputContext()->statusArea();
     statusArea.addAction(StatusGroup::InputMethod, inputMethodAction_.get());
@@ -441,9 +474,10 @@ void UnikeyEngine::deactivate(const InputMethodEntry &entry,
     reset(entry, event);
 }
 
-void UnikeyEngine::keyEvent(const InputMethodEntry &, KeyEvent &keyEvent) {
-    auto ic = keyEvent.inputContext();
-    auto state = ic->propertyFor(&factory_);
+void UnikeyEngine::keyEvent(const InputMethodEntry & /*entry*/,
+                            KeyEvent &keyEvent) {
+    auto *ic = keyEvent.inputContext();
+    auto *state = ic->propertyFor(&factory_);
     state->rebuildFromSurroundingText();
     state->keyEvent(keyEvent);
 }
@@ -464,7 +498,8 @@ void UnikeyState::preedit(KeyEvent &keyEvent) {
             syncState(keyEvent.rawKey().sym());
             updatePreedit();
             lastShiftPressed_ = FcitxKey_None;
-            return keyEvent.filterAndAccept();
+            keyEvent.filterAndAccept();
+            return;
         }
     } else {
         // We pressed something else, reset the state.
@@ -479,50 +514,55 @@ void UnikeyState::preedit(KeyEvent &keyEvent) {
         (sym >= FcitxKey_KP_Home && sym <= FcitxKey_KP_Delete)) {
         handleIgnoredKey();
         return;
-    } else if (state.test(KeyState::Super)) {
+    }
+    if (state.test(KeyState::Super)) {
         return;
-    } else if ((sym >= FcitxKey_Caps_Lock && sym <= FcitxKey_Hyper_R) ||
-               sym == FcitxKey_Shift_L || sym == FcitxKey_Shift_R) {
+    }
+    if ((sym >= FcitxKey_Caps_Lock && sym <= FcitxKey_Hyper_R) ||
+        sym == FcitxKey_Shift_L || sym == FcitxKey_Shift_R) {
         return;
-    } else if (sym == FcitxKey_BackSpace) {
+    }
+    if (sym == FcitxKey_BackSpace) {
         // capture BackSpace
         uic_.backspacePress();
 
         if (uic_.backspaces() == 0 || preeditStr_.empty()) {
             commit();
             return;
-        } else {
-            if (static_cast<int>(preeditStr_.length()) <= uic_.backspaces()) {
-                preeditStr_.clear();
-                autoCommit_ = true;
-            } else {
-                eraseChars(uic_.backspaces());
-            }
-
-            // change tone position after press backspace
-            if (uic_.bufChars() > 0) {
-                if (engine_->config().oc.value() == UkConv::XUTF8) {
-                    preeditStr_.append(
-                        reinterpret_cast<const char *>(uic_.buf()),
-                        uic_.bufChars());
-                } else {
-                    unsigned char buf[CONVERT_BUF_SIZE];
-                    int bufSize = CONVERT_BUF_SIZE;
-
-                    latinToUtf(buf, uic_.buf(), uic_.bufChars(), &bufSize);
-                    preeditStr_.append((const char *)buf,
-                                       CONVERT_BUF_SIZE - bufSize);
-                }
-
-                autoCommit_ = false;
-            }
-            updatePreedit();
         }
-        return keyEvent.filterAndAccept();
-    } else if (sym >= FcitxKey_KP_Multiply && sym <= FcitxKey_KP_9) {
+        if (static_cast<int>(preeditStr_.length()) <= uic_.backspaces()) {
+            preeditStr_.clear();
+            autoCommit_ = true;
+        } else {
+            eraseChars(uic_.backspaces());
+        }
+
+        // change tone position after press backspace
+        if (uic_.bufChars() > 0) {
+            if (engine_->config().oc.value() == UkConv::XUTF8) {
+                preeditStr_.append(reinterpret_cast<const char *>(uic_.buf()),
+                                   uic_.bufChars());
+            } else {
+                unsigned char buf[CONVERT_BUF_SIZE];
+                int bufSize = CONVERT_BUF_SIZE;
+
+                latinToUtf(buf, uic_.buf(), uic_.bufChars(), &bufSize);
+                preeditStr_.append((const char *)buf,
+                                   CONVERT_BUF_SIZE - bufSize);
+            }
+
+            autoCommit_ = false;
+        }
+        updatePreedit();
+
+        keyEvent.filterAndAccept();
+        return;
+    }
+    if (sym >= FcitxKey_KP_Multiply && sym <= FcitxKey_KP_9) {
         handleIgnoredKey();
         return;
-    } else if (sym >= FcitxKey_space && sym <= FcitxKey_asciitilde) {
+    }
+    if (sym >= FcitxKey_space && sym <= FcitxKey_asciitilde) {
         // capture ascii printable char
         uic_.setCapsState(state.test(KeyState::Shift),
                           state.test(KeyState::CapsLock));
@@ -545,23 +585,23 @@ void UnikeyState::preedit(KeyEvent &keyEvent) {
 
         if ((*engine_->config().im == UkTelex ||
              *engine_->config().im == UkSimpleTelex2) &&
-            *engine_->config().process_w_at_begin == false &&
+            !*engine_->config().process_w_at_begin &&
             uic_.isAtWordBeginning() &&
             (sym == FcitxKey_w || sym == FcitxKey_W)) {
             uic_.putChar(sym);
             if (!*engine_->config().macro) {
                 return;
-            } else {
-                preeditStr_.append(sym == FcitxKey_w ? "w" : "W");
-                updatePreedit();
-                return keyEvent.filterAndAccept();
             }
+            preeditStr_.append(sym == FcitxKey_w ? "w" : "W");
+            updatePreedit();
+            keyEvent.filterAndAccept();
+            return;
         }
 
         autoCommit_ = false;
 
         // shift + space, shift + shift event
-        if (lastKeyWithShift_ == false && state.test(KeyState::Shift) &&
+        if (!lastKeyWithShift_ && state.test(KeyState::Shift) &&
             sym == FcitxKey_space && !uic_.isAtWordBeginning()) {
             uic_.restoreKeyStrokes();
         } else {
@@ -576,21 +616,24 @@ void UnikeyState::preedit(KeyEvent &keyEvent) {
         if (!preeditStr_.empty()) {
             if (preeditStr_.back() == sym && isWordBreakSym(sym)) {
                 commit();
-                return keyEvent.filterAndAccept();
+                keyEvent.filterAndAccept();
+                return;
             }
         }
         // end commit string
 
         updatePreedit();
-        return keyEvent.filterAndAccept();
+        keyEvent.filterAndAccept();
+        return;
     } // end capture printable char
 
     // non process key
     handleIgnoredKey();
 }
 
-void UnikeyEngine::reset(const InputMethodEntry &, InputContextEvent &event) {
-    auto state = event.inputContext()->propertyFor(&factory_);
+void UnikeyEngine::reset(const InputMethodEntry & /*entry*/,
+                         InputContextEvent &event) {
+    auto *state = event.inputContext()->propertyFor(&factory_);
     state->reset();
     if (event.type() == EventType::InputContextReset) {
         if (event.inputContext()->capabilityFlags().test(
@@ -636,7 +679,8 @@ void UnikeyEngine::reloadKeymap() {
 
 void UnikeyEngine::save() {}
 
-std::string UnikeyEngine::subMode(const InputMethodEntry &, InputContext &) {
+std::string UnikeyEngine::subMode(const InputMethodEntry & /*entry*/,
+                                  InputContext & /*inputContext*/) {
     return UkInputMethodI18NAnnotation::toString(*config_.im);
 }
 void UnikeyEngine::updateMacroAction(InputContext *ic) {
@@ -748,4 +792,4 @@ void UnikeyState::updatePreedit() {
 
 } // namespace fcitx
 
-FCITX_ADDON_FACTORY(fcitx::UnikeyFactory)
+FCITX_ADDON_FACTORY_V2(unikey, fcitx::UnikeyFactory)

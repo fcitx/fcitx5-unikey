@@ -9,14 +9,23 @@
 
 #include "unikey-config.h"
 #include <fcitx-config/iniparser.h>
+#include <fcitx-config/rawconfig.h>
+#include <fcitx-utils/handlertable.h>
+#include <fcitx-utils/i18n.h>
+#include <fcitx-utils/signals.h>
+#include <fcitx-utils/standardpath.h>
 #include <fcitx/action.h>
 #include <fcitx/addonfactory.h>
+#include <fcitx/addoninstance.h>
 #include <fcitx/addonmanager.h>
+#include <fcitx/event.h>
 #include <fcitx/inputcontextproperty.h>
 #include <fcitx/inputmethodengine.h>
 #include <fcitx/instance.h>
+#include <memory>
 #include <string>
 #include <unikeyinputcontext.h>
+#include <vector>
 
 namespace fcitx {
 
