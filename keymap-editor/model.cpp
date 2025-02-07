@@ -13,6 +13,7 @@
 #include <fcitx-utils/charutils.h>
 #include <fcitx-utils/i18n.h>
 #include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/unixfd.h>
 #include <fcntl.h>
 
 namespace fcitx {
@@ -156,9 +157,8 @@ void KeymapModel::load() {
     beginResetModel();
     auto keymapFile = StandardPath::global().open(
         StandardPath::Type::PkgConfig, "unikey/keymap.txt", O_RDONLY);
-    auto fp = fs::openFD(keymapFile, "rb");
-    if (fp) {
-        list_ = UkLoadKeyOrderMap(fp.get());
+    if (keymapFile.isValid()) {
+        list_ = UkLoadKeyOrderMap(keymapFile.fd());
     } else {
         list_.clear();
     }
@@ -173,14 +173,14 @@ void KeymapModel::save() {
 }
 
 void KeymapModel::load(const QString &file) {
-    UniqueFilePtr fp{fopen(file.toLocal8Bit().constData(), "rb")};
+    UnixFD fd = UnixFD::own(open(file.toLocal8Bit().constData(), O_RDONLY));
 
-    if (!fp) {
+    if (!fd.isValid()) {
         return;
     }
 
     beginResetModel();
-    list_ = UkLoadKeyOrderMap(fp.get());
+    list_ = UkLoadKeyOrderMap(fd.fd());
     endResetModel();
     setNeedSave(true);
 }

@@ -668,9 +668,7 @@ void UnikeyEngine::reloadKeymap() {
     auto keymapFile = StandardPath::global().open(
         StandardPath::Type::PkgConfig, "unikey/keymap.txt", O_RDONLY);
     if (keymapFile.isValid()) {
-        UniqueFilePtr fp = fs::openFD(keymapFile, "rb");
-
-        UkLoadKeyMap(fp.get(), im_.sharedMem()->usrKeyMap);
+        UkLoadKeyMap(keymapFile.fd(), im_.sharedMem()->usrKeyMap);
         im_.sharedMem()->usrKeyMapLoaded = true;
     } else {
         im_.sharedMem()->usrKeyMapLoaded = false;

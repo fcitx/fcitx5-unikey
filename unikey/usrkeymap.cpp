@@ -8,9 +8,12 @@
 #include <cstdint>
 #include <cstdio>
 #include <cstring>
+#include <fcitx-utils/fdstreambuf.h>
 #include <fcitx-utils/log.h>
 #include <fcitx-utils/misc.h>
 #include <fcitx-utils/stringutils.h>
+#include <istream>
+#include <string>
 
 namespace {
 
@@ -93,8 +96,8 @@ static bool parseNameValue(std::string_view line, std::string_view *name,
 }
 
 //-----------------------------------------------------
-DllExport void UkLoadKeyMap(FILE *f, int keyMap[256]) {
-    std::vector<UkKeyMapping> orderMap = UkLoadKeyOrderMap(f);
+DllExport void UkLoadKeyMap(int fd, int keyMap[256]) {
+    std::vector<UkKeyMapping> orderMap = UkLoadKeyOrderMap(fd);
     initKeyMap(keyMap);
     for (const auto &item : orderMap) {
         keyMap[item.key] = item.action;
@@ -105,18 +108,19 @@ DllExport void UkLoadKeyMap(FILE *f, int keyMap[256]) {
 }
 
 //------------------------------------------------------------------
-DllExport std::vector<UkKeyMapping> UkLoadKeyOrderMap(FILE *f) {
+DllExport std::vector<UkKeyMapping> UkLoadKeyOrderMap(int fd) {
     size_t lineCount = 0;
     int keyMap[256];
 
     initKeyMap(keyMap);
 
     std::vector<UkKeyMapping> pMap;
-    fcitx::UniqueCPtr<char> clineBuf;
-    size_t bufSize = 0;
-    while (getline(clineBuf, &bufSize, f) >= 0) {
+    fcitx::IFDStreamBuf buf(fd);
+    std::istream in(&buf);
+    std::string line;
+    while (std::getline(in, line)) {
         lineCount++;
-        auto text = fcitx::stringutils::trimView(clineBuf.get());
+        auto text = fcitx::stringutils::trimView(line);
         if (text.empty()) {
             continue;
         }
