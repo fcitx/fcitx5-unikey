@@ -8,18 +8,28 @@
 
 #include "actions.h"
 #include "editor.h"
+#include "inputproc.h"
+#include "keycons.h"
 #include "model.h"
 #include "usrkeymap.h"
+#include <QAbstractItemModel>
+#include <QObject>
+#include <QString>
+#include <Qt>
+#include <algorithm>
+#include <cstddef>
 #include <fcitx-utils/charutils.h>
+#include <fcitx-utils/fs.h>
 #include <fcitx-utils/i18n.h>
-#include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/standardpaths.h>
 #include <fcitx-utils/unixfd.h>
 #include <fcntl.h>
+#include <iterator>
+#include <utility>
 
-namespace fcitx {
-namespace unikey {
+namespace fcitx::unikey {
 
-typedef QPair<QString, QString> ItemType;
+using ItemType = std::pair<QString, QString>;
 
 KeymapModel::KeymapModel(QObject *parent)
     : QAbstractTableModel(parent), needSave_(false) {}
@@ -29,17 +39,21 @@ KeymapModel::~KeymapModel() {}
 QVariant KeymapModel::headerData(int section, Qt::Orientation orientation,
                                  int role) const {
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole) {
-        if (section == 0)
+        if (section == 0) {
             return _("Keymap");
-        else if (section == 1)
+        }
+        if (section == 1) {
             return _("Word");
+        }
     }
-    return QVariant();
+    return {};
 }
 
-int KeymapModel::rowCount(const QModelIndex &) const { return list_.size(); }
+int KeymapModel::rowCount(const QModelIndex & /*parent*/) const {
+    return list_.size();
+}
 
-int KeymapModel::columnCount(const QModelIndex &) const { return 2; }
+int KeymapModel::columnCount(const QModelIndex & /*parent*/) const { return 2; }
 
 QVariant KeymapModel::data(const QModelIndex &index, int role) const {
     if (index.row() >= static_cast<int>(list_.size()) || index.row() < 0) {
@@ -49,14 +63,16 @@ QVariant KeymapModel::data(const QModelIndex &index, int role) const {
     if (role == Qt::DisplayRole) {
         if (index.column() == 0) {
             return QString(QChar(list_[index.row()].key));
-        } else if (index.column() == 1) {
+        }
+        if (index.column() == 1) {
             return QString::fromStdString(
                 _(actionName(list_[index.row()].action)));
         }
     } else if (role == Qt::UserRole) {
         if (index.column() == 0) {
             return QChar(list_[index.row()].key);
-        } else if (index.column() == 1) {
+        }
+        if (index.column() == 1) {
             return list_[index.row()].action;
         }
     }
@@ -70,7 +86,7 @@ QModelIndex KeymapModel::addItem(unsigned char key, int action) {
         key = charutils::toupper(key);
         checkBoth = true;
     }
-    const auto lower = charutils::tolower(key);
+    const unsigned char lower = charutils::tolower(key);
     bool updated = false;
     auto match = [key, checkBoth, lower](const UkKeyMapping &item) {
         if (item.action < vneCount &&
@@ -83,7 +99,7 @@ QModelIndex KeymapModel::addItem(unsigned char key, int action) {
     auto iter = list_.begin();
     for (; iter != list_.end(); iter++) {
         if (match(*iter)) {
-            *iter = UkKeyMapping{key, action};
+            *iter = UkKeyMapping{.key = key, .action = action};
             updated = true;
             break;
         }
@@ -128,8 +144,9 @@ void KeymapModel::moveDown(int row) {
 }
 
 void KeymapModel::deleteItem(int row) {
-    if (row >= static_cast<int>(list_.size()))
+    if (row >= static_cast<int>(list_.size())) {
         return;
+    }
     beginRemoveRows(QModelIndex(), row, row);
     list_.erase(list_.begin() + row);
     endRemoveRows();
@@ -137,8 +154,9 @@ void KeymapModel::deleteItem(int row) {
 }
 
 void KeymapModel::deleteAllItem() {
-    if (!list_.empty())
+    if (!list_.empty()) {
         setNeedSave(true);
+    }
     beginResetModel();
     list_.clear();
     endResetModel();
@@ -151,12 +169,12 @@ void KeymapModel::setNeedSave(bool needSave) {
     }
 }
 
-bool KeymapModel::needSave() { return needSave_; }
+bool KeymapModel::needSave() const { return needSave_; }
 
 void KeymapModel::load() {
     beginResetModel();
-    auto keymapFile = StandardPath::global().open(
-        StandardPath::Type::PkgConfig, "unikey/keymap.txt", O_RDONLY);
+    auto keymapFile = StandardPaths::global().open(StandardPathsType::PkgConfig,
+                                                   "unikey/keymap.txt");
     if (keymapFile.isValid()) {
         list_ = UkLoadKeyOrderMap(keymapFile.fd());
     } else {
@@ -166,9 +184,9 @@ void KeymapModel::load() {
 }
 
 void KeymapModel::save() {
-    StandardPath::global().safeSave(StandardPath::Type::PkgConfig,
-                                    "unikey/keymap.txt",
-                                    [this](int fd) { return saveToFd(fd); });
+    StandardPaths::global().safeSave(StandardPathsType::PkgConfig,
+                                     "unikey/keymap.txt",
+                                     [this](int fd) { return saveToFd(fd); });
     setNeedSave(false);
 }
 
@@ -189,9 +207,9 @@ void KeymapModel::save(const QString &file) {
     if (!file.startsWith("/")) {
         return;
     }
-    StandardPath::global().safeSave(StandardPath::Type::PkgConfig,
-                                    file.toLocal8Bit().constData(),
-                                    [this](int fd) { return saveToFd(fd); });
+    StandardPaths::global().safeSave(StandardPathsType::PkgConfig,
+                                     file.toLocal8Bit().constData(),
+                                     [this](int fd) { return saveToFd(fd); });
     setNeedSave(false);
 }
 
@@ -226,6 +244,8 @@ void KeymapModel::load(int profile) {
     case UkMsVi:
         mapping = MsViMethodMapping;
         break;
+    default:
+        break;
     }
     if (!mapping) {
         return;
@@ -240,5 +260,4 @@ void KeymapModel::load(int profile) {
     setNeedSave(true);
 }
 
-} // namespace unikey
-} // namespace fcitx
+} // namespace fcitx::unikey

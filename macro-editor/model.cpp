@@ -13,7 +13,7 @@
 namespace fcitx {
 namespace unikey {
 
-typedef QPair<QString, QString> ItemType;
+typedef std::pair<QString, QString> ItemType;
 
 MacroModel::MacroModel(QObject *parent)
     : QAbstractTableModel(parent), needSave_(false) {}
@@ -52,7 +52,7 @@ void MacroModel::addItem(const QString &macro, const QString &word) {
     if (keyset_.contains(macro))
         return;
     beginInsertRows(QModelIndex(), list_.size(), list_.size());
-    list_.append(QPair<QString, QString>(macro, word));
+    list_.append(std::pair<QString, QString>(macro, word));
     keyset_.insert(macro);
     endInsertRows();
     setNeedSave(true);
@@ -61,7 +61,7 @@ void MacroModel::addItem(const QString &macro, const QString &word) {
 void MacroModel::deleteItem(int row) {
     if (row >= list_.count())
         return;
-    QPair<QString, QString> item = list_.at(row);
+    std::pair<QString, QString> item = list_.at(row);
     QString key = item.first;
     beginRemoveRows(QModelIndex(), row, row);
     list_.removeAt(row);
@@ -95,7 +95,7 @@ void MacroModel::load(CMacroTable *table) {
     for (int i = 0; i < table->getCount(); i++) {
         QString key = MacroEditor::getData(table, i, true);
         QString value = MacroEditor::getData(table, i, false);
-        list_.append(QPair<QString, QString>(key, value));
+        list_.append(std::pair<QString, QString>(key, value));
         keyset_.insert(key);
     }
     endResetModel();

@@ -14,6 +14,7 @@
 #include <fcitx-utils/stringutils.h>
 #include <istream>
 #include <string>
+#include <vector>
 
 namespace {
 

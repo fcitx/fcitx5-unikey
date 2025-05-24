@@ -7,33 +7,36 @@
 #ifndef _KEYMAP_EDITOR_MODEL_H_
 #define _KEYMAP_EDITOR_MODEL_H_
 
-#include "mactab.h"
-#include "usrkeymap.h"
+#include "inputproc.h"
 #include <QAbstractItemModel>
+#include <QObject>
 #include <QSet>
+#include <QString>
+#include <QVariant>
+#include <Qt>
+#include <vector>
 
-namespace fcitx {
-namespace unikey {
+namespace fcitx::unikey {
 class KeymapModel : public QAbstractTableModel {
     Q_OBJECT
 public:
     explicit KeymapModel(QObject *parent = 0);
     virtual ~KeymapModel();
 
-    virtual QVariant headerData(int section, Qt::Orientation orientation,
-                                int role = Qt::DisplayRole) const;
-    virtual int rowCount(const QModelIndex &parent = QModelIndex()) const;
-    virtual int columnCount(const QModelIndex &parent = QModelIndex()) const;
-    virtual QVariant data(const QModelIndex &index,
-                          int role = Qt::DisplayRole) const;
+    QVariant headerData(int section, Qt::Orientation orientation,
+                        int role = Qt::DisplayRole) const override;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex &index,
+                  int role = Qt::DisplayRole) const override;
     void load();
     QModelIndex addItem(unsigned char key, int action);
-    void moveUp(int index);
-    void moveDown(int index);
+    void moveUp(int row);
+    void moveDown(int row);
     void deleteItem(int row);
     void deleteAllItem();
     void save();
-    bool needSave();
+    bool needSave() const;
     void load(const QString &fileName);
     void save(const QString &fileName);
     void load(int profile);
@@ -47,7 +50,6 @@ private:
     bool needSave_;
     std::vector<UkKeyMapping> list_;
 };
-} // namespace unikey
-} // namespace fcitx
+} // namespace fcitx::unikey
 
 #endif // _MACRO_EDITOR_MODEL_H_

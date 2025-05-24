@@ -39,7 +39,7 @@ private:
     void setNeedSave(bool needSave);
     bool needSave_;
     QSet<QString> keyset_;
-    QList<QPair<QString, QString>> list_;
+    QList<std::pair<QString, QString>> list_;
 };
 } // namespace unikey
 } // namespace fcitx

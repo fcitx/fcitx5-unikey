@@ -13,7 +13,7 @@
 #include <fcitx-utils/handlertable.h>
 #include <fcitx-utils/i18n.h>
 #include <fcitx-utils/signals.h>
-#include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/standardpaths.h>
 #include <fcitx/action.h>
 #include <fcitx/addonfactory.h>
 #include <fcitx/addoninstance.h>
@@ -45,7 +45,7 @@ public:
     }
 
     void setSubConfig(const std::string &path,
-                      const fcitx::RawConfig &) override {
+                      const fcitx::RawConfig & /*unused*/) override {
         if (path == "macro") {
             reloadMacroTable();
         } else if (path == "keymap.txt") {
@@ -61,7 +61,7 @@ public:
     void reloadConfig() override;
     void reset(const InputMethodEntry &entry,
                InputContextEvent &event) override;
-    void deactivate(const fcitx::InputMethodEntry &,
+    void deactivate(const fcitx::InputMethodEntry & /*entry*/,
                     fcitx::InputContextEvent &event) override;
     void save() override;
     auto &factory() { return factory_; }
@@ -73,18 +73,19 @@ public:
     void updateCharsetAction(InputContext *ic);
     void updateInputMethodAction(InputContext *ic);
 
-    std::string subMode(const InputMethodEntry &, InputContext &) override;
+    std::string subMode(const InputMethodEntry & /*entry*/,
+                        InputContext & /*inputContext*/) override;
 
     UnikeyInputMethod *im() { return &im_; }
 
 private:
     void populateConfig();
     void reloadMacroTable() {
-        auto path = StandardPath::global().locate(StandardPath::Type::PkgConfig,
-                                                  "unikey/macro");
+        auto path = StandardPaths::global().locate(StandardPathsType::PkgConfig,
+                                                   "unikey/macro");
 
         if (!path.empty()) {
-            im_.loadMacroTable(path.data());
+            im_.loadMacroTable(path.string().c_str());
         }
     }
     void reloadKeymap();

@@ -4,20 +4,30 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  *
  */
-#include <QCloseEvent>
-#include <QDebug>
-#include <QFileDialog>
-#include <QMessageBox>
-
-#include "dialog.h"
 #include "editor.h"
+#include "charset.h"
+#include "dialog.h"
+#include "keycons.h"
 #include "mactab.h"
 #include "model.h"
-#include "ui_editor.h"
-#include <fcitx-utils/standardpath.h>
+#include "vnconv.h"
+#include <QCloseEvent>
+#include <QDebug>
+#include <QDialog>
+#include <QFileDialog>
+#include <QItemSelectionModel>
+#include <QMessageBox>
+#include <QObject>
+#include <QPushButton>
+#include <QWidget>
+#include <Qt>
+#include <fcitx-utils/fs.h>
+#include <fcitx-utils/i18n.h>
+#include <fcitx-utils/standardpaths.h>
+#include <fcitxqtconfiguiwidget.h>
+#include <memory>
 
-namespace fcitx {
-namespace unikey {
+namespace fcitx::unikey {
 
 MacroEditor::MacroEditor(QWidget *parent)
     : FcitxQtConfigUIWidget(parent), table_(std::make_unique<CMacroTable>()),
@@ -78,9 +88,9 @@ QString MacroEditor::getData(CMacroTable *table, int i, bool iskey) {
     char value[MAX_MACRO_TEXT_LEN * 3];
     do {
         if (i < table->getCount()) {
-            const StdVnChar *p = NULL;
+            const StdVnChar *p = nullptr;
             int maxOutLen = 0;
-            const char *result = NULL;
+            const char *result = nullptr;
             if (iskey) {
                 p = table->getKey(i);
                 maxOutLen = sizeof(key);
@@ -91,14 +101,16 @@ QString MacroEditor::getData(CMacroTable *table, int i, bool iskey) {
                 result = value;
             }
 
-            if (!p)
+            if (!p) {
                 break;
+            }
             int inLen = -1;
             int ret =
                 VnConvert(CONV_CHARSET_VNSTANDARD, CONV_CHARSET_XUTF8,
                           (UKBYTE *)p, (UKBYTE *)result, &inLen, &maxOutLen);
-            if (ret != 0)
+            if (ret != 0) {
                 break;
+            }
             return QString::fromUtf8(result);
         }
     } while (0);
@@ -113,20 +125,20 @@ void MacroEditor::addWordAccepted() {
 }
 
 void MacroEditor::load() {
-    auto path = StandardPath::global().locate(StandardPath::Type::PkgConfig,
-                                              "unikey/macro");
-    table_->loadFromFile(path.data());
+    auto path = StandardPaths::global().locate(StandardPathsType::PkgConfig,
+                                               "unikey/macro");
+    table_->loadFromFile(path.string().c_str());
     model_->load(table_.get());
 }
 
 void MacroEditor::save() {
     model_->save(table_.get());
-    StandardPath::global().safeSave(StandardPath::Type::PkgConfig,
-                                    "unikey/macro", [this](int fd) -> bool {
-                                        UnixFD unixFD(fd);
-                                        auto f = fs::openFD(unixFD, "wb");
-                                        return table_->writeToFp(f.release());
-                                    });
+    StandardPaths::global().safeSave(StandardPathsType::PkgConfig,
+                                     "unikey/macro", [this](int fd) -> bool {
+                                         UnixFD unixFD(fd);
+                                         auto f = fs::openFD(unixFD, "wb");
+                                         return table_->writeToFp(f.release());
+                                     });
 }
 
 void MacroEditor::importMacro() {
@@ -169,6 +181,4 @@ void MacroEditor::exportFileSelected() {
     table_->writeToFile(file.toUtf8().constData());
 }
 
-} // namespace unikey
-
-} // namespace fcitx
+} // namespace fcitx::unikey

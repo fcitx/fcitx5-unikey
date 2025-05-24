@@ -6,17 +6,28 @@
  */
 #include "editor.h"
 #include "actions.h"
-#include "inputproc.h"
+#include "keycons.h"
 #include "model.h"
-#include "ui_editor.h"
+#include <QAbstractItemModel>
 #include <QCloseEvent>
+#include <QComboBox>
 #include <QDebug>
 #include <QFileDialog>
+#include <QItemSelectionModel>
+#include <QList>
 #include <QMessageBox>
+#include <QObject>
+#include <QOverload>
+#include <QPushButton>
+#include <QStandardItem>
+#include <QWidget>
+#include <Qt>
 #include <fcitx-utils/charutils.h>
-#include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/i18n.h>
+#include <fcitx-utils/key.h>
+#include <fcitx-utils/standardpaths.h>
+#include <fcitxqtconfiguiwidget.h>
 #include <fcitxqtkeysequencewidget.h>
-#include <tuple>
 
 namespace fcitx::unikey {
 
@@ -137,10 +148,7 @@ bool KeymapEditor::keySequenceValid() const {
         return false;
     }
     auto key = keySequenceEdit->keySequence()[0];
-    if (!key.isValid() || !key.isSimple()) {
-        return false;
-    }
-    return true;
+    return key.isValid() && key.isSimple();
 }
 
 void KeymapEditor::deleteKeymap() {

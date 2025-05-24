@@ -6,14 +6,21 @@
  */
 #include "testdir.h"
 #include "testfrontend_public.h"
+#include <fcitx-config/rawconfig.h>
+#include <fcitx-utils/capabilityflags.h>
 #include <fcitx-utils/eventdispatcher.h>
+#include <fcitx-utils/key.h>
+#include <fcitx-utils/keysym.h>
 #include <fcitx-utils/log.h>
-#include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/macros.h>
+#include <fcitx-utils/standardpaths.h>
 #include <fcitx-utils/testing.h>
 #include <fcitx/addonmanager.h>
+#include <fcitx/inputmethodgroup.h>
 #include <fcitx/inputmethodmanager.h>
 #include <fcitx/instance.h>
-#include <iostream>
+#include <map>
+#include <string>
 
 using namespace fcitx;
 
@@ -1756,7 +1763,7 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
         auto *testfrontend = instance->addonManager().addon("testfrontend");
         auto uuid =
             testfrontend->call<ITestFrontend::createInputContext>("testapp");
-        auto ic = instance->inputContextManager().findByUUID(uuid);
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
         ic->setCapabilityFlags(CapabilityFlag::SurroundingText);
         testfrontend->call<ITestFrontend::pushCommitExpectation>("ăo ");
         testfrontend->call<ITestFrontend::pushCommitExpectation>("âo ");
@@ -1916,8 +1923,8 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
 void runInstance() {}
 
 int main() {
-    setupTestingEnvironment(TESTING_BINARY_DIR, {TESTING_BINARY_DIR "/src"},
-                            {TESTING_BINARY_DIR "/test"});
+    setupTestingEnvironmentPath(TESTING_BINARY_DIR, {"bin"},
+                                {TESTING_BINARY_DIR "/test"});
     // fcitx::Log::setLogRule("default=5,table=5,libime-table=5");
     char arg0[] = "testunikey";
     char arg1[] = "--disable=all";

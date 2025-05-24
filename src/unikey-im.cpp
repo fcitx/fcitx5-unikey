@@ -6,10 +6,14 @@
  */
 
 #include "unikey-im.h"
+#include "charset.h"
+#include "inputproc.h"
+#include "keycons.h"
 #include "unikey-config.h"
 #include "unikeyinputcontext.h"
 #include "usrkeymap.h"
 #include "vnconv.h"
+#include "vnlexi.h"
 #include <cassert>
 #include <cstddef>
 #include <cstdint>
@@ -24,7 +28,7 @@
 #include <fcitx-utils/log.h>
 #include <fcitx-utils/macros.h>
 #include <fcitx-utils/misc.h>
-#include <fcitx-utils/standardpath.h>
+#include <fcitx-utils/standardpaths.h>
 #include <fcitx-utils/textformatflags.h>
 #include <fcitx-utils/utf8.h>
 #include <fcitx/action.h>
@@ -66,7 +70,7 @@ const unsigned int Unikey_OC[] = {CONV_CHARSET_XUTF8,  CONV_CHARSET_TCVN3,
 constexpr unsigned int NUM_OUTPUTCHARSET = FCITX_ARRAY_SIZE(Unikey_OC);
 static_assert(NUM_OUTPUTCHARSET == UkConvI18NAnnotation::enumLength);
 
-bool isWordBreakSym(unsigned char c) { return WordBreakSyms.count(c); }
+bool isWordBreakSym(unsigned char c) { return WordBreakSyms.contains(c); }
 
 bool isWordAutoCommit(unsigned char c) {
     static const std::unordered_set<unsigned char> WordAutoCommit = {
@@ -74,7 +78,7 @@ bool isWordAutoCommit(unsigned char c) {
         'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's',
         't', 'v', 'x', 'z', 'B', 'C', 'F', 'G', 'H', 'J', 'K', 'L',
         'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'X', 'Z'};
-    return WordAutoCommit.count(c);
+    return WordAutoCommit.contains(c);
 }
 
 VnLexiName charToVnLexi(uint32_t ch) {
@@ -665,8 +669,8 @@ void UnikeyEngine::reloadConfig() {
 
 void UnikeyEngine::reloadKeymap() {
     // Keymap need to be reloaded before populateConfig.
-    auto keymapFile = StandardPath::global().open(
-        StandardPath::Type::PkgConfig, "unikey/keymap.txt", O_RDONLY);
+    auto keymapFile = StandardPaths::global().open(StandardPathsType::PkgConfig,
+                                                   "unikey/keymap.txt");
     if (keymapFile.isValid()) {
         UkLoadKeyMap(keymapFile.fd(), im_.sharedMem()->usrKeyMap);
         im_.sharedMem()->usrKeyMapLoaded = true;
