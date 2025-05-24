@@ -17,7 +17,6 @@
 #include <QList>
 #include <QMessageBox>
 #include <QObject>
-#include <QOverload>
 #include <QPushButton>
 #include <QStandardItem>
 #include <QWidget>
