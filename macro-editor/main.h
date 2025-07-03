@@ -7,6 +7,8 @@
 #ifndef _MACRO_EDITOR_MAIN_H_
 #define _MACRO_EDITOR_MAIN_H_
 
+#include <QObject>
+#include <QString>
 #include <fcitxqtconfiguiplugin.h>
 
 namespace fcitx {

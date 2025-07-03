@@ -165,7 +165,7 @@ void KeymapModel::deleteAllItem() {
 void KeymapModel::setNeedSave(bool needSave) {
     if (needSave_ != needSave) {
         needSave_ = needSave;
-        emit needSaveChanged(needSave_);
+        Q_EMIT needSaveChanged(needSave_);
     }
 }
 

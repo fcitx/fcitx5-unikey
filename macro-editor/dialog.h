@@ -9,11 +9,11 @@
 
 #include "ui_dialog.h"
 #include <QDialog>
+#include <QString>
+#include <QWidget>
 
-class CMacroTable;
+namespace fcitx::unikey {
 
-namespace fcitx {
-namespace unikey {
 class MacroDialog : public QDialog, private Ui::Dialog {
     Q_OBJECT
 public:
@@ -21,7 +21,6 @@ public:
     QString macro() const;
     QString word() const;
 };
-} // namespace unikey
-} // namespace fcitx
+} // namespace fcitx::unikey
 
 #endif // _MACRO_EDITOR_DIALOG_H_

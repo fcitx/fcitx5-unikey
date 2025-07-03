@@ -41,7 +41,7 @@ public:
     void save(const QString &fileName);
     void load(int profile);
 
-signals:
+Q_SIGNALS:
     void needSaveChanged(bool);
 
 private:

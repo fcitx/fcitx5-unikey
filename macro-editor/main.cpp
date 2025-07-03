@@ -6,9 +6,13 @@
  */
 #include "main.h"
 #include "editor.h"
-#include "model.h"
 #include <QApplication>
-#include <qplugin.h>
+#include <QObject>
+#include <QtPlugin>
+#include <fcitx-utils/i18n.h>
+#include <fcitx-utils/macros.h>
+#include <fcitxqtconfiguiplugin.h>
+#include <fcitxqtconfiguiwidget.h>
 
 namespace fcitx {
 
@@ -18,7 +22,7 @@ MacroEditorPlugin::MacroEditorPlugin(QObject *parent)
 }
 
 FcitxQtConfigUIWidget *MacroEditorPlugin::create(const QString &key) {
-    Q_UNUSED(key);
+    FCITX_UNUSED(key);
     return new fcitx::unikey::MacroEditor;
 }
 

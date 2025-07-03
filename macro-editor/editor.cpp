@@ -76,7 +76,7 @@ void MacroEditor::deleteWord() {
 void MacroEditor::deleteAllWord() { model_->deleteAllItem(); }
 
 void MacroEditor::addWord() {
-    MacroDialog *dialog = new MacroDialog(this);
+    auto *dialog = new MacroDialog(this);
     dialog->setAttribute(Qt::WA_DeleteOnClose, true);
     dialog->open();
     connect(dialog, &QDialog::accepted, this, &MacroEditor::addWordAccepted);
@@ -118,8 +118,7 @@ QString MacroEditor::getData(CMacroTable *table, int i, bool iskey) {
 }
 
 void MacroEditor::addWordAccepted() {
-    const MacroDialog *dialog =
-        qobject_cast<const MacroDialog *>(QObject::sender());
+    const auto *dialog = qobject_cast<const MacroDialog *>(QObject::sender());
 
     model_->addItem(dialog->macro(), dialog->word());
 }
@@ -142,7 +141,7 @@ void MacroEditor::save() {
 }
 
 void MacroEditor::importMacro() {
-    QFileDialog *dialog = new QFileDialog(this);
+    auto *dialog = new QFileDialog(this);
     dialog->setAttribute(Qt::WA_DeleteOnClose, true);
     dialog->setFileMode(QFileDialog::ExistingFile);
     dialog->setAcceptMode(QFileDialog::AcceptOpen);
@@ -152,8 +151,7 @@ void MacroEditor::importMacro() {
 }
 
 void MacroEditor::importFileSelected() {
-    const QFileDialog *dialog =
-        qobject_cast<const QFileDialog *>(QObject::sender());
+    const auto *dialog = qobject_cast<const QFileDialog *>(QObject::sender());
     if (dialog->selectedFiles().length() <= 0) {
         return;
     }
@@ -162,7 +160,7 @@ void MacroEditor::importFileSelected() {
 }
 
 void MacroEditor::exportMacro() {
-    QFileDialog *dialog = new QFileDialog(this);
+    auto *dialog = new QFileDialog(this);
     dialog->setAttribute(Qt::WA_DeleteOnClose, true);
     dialog->setDirectory("macro");
     dialog->setAcceptMode(QFileDialog::AcceptSave);
@@ -172,8 +170,7 @@ void MacroEditor::exportMacro() {
 }
 
 void MacroEditor::exportFileSelected() {
-    const QFileDialog *dialog =
-        qobject_cast<const QFileDialog *>(QObject::sender());
+    const auto *dialog = qobject_cast<const QFileDialog *>(QObject::sender());
     if (dialog->selectedFiles().length() <= 0) {
         return;
     }

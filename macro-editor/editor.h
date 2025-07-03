@@ -8,13 +8,14 @@
 #define _MACRO_EDITOR_EDITOR_H_
 
 #include "ui_editor.h"
+#include <QString>
+#include <QWidget>
 #include <fcitxqtconfiguiwidget.h>
 #include <memory>
 
 class CMacroTable;
 
-namespace fcitx {
-namespace unikey {
+namespace fcitx::unikey {
 
 class MacroModel;
 class MacroEditor : public FcitxQtConfigUIWidget, public Ui::Editor {
@@ -28,7 +29,7 @@ public:
     QString icon() override;
 
     static QString getData(CMacroTable *table, int i, bool iskey);
-private slots:
+private Q_SLOTS:
     void addWord();
     void deleteWord();
     void deleteAllWord();
@@ -43,7 +44,6 @@ private:
     std::unique_ptr<CMacroTable> table_;
     MacroModel *model_;
 };
-} // namespace unikey
-} // namespace fcitx
+} // namespace fcitx::unikey
 
 #endif // _MACRO_EDITOR_EDITOR_H_

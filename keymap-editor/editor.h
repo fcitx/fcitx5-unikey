@@ -50,7 +50,7 @@ public:
     QString icon() override;
 
     static QString getData(CKeymapTable *table, int i, bool iskey);
-private slots:
+private Q_SLOTS:
     void addKeymap();
     void deleteKeymap();
     void deleteAllKeymap();
