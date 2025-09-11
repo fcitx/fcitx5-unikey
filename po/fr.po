@@ -4,15 +4,16 @@
 #
 # Translators:
 # roxfr <roxfr@outlook.fr>, 2022
+# Popolon_Github, 2025
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-01-04 20:25+0000\n"
+"POT-Creation-Date: 2025-09-11 20:24+0000\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
-"Last-Translator: roxfr <roxfr@outlook.fr>, 2022\n"
-"Language-Team: French (https://www.transifex.com/fcitx/teams/12005/fr/)\n"
+"Last-Translator: Popolon_Github, 2025\n"
+"Language-Team: French (https://app.transifex.com/fcitx/teams/12005/fr/)\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -83,19 +84,19 @@ msgstr "A avec circonflexe [A^]"
 msgid "Action:"
 msgstr "Action :"
 
-#: src/unikey-config.h:60
+#: src/unikey-config.h:61
 msgid "Allow to modify surrounding text (experimental)"
 msgstr ""
 
-#: src/unikey-config.h:54
+#: src/unikey-config.h:55
 msgid "Allow type with more freedom"
 msgstr "Autoriser le type avec plus de liberté"
 
-#: src/unikey-config.h:49
+#: src/unikey-config.h:50
 msgid "Auto restore keys with invalid words"
 msgstr "Clés de restauration automatique avec des mots invalides"
 
-#: src/unikey-config.h:29
+#: src/unikey-config.h:30
 msgid "BK HCM 2"
 msgstr "BK HCM 2"
 
@@ -110,7 +111,7 @@ msgstr "Brève : A devient A("
 msgid "Built-in Input Methods"
 msgstr "Méthodes de saisie intégrées"
 
-#: src/unikey-config.h:30
+#: src/unikey-config.h:31
 msgid "CString"
 msgstr "CString"
 
@@ -121,7 +122,7 @@ msgstr "CString"
 msgid "Category:"
 msgstr "Catégorie :"
 
-#: keymap-editor/editor.cpp:58
+#: keymap-editor/editor.cpp:68
 msgid "Character complements"
 msgstr "Compléments de caractères"
 
@@ -165,11 +166,11 @@ msgstr "Dialogue"
 msgid "E with circumflex [E^]"
 msgstr "E avec circonflexe [E^]"
 
-#: src/unikey-config.h:45
+#: src/unikey-config.h:46
 msgid "Enable Macro"
 msgstr "Activer la macro"
 
-#: src/unikey-config.h:44
+#: src/unikey-config.h:45
 msgid "Enable spell check"
 msgstr "Activer la vérification orthographique"
 
@@ -197,7 +198,7 @@ msgstr "Klaxon : U devient U+"
 msgid "Horn: U, O become U+, O+"
 msgstr "Corne : U, O deviennent U+, O+"
 
-#: src/unikey-config.h:41 src/unikey-im.cpp:331
+#: src/unikey-config.h:42 src/unikey-im.cpp:368
 msgid "Input Method"
 msgstr "Méthode de saisie"
 
@@ -222,27 +223,27 @@ msgstr "Clé"
 msgid "Key definition"
 msgstr "Définition de clé"
 
-#: keymap-editor/model.cpp:32
+#: keymap-editor/model.cpp:43
 msgid "Keymap"
 msgstr "Keymap"
 
-#: src/unikey-config.h:66
+#: src/unikey-config.h:67
 msgid "Keymap Editor"
 msgstr "Éditeur de Keymap"
 
-#: macro-editor/model.cpp:27 src/unikey-im.cpp:394
+#: macro-editor/model.cpp:33 src/unikey-im.cpp:431
 msgid "Macro"
 msgstr "Macro"
 
-#: src/unikey-im.cpp:645
+#: src/unikey-im.cpp:691
 msgid "Macro Disabled"
 msgstr "Macro désactivée"
 
-#: src/unikey-config.h:64
+#: src/unikey-config.h:65
 msgid "Macro Editor"
 msgstr "Éditeur de macros"
 
-#: src/unikey-im.cpp:644
+#: src/unikey-im.cpp:690
 msgid "Macro Enabled"
 msgstr "Macro activée"
 
@@ -253,7 +254,7 @@ msgstr "Macro activée"
 msgid "Macro:"
 msgstr "Macro :"
 
-#: keymap-editor/editor.cpp:53 src/unikey-config.h:34
+#: keymap-editor/editor.cpp:63 src/unikey-config.h:35
 msgid "Microsoft Vietnamese"
 msgstr "Microsoft Vietnamien"
 
@@ -271,11 +272,11 @@ msgstr "Déplacer &vers le bas"
 msgid "Move &Up"
 msgstr "Déplacer &Haut"
 
-#: src/unikey-config.h:30
+#: src/unikey-config.h:31
 msgid "NCR Decimal"
 msgstr "NCR décimal"
 
-#: src/unikey-config.h:31
+#: src/unikey-config.h:32
 msgid "NCR Hex"
 msgstr "NCR Hex"
 
@@ -287,15 +288,15 @@ msgstr "O avec circonflexe [O^]"
 msgid "O with horn [O+]"
 msgstr "O avec klaxon [O+]"
 
-#: src/unikey-config.h:43
+#: src/unikey-config.h:44
 msgid "Output Charset"
 msgstr "Jeu de caractères de sortie"
 
-#: src/unikey-im.cpp:357
+#: src/unikey-im.cpp:394
 msgid "Output charset"
 msgstr "Jeu de caractères de sortie"
 
-#: src/unikey-config.h:47
+#: src/unikey-config.h:48
 msgid "Process W at word begin"
 msgstr "Traiter W au début du mot"
 
@@ -303,27 +304,27 @@ msgstr "Traiter W au début du mot"
 msgid "Remove existing tone"
 msgstr "Supprimer la tonalité existante"
 
-#: src/unikey-config.h:57
+#: src/unikey-config.h:58
 msgid "Restore typing state from surrounding text"
 msgstr "Restaurer l'état de saisie à partir du texte environnant"
 
-#: keymap-editor/editor.cpp:54 src/unikey-config.h:35
+#: keymap-editor/editor.cpp:64 src/unikey-config.h:36
 msgid "Simple Telex"
 msgstr "Télex simple"
 
-#: keymap-editor/editor.cpp:55 src/unikey-config.h:36
+#: keymap-editor/editor.cpp:65 src/unikey-config.h:37
 msgid "Simple Telex2"
 msgstr "Télex2 simple"
 
-#: src/unikey-im.cpp:653
+#: src/unikey-im.cpp:699
 msgid "Spell Check Disabled"
 msgstr "Vérification orthographique désactivée"
 
-#: src/unikey-im.cpp:652
+#: src/unikey-im.cpp:698
 msgid "Spell Check Enabled"
 msgstr "Vérification orthographique activée"
 
-#: src/unikey-im.cpp:382
+#: src/unikey-im.cpp:419
 msgid "Spell check"
 msgstr "Vérification orthographique"
 
@@ -331,11 +332,11 @@ msgstr "Vérification orthographique"
 msgid "Stroke: D becomes -D"
 msgstr "Trait : D devient -D"
 
-#: src/unikey-config.h:28
+#: src/unikey-config.h:29
 msgid "TCVN3"
 msgstr "TCVN3"
 
-#: keymap-editor/editor.cpp:50 src/unikey-config.h:33
+#: keymap-editor/editor.cpp:60 src/unikey-config.h:34
 msgid "Telex"
 msgstr "Télex"
 
@@ -351,7 +352,7 @@ msgstr "Tone . (point ci-dessous)"
 msgid "Tone ` (grave)"
 msgstr "Ton ` (grave)"
 
-#: keymap-editor/editor.cpp:57
+#: keymap-editor/editor.cpp:67
 msgid "Tone marks"
 msgstr "Marques de tonalité"
 
@@ -367,65 +368,65 @@ msgstr "Tonalité ◌̉ (crochet au-dessus)"
 msgid "U with horn [U+]"
 msgstr "U avec klaxon [U+]"
 
-#: src/unikey-config.h:62
+#: src/unikey-config.h:63
 msgid "Underline the preedit text"
 msgstr ""
 
-#: src/unikey-config.h:28
+#: src/unikey-config.h:29
 msgid "Unicode"
 msgstr "Unicode"
 
-#: org.fcitx.Fcitx5.Addon.Unikey.metainfo.xml.in:7 src/unikey.conf.in:3
+#: org.fcitx.Fcitx5.Addon.Unikey.metainfo.xml.in:7 src/unikey.conf.in:2
 msgid "Unikey"
 msgstr "Unikey"
 
 #. i18n: file: keymap-editor/editor.ui:14
 #. i18n: ectx: property (windowTitle), widget (QWidget, Editor)
-#: keymap-editor/editor.cpp:103 rc.cpp:3
+#: keymap-editor/editor.cpp:113 rc.cpp:3
 #, kde-format
 msgid "Unikey Keymap Editor"
 msgstr "Unikey Keymap Editor"
 
 #. i18n: file: macro-editor/editor.ui:14
 #. i18n: ectx: property (windowTitle), widget (QWidget, Editor)
-#: macro-editor/editor.cpp:52 rc.cpp:57
+#: macro-editor/editor.cpp:62 rc.cpp:57
 #, kde-format
 msgid "Unikey Macro Editor"
 msgstr "Éditeur de macros Unikey"
 
-#: src/unikey-addon.conf.in.in:3
+#: src/unikey-addon.conf.in.in:2
 msgid "Unikey Wrapper For Fcitx"
 msgstr "Unikey Wrapper pour Fcitx"
 
-#: src/unikey-config.h:52
+#: src/unikey-config.h:53
 msgid "Use oà, _uý (instead of òa, úy)"
 msgstr "Utilisez oà, _uý (au lieu de òa, úy)"
 
-#: src/unikey-config.h:35
+#: src/unikey-config.h:36
 msgid "UserIM"
 msgstr "UserIM"
 
-#: keymap-editor/editor.cpp:52 src/unikey-config.h:29 src/unikey-config.h:34
+#: keymap-editor/editor.cpp:62 src/unikey-config.h:30 src/unikey-config.h:35
 msgid "VIQR"
 msgstr "VIQR"
 
-#: keymap-editor/editor.cpp:51 src/unikey-config.h:33
+#: keymap-editor/editor.cpp:61 src/unikey-config.h:34
 msgid "VNI"
 msgstr "VNI"
 
-#: src/unikey-config.h:29
+#: src/unikey-config.h:30
 msgid "VNI Win"
 msgstr "VNI Win"
 
-#: keymap-editor/editor.cpp:59
+#: keymap-editor/editor.cpp:69
 msgid "Vietnamese characters"
 msgstr "Caractères vietnamiens"
 
 #: org.fcitx.Fcitx5.Addon.Unikey.metainfo.xml.in:8
 msgid "Vietnamese input method"
-msgstr "Méthode de saisie vietnamienne"
+msgstr "Méthode de saisie du vietnamien"
 
-#: keymap-editor/model.cpp:34 macro-editor/model.cpp:29
+#: keymap-editor/model.cpp:46 macro-editor/model.cpp:36
 msgid "Word"
 msgstr "Mot"
 
