@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2025-09-11 20:24+0000\n"
+"POT-Creation-Date: 2025-09-12 20:24+0000\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
 "Last-Translator: Popolon_Github, 2025\n"
 "Language-Team: French (https://app.transifex.com/fcitx/teams/12005/fr/)\n"
@@ -86,7 +86,7 @@ msgstr "Action :"
 
 #: src/unikey-config.h:61
 msgid "Allow to modify surrounding text (experimental)"
-msgstr ""
+msgstr "Permettre la modification du texte environnant (expérimental)"
 
 #: src/unikey-config.h:55
 msgid "Allow type with more freedom"
@@ -370,7 +370,7 @@ msgstr "U avec klaxon [U+]"
 
 #: src/unikey-config.h:63
 msgid "Underline the preedit text"
-msgstr ""
+msgstr "Souligne le texte de pré-édition"
 
 #: src/unikey-config.h:29
 msgid "Unicode"
