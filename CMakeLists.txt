@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.6)
 
-project(fcitx5-unikey VERSION 5.1.7)
+project(fcitx5-unikey VERSION 5.1.8)
 
 set(REQUIRED_FCITX_VERSION 5.1.13)
 find_package(ECM 1.0.0 REQUIRED)
