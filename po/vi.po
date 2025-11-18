@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the fcitx5-unikey package.
 #
 # Translators:
-# csslayer <wengxt@gmail.com>, 2018
+# Xuetian Weng <wengxt@gmail.com>, 2018
 # zenfas, 2022
 # trmdi, 2023
 # Huy Võ <hoanghuy309@gmail.com>, 2025
@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2025-03-12 20:24+0000\n"
+"POT-Creation-Date: 2025-11-18 20:24+0000\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
 "Last-Translator: Huy Võ <hoanghuy309@gmail.com>, 2025\n"
 "Language-Team: Vietnamese (https://app.transifex.com/fcitx/teams/12005/vi/)\n"
@@ -43,7 +43,7 @@ msgstr "&Thêm/Cập nhật"
 #: rc.cpp:36 rc.cpp:63
 #, kde-format
 msgid "&Delete"
-msgstr "&Xóa"
+msgstr "Xóa"
 
 #. i18n: file: keymap-editor/editor.ui:201
 #. i18n: ectx: property (text), widget (QPushButton, exportButton)
@@ -123,7 +123,7 @@ msgstr "CString"
 msgid "Category:"
 msgstr "Loại:"
 
-#: keymap-editor/editor.cpp:58
+#: keymap-editor/editor.cpp:68
 msgid "Character complements"
 msgstr "Các thành phần ghép"
 
@@ -199,7 +199,7 @@ msgstr "Dấu móc: U thành Ư"
 msgid "Horn: U, O become U+, O+"
 msgstr "Dấu móc: U, O thành Ư, Ơ"
 
-#: src/unikey-config.h:42 src/unikey-im.cpp:364
+#: src/unikey-config.h:42 src/unikey-im.cpp:368
 msgid "Input Method"
 msgstr "Phương Thức Nhập"
 
@@ -224,7 +224,7 @@ msgstr "Phím"
 msgid "Key definition"
 msgstr "Định nghĩa phím"
 
-#: keymap-editor/model.cpp:33
+#: keymap-editor/model.cpp:43
 msgid "Keymap"
 msgstr "Phím"
 
@@ -232,11 +232,11 @@ msgstr "Phím"
 msgid "Keymap Editor"
 msgstr "Biên tập bàn phím"
 
-#: macro-editor/model.cpp:27 src/unikey-im.cpp:427
+#: macro-editor/model.cpp:33 src/unikey-im.cpp:431
 msgid "Macro"
 msgstr "Gõ tắt"
 
-#: src/unikey-im.cpp:687
+#: src/unikey-im.cpp:691
 msgid "Macro Disabled"
 msgstr "Tắt gõ tắt"
 
@@ -244,7 +244,7 @@ msgstr "Tắt gõ tắt"
 msgid "Macro Editor"
 msgstr "Bảng gõ tắt"
 
-#: src/unikey-im.cpp:686
+#: src/unikey-im.cpp:690
 msgid "Macro Enabled"
 msgstr "Cho phép gõ tắt"
 
@@ -255,7 +255,7 @@ msgstr "Cho phép gõ tắt"
 msgid "Macro:"
 msgstr "Gõ tắt:"
 
-#: keymap-editor/editor.cpp:53 src/unikey-config.h:35
+#: keymap-editor/editor.cpp:63 src/unikey-config.h:35
 msgid "Microsoft Vietnamese"
 msgstr "Microsoft Vietnamese"
 
@@ -293,7 +293,7 @@ msgstr "Chữ [Ơ]"
 msgid "Output Charset"
 msgstr "Bảng Mã"
 
-#: src/unikey-im.cpp:390
+#: src/unikey-im.cpp:394
 msgid "Output charset"
 msgstr "Bảng mã"
 
@@ -309,23 +309,23 @@ msgstr "Xóa dấu đang có"
 msgid "Restore typing state from surrounding text"
 msgstr "Phục hồi trạng thái gõ phím bằng surrounding "
 
-#: keymap-editor/editor.cpp:54 src/unikey-config.h:36
+#: keymap-editor/editor.cpp:64 src/unikey-config.h:36
 msgid "Simple Telex"
 msgstr "Simple Telex"
 
-#: keymap-editor/editor.cpp:55 src/unikey-config.h:37
+#: keymap-editor/editor.cpp:65 src/unikey-config.h:37
 msgid "Simple Telex2"
 msgstr "Simple Telex2"
 
-#: src/unikey-im.cpp:695
+#: src/unikey-im.cpp:699
 msgid "Spell Check Disabled"
 msgstr "Tắt kiểm tra chính tả"
 
-#: src/unikey-im.cpp:694
+#: src/unikey-im.cpp:698
 msgid "Spell Check Enabled"
 msgstr "Bật kiểm tra chính tả"
 
-#: src/unikey-im.cpp:415
+#: src/unikey-im.cpp:419
 msgid "Spell check"
 msgstr "Kiểm tra chính tả"
 
@@ -337,7 +337,7 @@ msgstr "Dấu gạch: D thành Đ"
 msgid "TCVN3"
 msgstr "TCVN3"
 
-#: keymap-editor/editor.cpp:50 src/unikey-config.h:34
+#: keymap-editor/editor.cpp:60 src/unikey-config.h:34
 msgid "Telex"
 msgstr "Telex"
 
@@ -353,7 +353,7 @@ msgstr "Dấu nặng"
 msgid "Tone ` (grave)"
 msgstr "Dấu huyền"
 
-#: keymap-editor/editor.cpp:57
+#: keymap-editor/editor.cpp:67
 msgid "Tone marks"
 msgstr "Các dấu thanh"
 
@@ -383,14 +383,14 @@ msgstr "Unikey"
 
 #. i18n: file: keymap-editor/editor.ui:14
 #. i18n: ectx: property (windowTitle), widget (QWidget, Editor)
-#: keymap-editor/editor.cpp:103 rc.cpp:3
+#: keymap-editor/editor.cpp:113 rc.cpp:3
 #, kde-format
 msgid "Unikey Keymap Editor"
 msgstr "Biên tập bàn phím Unikey"
 
 #. i18n: file: macro-editor/editor.ui:14
 #. i18n: ectx: property (windowTitle), widget (QWidget, Editor)
-#: macro-editor/editor.cpp:52 rc.cpp:57
+#: macro-editor/editor.cpp:62 rc.cpp:57
 #, kde-format
 msgid "Unikey Macro Editor"
 msgstr "Bảng gõ tắt Unikey"
@@ -407,11 +407,11 @@ msgstr "Đặt dấu kiểu oà, _uý (thay vì òa, úy)"
 msgid "UserIM"
 msgstr "Tự định nghĩa"
 
-#: keymap-editor/editor.cpp:52 src/unikey-config.h:30 src/unikey-config.h:35
+#: keymap-editor/editor.cpp:62 src/unikey-config.h:30 src/unikey-config.h:35
 msgid "VIQR"
 msgstr "VIQR"
 
-#: keymap-editor/editor.cpp:51 src/unikey-config.h:34
+#: keymap-editor/editor.cpp:61 src/unikey-config.h:34
 msgid "VNI"
 msgstr "VNI"
 
@@ -419,7 +419,7 @@ msgstr "VNI"
 msgid "VNI Win"
 msgstr "VNI Win"
 
-#: keymap-editor/editor.cpp:59
+#: keymap-editor/editor.cpp:69
 msgid "Vietnamese characters"
 msgstr "Chữ cái tiếng Việt"
 
@@ -427,7 +427,7 @@ msgstr "Chữ cái tiếng Việt"
 msgid "Vietnamese input method"
 msgstr "Kiểu gõ tiếng Việt"
 
-#: keymap-editor/model.cpp:35 macro-editor/model.cpp:29
+#: keymap-editor/model.cpp:46 macro-editor/model.cpp:36
 msgid "Word"
 msgstr "Từ"
 
