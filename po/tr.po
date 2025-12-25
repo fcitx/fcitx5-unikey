@@ -3,17 +3,18 @@
 # This file is distributed under the same license as the fcitx5-unikey package.
 #
 # Translators:
-# csslayer <wengxt@gmail.com>, 2018
+# Xuetian Weng <wengxt@gmail.com>, 2018
 # abc Def <hdogan1974@gmail.com>, 2021
+# Emir SARI, 2025
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-01-04 20:25+0000\n"
+"POT-Creation-Date: 2025-12-25 20:24+0000\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
-"Last-Translator: abc Def <hdogan1974@gmail.com>, 2021\n"
-"Language-Team: Turkish (https://www.transifex.com/fcitx/teams/12005/tr/)\n"
+"Last-Translator: Emir SARI, 2025\n"
+"Language-Team: Turkish (https://app.transifex.com/fcitx/teams/12005/tr/)\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -32,7 +33,7 @@ msgstr "&Ekle"
 #: rc.cpp:27
 #, kde-format
 msgid "&Add / Update"
-msgstr ""
+msgstr "&Ekle/Güncelle"
 
 #. i18n: file: keymap-editor/editor.ui:161
 #. i18n: ectx: property (text), widget (QPushButton, deleteButton)
@@ -50,7 +51,7 @@ msgstr "&Sil"
 #: rc.cpp:45 rc.cpp:72
 #, kde-format
 msgid "&Export"
-msgstr "&Dışarı Aktar"
+msgstr "&Dışa Aktar"
 
 #. i18n: file: keymap-editor/editor.ui:190
 #. i18n: ectx: property (text), widget (QPushButton, importButton)
@@ -59,14 +60,14 @@ msgstr "&Dışarı Aktar"
 #: rc.cpp:42 rc.cpp:69
 #, kde-format
 msgid "&Import"
-msgstr "&İçeri Aktar"
+msgstr "&İçe Aktar"
 
 #. i18n: file: keymap-editor/editor.ui:47
 #. i18n: ectx: property (text), widget (QPushButton, loadButton)
 #: rc.cpp:12
 #, kde-format
 msgid "&Load"
-msgstr ""
+msgstr "&Yükle"
 
 #: keymap-editor/actions.cpp:38
 msgid "A with breve [A(]"
@@ -83,19 +84,19 @@ msgstr ""
 msgid "Action:"
 msgstr ""
 
-#: src/unikey-config.h:60
+#: src/unikey-config.h:61
 msgid "Allow to modify surrounding text (experimental)"
 msgstr ""
 
-#: src/unikey-config.h:54
+#: src/unikey-config.h:55
 msgid "Allow type with more freedom"
 msgstr ""
 
-#: src/unikey-config.h:49
+#: src/unikey-config.h:50
 msgid "Auto restore keys with invalid words"
 msgstr ""
 
-#: src/unikey-config.h:29
+#: src/unikey-config.h:30
 msgid "BK HCM 2"
 msgstr ""
 
@@ -110,7 +111,7 @@ msgstr ""
 msgid "Built-in Input Methods"
 msgstr ""
 
-#: src/unikey-config.h:30
+#: src/unikey-config.h:31
 msgid "CString"
 msgstr ""
 
@@ -121,7 +122,7 @@ msgstr ""
 msgid "Category:"
 msgstr ""
 
-#: keymap-editor/editor.cpp:58
+#: keymap-editor/editor.cpp:68
 msgid "Character complements"
 msgstr ""
 
@@ -165,11 +166,11 @@ msgstr ""
 msgid "E with circumflex [E^]"
 msgstr ""
 
-#: src/unikey-config.h:45
+#: src/unikey-config.h:46
 msgid "Enable Macro"
 msgstr ""
 
-#: src/unikey-config.h:44
+#: src/unikey-config.h:45
 msgid "Enable spell check"
 msgstr ""
 
@@ -197,7 +198,7 @@ msgstr ""
 msgid "Horn: U, O become U+, O+"
 msgstr ""
 
-#: src/unikey-config.h:41 src/unikey-im.cpp:331
+#: src/unikey-config.h:42 src/unikey-im.cpp:368
 msgid "Input Method"
 msgstr ""
 
@@ -222,27 +223,27 @@ msgstr ""
 msgid "Key definition"
 msgstr ""
 
-#: keymap-editor/model.cpp:32
+#: keymap-editor/model.cpp:43
 msgid "Keymap"
 msgstr ""
 
-#: src/unikey-config.h:66
+#: src/unikey-config.h:67
 msgid "Keymap Editor"
 msgstr ""
 
-#: macro-editor/model.cpp:27 src/unikey-im.cpp:394
+#: macro-editor/model.cpp:33 src/unikey-im.cpp:431
 msgid "Macro"
 msgstr ""
 
-#: src/unikey-im.cpp:645
+#: src/unikey-im.cpp:691
 msgid "Macro Disabled"
 msgstr ""
 
-#: src/unikey-config.h:64
+#: src/unikey-config.h:65
 msgid "Macro Editor"
 msgstr ""
 
-#: src/unikey-im.cpp:644
+#: src/unikey-im.cpp:690
 msgid "Macro Enabled"
 msgstr ""
 
@@ -253,7 +254,7 @@ msgstr ""
 msgid "Macro:"
 msgstr "Makro:"
 
-#: keymap-editor/editor.cpp:53 src/unikey-config.h:34
+#: keymap-editor/editor.cpp:63 src/unikey-config.h:35
 msgid "Microsoft Vietnamese"
 msgstr ""
 
@@ -271,11 +272,11 @@ msgstr ""
 msgid "Move &Up"
 msgstr ""
 
-#: src/unikey-config.h:30
+#: src/unikey-config.h:31
 msgid "NCR Decimal"
 msgstr ""
 
-#: src/unikey-config.h:31
+#: src/unikey-config.h:32
 msgid "NCR Hex"
 msgstr ""
 
@@ -287,15 +288,15 @@ msgstr ""
 msgid "O with horn [O+]"
 msgstr ""
 
-#: src/unikey-config.h:43
+#: src/unikey-config.h:44
 msgid "Output Charset"
 msgstr ""
 
-#: src/unikey-im.cpp:357
+#: src/unikey-im.cpp:394
 msgid "Output charset"
 msgstr ""
 
-#: src/unikey-config.h:47
+#: src/unikey-config.h:48
 msgid "Process W at word begin"
 msgstr ""
 
@@ -303,27 +304,27 @@ msgstr ""
 msgid "Remove existing tone"
 msgstr ""
 
-#: src/unikey-config.h:57
+#: src/unikey-config.h:58
 msgid "Restore typing state from surrounding text"
 msgstr ""
 
-#: keymap-editor/editor.cpp:54 src/unikey-config.h:35
+#: keymap-editor/editor.cpp:64 src/unikey-config.h:36
 msgid "Simple Telex"
 msgstr ""
 
-#: keymap-editor/editor.cpp:55 src/unikey-config.h:36
+#: keymap-editor/editor.cpp:65 src/unikey-config.h:37
 msgid "Simple Telex2"
 msgstr ""
 
-#: src/unikey-im.cpp:653
+#: src/unikey-im.cpp:699
 msgid "Spell Check Disabled"
 msgstr ""
 
-#: src/unikey-im.cpp:652
+#: src/unikey-im.cpp:698
 msgid "Spell Check Enabled"
 msgstr ""
 
-#: src/unikey-im.cpp:382
+#: src/unikey-im.cpp:419
 msgid "Spell check"
 msgstr ""
 
@@ -331,11 +332,11 @@ msgstr ""
 msgid "Stroke: D becomes -D"
 msgstr ""
 
-#: src/unikey-config.h:28
+#: src/unikey-config.h:29
 msgid "TCVN3"
 msgstr ""
 
-#: keymap-editor/editor.cpp:50 src/unikey-config.h:33
+#: keymap-editor/editor.cpp:60 src/unikey-config.h:34
 msgid "Telex"
 msgstr ""
 
@@ -351,7 +352,7 @@ msgstr ""
 msgid "Tone ` (grave)"
 msgstr ""
 
-#: keymap-editor/editor.cpp:57
+#: keymap-editor/editor.cpp:67
 msgid "Tone marks"
 msgstr ""
 
@@ -367,57 +368,57 @@ msgstr ""
 msgid "U with horn [U+]"
 msgstr ""
 
-#: src/unikey-config.h:62
+#: src/unikey-config.h:63
 msgid "Underline the preedit text"
 msgstr ""
 
-#: src/unikey-config.h:28
+#: src/unikey-config.h:29
 msgid "Unicode"
 msgstr ""
 
-#: org.fcitx.Fcitx5.Addon.Unikey.metainfo.xml.in:7 src/unikey.conf.in:3
+#: org.fcitx.Fcitx5.Addon.Unikey.metainfo.xml.in:7 src/unikey.conf.in:2
 msgid "Unikey"
 msgstr "Unikey"
 
 #. i18n: file: keymap-editor/editor.ui:14
 #. i18n: ectx: property (windowTitle), widget (QWidget, Editor)
-#: keymap-editor/editor.cpp:103 rc.cpp:3
+#: keymap-editor/editor.cpp:113 rc.cpp:3
 #, kde-format
 msgid "Unikey Keymap Editor"
-msgstr ""
+msgstr "Unikey Düğme Eşlem Düzenleyicisi"
 
 #. i18n: file: macro-editor/editor.ui:14
 #. i18n: ectx: property (windowTitle), widget (QWidget, Editor)
-#: macro-editor/editor.cpp:52 rc.cpp:57
+#: macro-editor/editor.cpp:62 rc.cpp:57
 #, kde-format
 msgid "Unikey Macro Editor"
-msgstr "Unikey Makro Editör"
+msgstr "Unikey Makro Düzenleyicisi"
 
-#: src/unikey-addon.conf.in.in:3
+#: src/unikey-addon.conf.in.in:2
 msgid "Unikey Wrapper For Fcitx"
-msgstr "Fcitx için Unikey Wrapper"
+msgstr "Fcitx için Unikey Sargısı"
 
-#: src/unikey-config.h:52
+#: src/unikey-config.h:53
 msgid "Use oà, _uý (instead of òa, úy)"
 msgstr ""
 
-#: src/unikey-config.h:35
+#: src/unikey-config.h:36
 msgid "UserIM"
 msgstr ""
 
-#: keymap-editor/editor.cpp:52 src/unikey-config.h:29 src/unikey-config.h:34
+#: keymap-editor/editor.cpp:62 src/unikey-config.h:30 src/unikey-config.h:35
 msgid "VIQR"
 msgstr ""
 
-#: keymap-editor/editor.cpp:51 src/unikey-config.h:33
+#: keymap-editor/editor.cpp:61 src/unikey-config.h:34
 msgid "VNI"
 msgstr ""
 
-#: src/unikey-config.h:29
+#: src/unikey-config.h:30
 msgid "VNI Win"
 msgstr ""
 
-#: keymap-editor/editor.cpp:59
+#: keymap-editor/editor.cpp:69
 msgid "Vietnamese characters"
 msgstr ""
 
@@ -425,7 +426,7 @@ msgstr ""
 msgid "Vietnamese input method"
 msgstr "Vietnamca giriş yöntemi"
 
-#: keymap-editor/model.cpp:34 macro-editor/model.cpp:29
+#: keymap-editor/model.cpp:46 macro-editor/model.cpp:36
 msgid "Word"
 msgstr ""
 
