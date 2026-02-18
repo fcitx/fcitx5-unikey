@@ -20,6 +20,7 @@
 #include <cstring>
 #include <fcitx-config/iniparser.h>
 #include <fcitx-utils/capabilityflags.h>
+#include <fcitx-utils/event.h>
 #include <fcitx-utils/charutils.h>
 #include <fcitx-utils/fs.h>
 #include <fcitx-utils/i18n.h>
@@ -144,6 +145,11 @@ public:
             return;
         }
 
+        if (isDirectCommit()) {
+            directCommitKeyEvent(keyEvent);
+            return;
+        }
+
         if (keyEvent.key().isSimple() &&
             !keyEvent.rawKey().check(FcitxKey_space)) {
             rebuildPreedit();
@@ -168,6 +174,16 @@ public:
     void syncState(KeySym sym = FcitxKey_None);
     void updatePreedit();
 
+    // Direct commit mode: commit text immediately without preedit
+    bool isDirectCommit() const;
+    bool hasActiveWord() const { return committedChars_ > 0; }
+    void directCommitKeyEvent(KeyEvent &keyEvent);
+    void directCommitPreedit(KeyEvent &keyEvent);
+    void directCommitSync(KeySym sym = FcitxKey_None);
+    void forwardBackspaces(int n);
+    void flushPendingCommit();
+    void schedulePendingCommit(std::string text);
+
     void eraseChars(int num_chars) {
         int i;
         int k;
@@ -187,6 +203,8 @@ public:
     }
 
     void reset() {
+        flushPendingCommit();
+        committedChars_ = 0;
         uic_.resetBuf();
         preeditStr_.clear();
         updatePreedit();
@@ -236,7 +254,14 @@ public:
             return;
         }
 
-        const auto isValidStateCharacter = [](char c) {
+        const auto isValidStateCharacter = [this](char c) {
+            // In direct commit mode, rebuild all ASCII letters so the
+            // engine can recover after app-triggered resets (e.g. Enter
+            // in chat apps). Without this, 'd' and vowels can't be
+            // rebuilt, and VNI modifiers become literal digits.
+            if (isDirectCommit()) {
+                return charutils::islower(c) || charutils::isupper(c);
+            }
             return isWordAutoCommit(c) && !charutils::isdigit(c);
         };
 
@@ -269,12 +294,19 @@ public:
             }
         }
 
+        auto rebuildLen = std::distance(start, end);
         FCITX_UNIKEY_DEBUG()
             << "Rebuild surrounding with: \""
-            << std::string_view(&*start, std::distance(start, end)) << "\"";
+            << std::string_view(&*start, rebuildLen) << "\"";
         for (; start != end; ++start) {
             uic_.putChar(*start);
             autoCommit_ = true;
+        }
+        if (isDirectCommit()) {
+            committedChars_ = static_cast<int>(rebuildLen);
+            // Don't set autoCommit_ — rebuilt chars must go through
+            // filter() so VNI digits are processed as modifiers.
+            autoCommit_ = false;
         }
     }
 
@@ -353,6 +385,10 @@ private:
     std::string preeditStr_;
     bool autoCommit_ = false;
     KeySym lastShiftPressed_ = FcitxKey_None;
+    int committedChars_ = 0;
+    int pendingBackspaces_ = 0;
+    std::string pendingCommitText_;
+    std::unique_ptr<EventSourceTime> commitTimer_;
 };
 
 UnikeyEngine::UnikeyEngine(Instance *instance)
@@ -638,6 +674,14 @@ void UnikeyState::preedit(KeyEvent &keyEvent) {
 void UnikeyEngine::reset(const InputMethodEntry & /*entry*/,
                          InputContextEvent &event) {
     auto *state = event.inputContext()->propertyFor(&factory_);
+    // In direct commit mode, preserve engine state on app-triggered
+    // resets only when mid-word (committedChars_ > 0). The committed
+    // text is still on screen and the engine must stay in sync for
+    // VNI modifiers to work. At word boundaries (committedChars_ == 0),
+    // allow the reset to proceed normally to avoid buffer accumulation.
+    if (state->isDirectCommit() && state->hasActiveWord()) {
+        return;
+    }
     state->reset();
     if (event.type() == EventType::InputContextReset) {
         if (event.inputContext()->capabilityFlags().test(
@@ -734,7 +778,7 @@ void UnikeyState::handleIgnoredKey() {
 }
 
 void UnikeyState::commit() {
-    if (!preeditStr_.empty()) {
+    if (!isDirectCommit() && !preeditStr_.empty()) {
         ic_->commitString(preeditStr_);
     }
     reset();
@@ -790,6 +834,243 @@ void UnikeyState::updatePreedit() {
     }
     ic_->updatePreedit();
     ic_->updateUserInterface(UserInterfaceComponent::InputPanel);
+}
+
+bool UnikeyState::isDirectCommit() const {
+    return *engine_->config().directCommit &&
+           !*engine_->config().modifySurroundingText;
+}
+
+void UnikeyState::forwardBackspaces(int n) {
+    if (n <= 0) {
+        return;
+    }
+    if (ic_->capabilityFlags().test(CapabilityFlag::SurroundingText) &&
+        !ic_->capabilityFlags().test(CapabilityFlag::Terminal)) {
+        ic_->deleteSurroundingText(-n, n);
+    } else {
+        for (int i = 0; i < n; i++) {
+            pendingBackspaces_++;
+            ic_->forwardKey(Key(FcitxKey_BackSpace));
+        }
+    }
+}
+
+void UnikeyState::directCommitSync(KeySym sym) {
+    int bs = uic_.backspaces();
+
+    std::string newText;
+    if (uic_.bufChars() > 0) {
+        if (*engine_->config().oc == UkConv::XUTF8) {
+            newText.append(reinterpret_cast<const char *>(uic_.buf()),
+                           uic_.bufChars());
+        } else {
+            unsigned char buf[CONVERT_BUF_SIZE + 1];
+            int bufSize = CONVERT_BUF_SIZE;
+            latinToUtf(buf, uic_.buf(), uic_.bufChars(), &bufSize);
+            newText.append(reinterpret_cast<const char *>(buf),
+                           CONVERT_BUF_SIZE - bufSize);
+        }
+    } else if (sym != FcitxKey_Shift_L && sym != FcitxKey_Shift_R &&
+               sym != FcitxKey_None) {
+        newText = utf8::UCS4ToUTF8(sym);
+    }
+
+    int delChars = (bs < committedChars_) ? bs : committedChars_;
+    committedChars_ -= delChars;
+
+    if (delChars > 0) {
+        forwardBackspaces(delChars);
+    }
+
+    if (!newText.empty()) {
+        if ((ic_->capabilityFlags().test(CapabilityFlag::SurroundingText) &&
+             !ic_->capabilityFlags().test(CapabilityFlag::Terminal)) ||
+            delChars == 0) {
+            ic_->commitString(newText);
+            committedChars_ +=
+                static_cast<int>(utf8::length(newText));
+        } else {
+            schedulePendingCommit(std::move(newText));
+        }
+    }
+}
+
+void UnikeyState::flushPendingCommit() {
+    if (commitTimer_) {
+        commitTimer_->setEnabled(false);
+    }
+    if (!pendingCommitText_.empty()) {
+        ic_->commitString(pendingCommitText_);
+        committedChars_ +=
+            static_cast<int>(utf8::length(pendingCommitText_));
+        pendingCommitText_.clear();
+    }
+}
+
+void UnikeyState::schedulePendingCommit(std::string text) {
+    pendingCommitText_ = std::move(text);
+    uint64_t t = now(CLOCK_MONOTONIC) + 20000;
+    if (!commitTimer_) {
+        commitTimer_ =
+            engine_->instance()->eventLoop().addTimeEvent(
+                CLOCK_MONOTONIC, t, 0,
+                [this](EventSourceTime *source, uint64_t) {
+                    flushPendingCommit();
+                    source->setEnabled(false);
+                    return true;
+                });
+    } else {
+        commitTimer_->setTime(t);
+        commitTimer_->setEnabled(true);
+    }
+}
+
+void UnikeyState::directCommitKeyEvent(KeyEvent &keyEvent) {
+    auto sym = keyEvent.rawKey().sym();
+
+    // Skip forwarded backspaces re-entering via XIM.
+    // Don't filterAndAccept — let the BS reach the app for deletion.
+    if (sym == FcitxKey_BackSpace && pendingBackspaces_ > 0) {
+        pendingBackspaces_--;
+        if (pendingBackspaces_ == 0) {
+            // All forwarded BSes processed, safe to commit now.
+            flushPendingCommit();
+        }
+        return;
+    }
+    pendingBackspaces_ = 0;
+
+    flushPendingCommit();
+    directCommitPreedit(keyEvent);
+
+    if (sym >= FcitxKey_space && sym <= FcitxKey_asciitilde) {
+        lastKeyWithShift_ =
+            keyEvent.rawKey().states().test(KeyState::Shift);
+    } else {
+        lastKeyWithShift_ = false;
+    }
+}
+
+void UnikeyState::directCommitPreedit(KeyEvent &keyEvent) {
+    auto sym = keyEvent.rawKey().sym();
+    auto state = keyEvent.rawKey().states();
+
+    // Shift+Shift restore
+    if (keyEvent.rawKey().check(FcitxKey_Shift_L) ||
+        keyEvent.rawKey().check(FcitxKey_Shift_R)) {
+        if (lastShiftPressed_ == FcitxKey_None) {
+            lastShiftPressed_ = keyEvent.rawKey().sym();
+        } else if (lastShiftPressed_ != keyEvent.rawKey().sym()) {
+            uic_.restoreKeyStrokes();
+            directCommitSync(keyEvent.rawKey().sym());
+            lastShiftPressed_ = FcitxKey_None;
+            keyEvent.filterAndAccept();
+            return;
+        }
+    } else {
+        lastShiftPressed_ = FcitxKey_None;
+    }
+
+    if (state.testAny(KeyState::Ctrl_Alt) || sym == FcitxKey_Control_L ||
+        sym == FcitxKey_Control_R || sym == FcitxKey_Tab ||
+        sym == FcitxKey_Return || sym == FcitxKey_Delete ||
+        sym == FcitxKey_KP_Enter ||
+        (sym >= FcitxKey_Home && sym <= FcitxKey_Insert) ||
+        (sym >= FcitxKey_KP_Home && sym <= FcitxKey_KP_Delete)) {
+        uic_.filter(0);
+        directCommitSync();
+        committedChars_ = 0;
+        uic_.resetBuf();
+        return;
+    }
+    if (state.test(KeyState::Super)) {
+        return;
+    }
+    if ((sym >= FcitxKey_Caps_Lock && sym <= FcitxKey_Hyper_R) ||
+        sym == FcitxKey_Shift_L || sym == FcitxKey_Shift_R) {
+        return;
+    }
+    if (sym == FcitxKey_BackSpace) {
+        uic_.backspacePress();
+        if (uic_.backspaces() == 0 || committedChars_ == 0) {
+            committedChars_ = 0;
+            uic_.resetBuf();
+            return;
+        }
+        if (committedChars_ <= uic_.backspaces()) {
+            autoCommit_ = true;
+        }
+        directCommitSync();
+        if (uic_.bufChars() > 0) {
+            autoCommit_ = false;
+        }
+        keyEvent.filterAndAccept();
+        return;
+    }
+    if (sym >= FcitxKey_KP_Multiply && sym <= FcitxKey_KP_9) {
+        uic_.filter(0);
+        directCommitSync();
+        committedChars_ = 0;
+        uic_.resetBuf();
+        return;
+    }
+    if (sym >= FcitxKey_space && sym <= FcitxKey_asciitilde) {
+        uic_.setCapsState(state.test(KeyState::Shift),
+                          state.test(KeyState::CapsLock));
+
+        // Auto commit consonants/digits
+        if (!*engine_->config().macro &&
+            (uic_.isAtWordBeginning() || autoCommit_)) {
+            if (isWordAutoCommit(sym)) {
+                uic_.putChar(sym);
+                autoCommit_ = true;
+                ic_->commitString(utf8::UCS4ToUTF8(sym));
+                committedChars_++;
+                keyEvent.filterAndAccept();
+                return;
+            }
+        }
+
+        // W at word beginning (Telex)
+        if ((*engine_->config().im == UkTelex ||
+             *engine_->config().im == UkSimpleTelex2) &&
+            !*engine_->config().process_w_at_begin &&
+            uic_.isAtWordBeginning() &&
+            (sym == FcitxKey_w || sym == FcitxKey_W)) {
+            uic_.putChar(sym);
+            ic_->commitString(sym == FcitxKey_w ? "w" : "W");
+            committedChars_++;
+            keyEvent.filterAndAccept();
+            return;
+        }
+
+        autoCommit_ = false;
+
+        // Shift + space restore
+        if (!lastKeyWithShift_ && state.test(KeyState::Shift) &&
+            sym == FcitxKey_space && !uic_.isAtWordBeginning()) {
+            uic_.restoreKeyStrokes();
+        } else {
+            uic_.filter(sym);
+        }
+
+        directCommitSync(sym);
+
+        if (committedChars_ > 0 && isWordBreakSym(sym)) {
+            committedChars_ = 0;
+            uic_.resetBuf();
+        }
+
+        keyEvent.filterAndAccept();
+        return;
+    }
+
+    // Non-processed key
+    uic_.filter(0);
+    directCommitSync();
+    committedChars_ = 0;
+    uic_.resetBuf();
 }
 
 } // namespace fcitx

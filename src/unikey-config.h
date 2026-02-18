@@ -61,6 +61,11 @@ FCITX_CONFIGURATION(
         _("Allow to modify surrounding text (experimental)"), false};
     Option<bool> displayUnderline{this, "DisplayUnderline",
                                   _("Underline the preedit text"), true};
+    Option<bool> directCommit{
+        this, "DirectCommit",
+        _("Commit text directly without preedit "
+          "(for IDE compatibility)"),
+        false};
 #ifdef ENABLE_QT
     ExternalOption macroEditor{this, "MacroEditor", _("Macro Editor"),
                                "fcitx://config/addon/unikey/macro"};

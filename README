@@ -1,9 +1,57 @@
-Unikey (Vietnamese Input Method) engine support for Fcitx
+Unikey (Vietnamese Input Method) engine support for Fcitx5
 
-Released under mixed GPLv2+
+Released under mixed GPLv2+ (main code) and LGPLv2+ (unikey library).
 
-Install:
-$ mkdir build && cd build
-$ cmake -DCMAKE_INSTALL_PREFIX=[prefix to fcitx5] ..
-$ make
-# make install
+## Dependencies
+
+Required:
+- CMake >= 3.6
+- Extra CMake Modules (ECM) >= 1.0.0
+- Fcitx5 >= 5.1.13
+- Gettext
+- PkgConfig
+
+Optional (for Qt6 macro/keymap editors):
+- Qt6 (Core, Gui, Widgets)
+- Fcitx5Qt6WidgetsAddons >= 5.0.12
+
+## Build
+
+    mkdir build && cd build
+    cmake -DCMAKE_INSTALL_PREFIX=/usr ..
+    make -j$(nproc)
+
+Or with Ninja:
+
+    mkdir build && cd build
+    cmake -DCMAKE_INSTALL_PREFIX=/usr -G Ninja ..
+    ninja
+
+CMake options:
+- -DENABLE_QT=On       (default) Build Qt6 macro/keymap editors
+- -DENABLE_TEST=On     (default) Build tests
+- -DENABLE_COVERAGE=Off          Enable gcov coverage
+
+## Install
+
+    sudo make install
+
+Or with Ninja:
+
+    sudo ninja install
+
+Then restart Fcitx5:
+
+    fcitx5 -r -d
+
+## Uninstall
+
+    sudo make uninstall
+
+Or with Ninja:
+
+    sudo ninja uninstall
+
+## Test
+
+    ctest --test-dir build/
