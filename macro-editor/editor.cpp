@@ -111,7 +111,7 @@ QString MacroEditor::getData(CMacroTable *table, int i, bool iskey) {
             if (ret != 0) {
                 break;
             }
-            return QString::fromUtf8(result);
+            return QString::fromUtf8(result, maxOutLen);
         }
     } while (0);
     return QString();
@@ -157,9 +157,12 @@ void MacroEditor::importFileSelected() {
     }
     QString file = dialog->selectedFiles()[0];
     table_->loadFromFile(file.toUtf8().constData());
+    model_->load(table_.get());
+    model_->setNeedSave(true);
 }
 
 void MacroEditor::exportMacro() {
+    model_->save(table_.get());
     auto *dialog = new QFileDialog(this);
     dialog->setAttribute(Qt::WA_DeleteOnClose, true);
     dialog->setDirectory("macro");
