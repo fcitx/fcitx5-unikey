@@ -38,13 +38,13 @@ constexpr UkEventLabelPair UkEvLabelList[] = {
     {"Hook-U", vneHook_u},     {"Hook-O", vneHook_o},
     {"Bowl", vneBowl},         {"D-Mark", vneDd},
     {"Telex-W", vne_telex_w},  {"Escape", vneEscChar},
-    {"DD", vneCount + vnl_DD}, {"dd", vneCount + vnl_dd},
-    {"A^", vneCount + vnl_Ar}, {"a^", vneCount + vnl_ar},
-    {"A(", vneCount + vnl_Ab}, {"a(", vneCount + vnl_ab},
-    {"E^", vneCount + vnl_Er}, {"e^", vneCount + vnl_er},
-    {"O^", vneCount + vnl_Or}, {"o^", vneCount + vnl_or},
-    {"O+", vneCount + vnl_Oh}, {"o+", vneCount + vnl_oh},
-    {"U+", vneCount + vnl_Uh}, {"u+", vneCount + vnl_uh}};
+    {"DD", (int)vneCount + vnl_DD}, {"dd", (int)vneCount + vnl_dd},
+    {"A^", (int)vneCount + vnl_Ar}, {"a^", (int)vneCount + vnl_ar},
+    {"A(", (int)vneCount + vnl_Ab}, {"a(", (int)vneCount + vnl_ab},
+    {"E^", (int)vneCount + vnl_Er}, {"e^", (int)vneCount + vnl_er},
+    {"O^", (int)vneCount + vnl_Or}, {"o^", (int)vneCount + vnl_or},
+    {"O+", (int)vneCount + vnl_Oh}, {"o+", (int)vneCount + vnl_oh},
+    {"U+", (int)vneCount + vnl_Uh}, {"u+", (int)vneCount + vnl_uh}};
 
 constexpr auto UkEvLabelCount = FCITX_ARRAY_SIZE(UkEvLabelList);
 

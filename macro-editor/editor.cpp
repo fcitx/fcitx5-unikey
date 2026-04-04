@@ -13,6 +13,7 @@
 #include "vnconv.h"
 #include <QCloseEvent>
 #include <QDebug>
+#include <QDateTime>
 #include <QDialog>
 #include <QFileDialog>
 #include <QItemSelectionModel>
@@ -145,6 +146,7 @@ void MacroEditor::importMacro() {
     dialog->setAttribute(Qt::WA_DeleteOnClose, true);
     dialog->setFileMode(QFileDialog::ExistingFile);
     dialog->setAcceptMode(QFileDialog::AcceptOpen);
+    dialog->setNameFilter(_("Text files (*.txt);;All files (*)"));
     dialog->open();
     connect(dialog, &QFileDialog::accepted, this,
             &MacroEditor::importFileSelected);
@@ -165,8 +167,11 @@ void MacroEditor::exportMacro() {
     model_->save(table_.get());
     auto *dialog = new QFileDialog(this);
     dialog->setAttribute(Qt::WA_DeleteOnClose, true);
-    dialog->setDirectory("macro");
     dialog->setAcceptMode(QFileDialog::AcceptSave);
+    dialog->setNameFilter(_("Text files (*.txt);;All files (*)"));
+    dialog->setDefaultSuffix("txt");
+    QString date = QDateTime::currentDateTime().toString("yyyy-MM-dd");
+    dialog->selectFile(QString("macro_%1.txt").arg(date));
     dialog->open();
     connect(dialog, &QFileDialog::accepted, this,
             &MacroEditor::exportFileSelected);
