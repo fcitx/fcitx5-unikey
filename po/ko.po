@@ -3,30 +3,378 @@
 # This file is distributed under the same license as the fcitx5-unikey package.
 #
 # Translators:
-# csslayer <wengxt@gmail.com>, 2018
+# Xuetian Weng <wengxt@gmail.com>, 2018
 # Bon Keun Seo <scobyseo@gmail.com>, 2021
-# Junghee Lee <daemul72@gmail.com>, 2023
+# Junghee Lee <daemul72@gmail.com>, 2026
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-02-13 22:18+0000\n"
+"POT-Creation-Date: 2026-04-05 20:24+0000\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
-"Last-Translator: Junghee Lee <daemul72@gmail.com>, 2023\n"
-"Language-Team: Korean (https://www.transifex.com/fcitx/teams/12005/ko/)\n"
+"Last-Translator: Junghee Lee <daemul72@gmail.com>, 2026\n"
+"Language-Team: Korean (https://app.transifex.com/fcitx/teams/12005/ko/)\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#. i18n: file: macro-editor/editor.ui:36
-#. i18n: ectx: property (text), widget (QPushButton, addButton)
-#: rc.cpp:60
+#: keymap-editor/model.cpp:43
+msgid "Keymap"
+msgstr "키맵"
+
+#: keymap-editor/model.cpp:46 macro-editor/model.cpp:36
+msgid "Word"
+msgstr "단어"
+
+#: keymap-editor/actions.cpp:13
+msgid "Remove existing tone"
+msgstr "기존 성조 제거"
+
+#: keymap-editor/actions.cpp:14
+msgid "Tone ' (acute)"
+msgstr "성조 ' (어큐트)"
+
+#: keymap-editor/actions.cpp:15
+msgid "Tone ` (grave)"
+msgstr "성조 ` (그레이브)"
+
+#: keymap-editor/actions.cpp:16
+msgid "Tone ◌̉ (hook above)"
+msgstr "성조 ◌̉ (훅 위)"
+
+#: keymap-editor/actions.cpp:17
+msgid "Tone ~ (tilde)"
+msgstr "성조 ~ (틸드)"
+
+#: keymap-editor/actions.cpp:18
+msgid "Tone . (dot below)"
+msgstr "성조 . (아래점)"
+
+#: keymap-editor/actions.cpp:19
+msgid "Escape key"
+msgstr "Esc 키"
+
+#: keymap-editor/actions.cpp:20
+msgid "Circumflex for all applicable characters"
+msgstr "적용 가능한 모든 문자에 곡절 부호"
+
+#: keymap-editor/actions.cpp:22
+msgid "Circumflex: A becomes A^"
+msgstr "곡절 부호: A → A^"
+
+#: keymap-editor/actions.cpp:23
+msgid "Circumflex: E becomes E^"
+msgstr "곡절 부호: E → E^"
+
+#: keymap-editor/actions.cpp:24
+msgid "Circumflex: O becomes O^"
+msgstr "곡절 부호: O → O^"
+
+#: keymap-editor/actions.cpp:25
+msgid "Horn-Breve: U, O, A, become U+, O+, A("
+msgstr "뿔표-브레브: U, O, A → U+, O+, A("
+
+#: keymap-editor/actions.cpp:27
+msgid "Horn: U, O become U+, O+"
+msgstr "뿔표: U, O → U+, O+"
+
+#: keymap-editor/actions.cpp:28
+msgid "Horn: U becomes U+"
+msgstr "뿔표: U → U+"
+
+#: keymap-editor/actions.cpp:29
+msgid "Horn: O becomes O+"
+msgstr "뿔표: O → O+"
+
+#: keymap-editor/actions.cpp:30
+msgid "Breve: A becomes A("
+msgstr "브레브: A → A("
+
+#: keymap-editor/actions.cpp:31
+msgid "Stroke: D becomes -D"
+msgstr "가로획: D → -D"
+
+#: keymap-editor/actions.cpp:32
+msgid "Horn-Breve: U, O, A, become U+, O+, A(, or create U+"
+msgstr "뿔표-브레브: U, O, A → U+, O+, A( 또는 U+ 생성"
+
+#: keymap-editor/actions.cpp:34
+msgid "D with stroke [-D]"
+msgstr "가로획이 있는 D [-D]"
+
+#: keymap-editor/actions.cpp:35
+msgid "d with stroke [-d]"
+msgstr "가로획이 있는 d [-d]"
+
+#: keymap-editor/actions.cpp:36
+msgid "A with circumflex [A^]"
+msgstr "곡절 부호가 있는 A [A^]"
+
+#: keymap-editor/actions.cpp:37
+msgid "a with circumflex [a^]"
+msgstr "곡절 부호가 있는 a [a^]"
+
+#: keymap-editor/actions.cpp:38
+msgid "A with breve [A(]"
+msgstr "브레브가 있는 A [A(]"
+
+#: keymap-editor/actions.cpp:39
+msgid "a with breve [a(]"
+msgstr "브레브가 있는 a [a(]"
+
+#: keymap-editor/actions.cpp:40
+msgid "E with circumflex [E^]"
+msgstr "곡절 부호가 있는 E [E^]"
+
+#: keymap-editor/actions.cpp:41
+msgid "e with circumflex [e^]"
+msgstr "곡절 부호가 있는 e [e^]"
+
+#: keymap-editor/actions.cpp:42
+msgid "O with circumflex [O^]"
+msgstr "곡절 부호가 있는 O [O^]"
+
+#: keymap-editor/actions.cpp:43
+msgid "o with circumflex [o^]"
+msgstr "곡절 부호가 있는 o [o^]"
+
+#: keymap-editor/actions.cpp:44
+msgid "O with horn [O+]"
+msgstr "뿔표가 있는 O [O+]"
+
+#: keymap-editor/actions.cpp:45
+msgid "o with horn [o+]"
+msgstr "뿔표가 있는 o [o+]"
+
+#: keymap-editor/actions.cpp:46
+msgid "U with horn [U+]"
+msgstr "뿔표가 있는 U [U+]"
+
+#: keymap-editor/actions.cpp:47
+msgid "u with horn [u+]"
+msgstr "뿔표가 있는 u [u+]"
+
+#: keymap-editor/editor.cpp:60 src/unikey-config.h:34
+msgid "Telex"
+msgstr "Telex"
+
+#: keymap-editor/editor.cpp:61 src/unikey-config.h:34
+msgid "VNI"
+msgstr "VNI"
+
+#: keymap-editor/editor.cpp:62 src/unikey-config.h:30 src/unikey-config.h:35
+msgid "VIQR"
+msgstr "VIQR"
+
+#: keymap-editor/editor.cpp:63 src/unikey-config.h:35
+msgid "Microsoft Vietnamese"
+msgstr "Microsoft 베트남어"
+
+#: keymap-editor/editor.cpp:64 src/unikey-config.h:36
+msgid "Simple Telex"
+msgstr "간소한 Telex"
+
+#: keymap-editor/editor.cpp:65 src/unikey-config.h:37
+msgid "Simple Telex2"
+msgstr "간소한 Telex2"
+
+#: keymap-editor/editor.cpp:67
+msgid "Tone marks"
+msgstr "성조 기호"
+
+#: keymap-editor/editor.cpp:68
+msgid "Character complements"
+msgstr "문자 보조 기호"
+
+#: keymap-editor/editor.cpp:69
+msgid "Vietnamese characters"
+msgstr "베트남어 문자"
+
+#. i18n: file: keymap-editor/editor.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, Editor)
+#: keymap-editor/editor.cpp:113 rc.cpp:3
 #, kde-format
-msgid "&Add"
-msgstr "추가(&A)"
+msgid "Unikey Keymap Editor"
+msgstr "유니키 키맵 편집기"
+
+#: macro-editor/model.cpp:33 src/unikey-im.cpp:431
+msgid "Macro"
+msgstr "매크로"
+
+#. i18n: file: macro-editor/editor.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, Editor)
+#: macro-editor/editor.cpp:62 rc.cpp:57
+#, kde-format
+msgid "Unikey Macro Editor"
+msgstr "유니키 매크로 편집기"
+
+#: src/unikey-config.h:29
+msgid "Unicode"
+msgstr "유니코드"
+
+#: src/unikey-config.h:29
+msgid "TCVN3"
+msgstr "TCVN3"
+
+#: src/unikey-config.h:30
+msgid "VNI Win"
+msgstr "VNI Win"
+
+#: src/unikey-config.h:30
+msgid "BK HCM 2"
+msgstr "BK HCM 2"
+
+#: src/unikey-config.h:31
+msgid "CString"
+msgstr "C 문자열"
+
+#: src/unikey-config.h:31
+msgid "NCR Decimal"
+msgstr "NCR 10진수"
+
+#: src/unikey-config.h:32
+msgid "NCR Hex"
+msgstr "NCR 16진수"
+
+#: src/unikey-config.h:36
+msgid "UserIM"
+msgstr "사용자 입력기"
+
+#: src/unikey-config.h:42 src/unikey-im.cpp:368
+msgid "Input Method"
+msgstr "입력기"
+
+#: src/unikey-config.h:44
+msgid "Output Charset"
+msgstr "출력 문자 집합"
+
+#: src/unikey-config.h:45
+msgid "Enable spell check"
+msgstr "철자 검사 활성화"
+
+#: src/unikey-config.h:46
+msgid "Enable Macro"
+msgstr "매크로 활성화"
+
+#: src/unikey-config.h:48
+msgid "Process W at word begin"
+msgstr "단어 시작에서 W 처리"
+
+#: src/unikey-config.h:50
+msgid "Auto restore keys with invalid words"
+msgstr "잘못된 단어의 키 자동 복원"
+
+#: src/unikey-config.h:53
+msgid "Use oà, _uý (instead of òa, úy)"
+msgstr "òa, úy 대신 oà, _uý 사용"
+
+#: src/unikey-config.h:55
+msgid "Allow type with more freedom"
+msgstr "더 자유로운 입력 허용"
+
+#: src/unikey-config.h:58
+msgid "Restore typing state from surrounding text"
+msgstr "주변 텍스트에서 입력 상태 복원"
+
+#: src/unikey-config.h:61
+msgid "Allow to modify surrounding text (experimental)"
+msgstr "주변 텍스트 수정 허용 (실험용)"
+
+#: src/unikey-config.h:63
+msgid "Underline the preedit text"
+msgstr "조합 중 텍스트에 밑줄 표시"
+
+#: src/unikey-config.h:65
+msgid "Macro Editor"
+msgstr "매크로 편집기"
+
+#: src/unikey-config.h:67
+msgid "Keymap Editor"
+msgstr "키맵 편집기"
+
+#: src/unikey-im.cpp:394
+msgid "Output charset"
+msgstr "출력 문자 집합"
+
+#: src/unikey-im.cpp:419
+msgid "Spell check"
+msgstr "철자 검사"
+
+#: src/unikey-im.cpp:690
+msgid "Macro Enabled"
+msgstr "매크로 활성화됨"
+
+#: src/unikey-im.cpp:691
+msgid "Macro Disabled"
+msgstr "매크로 비활성화됨"
+
+#: src/unikey-im.cpp:698
+msgid "Spell Check Enabled"
+msgstr "철자 검사 활성화됨"
+
+#: src/unikey-im.cpp:699
+msgid "Spell Check Disabled"
+msgstr "철자 검사 비활성화됨"
+
+#: org.fcitx.Fcitx5.Addon.Unikey.metainfo.xml.in:7 src/unikey.conf.in:2
+msgid "Unikey"
+msgstr "유니키"
+
+#: org.fcitx.Fcitx5.Addon.Unikey.metainfo.xml.in:8
+msgid "Vietnamese input method"
+msgstr "베트남어 입력기"
+
+#. i18n: file: keymap-editor/editor.ui:24
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:6
+#, kde-format
+msgid "Built-in Input Methods"
+msgstr "기본 제공 입력기"
+
+#. i18n: file: keymap-editor/editor.ui:30
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:9
+#, kde-format
+msgid "Input Method:"
+msgstr "입력기:"
+
+#. i18n: file: keymap-editor/editor.ui:47
+#. i18n: ectx: property (text), widget (QPushButton, loadButton)
+#: rc.cpp:12
+#, kde-format
+msgid "&Load"
+msgstr "불러오기(&L)"
+
+#. i18n: file: keymap-editor/editor.ui:61
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: rc.cpp:15
+#, kde-format
+msgid "Key definition"
+msgstr "키 정의"
+
+#. i18n: file: keymap-editor/editor.ui:67
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:18
+#, kde-format
+msgid "Category:"
+msgstr "범주:"
+
+#. i18n: file: keymap-editor/editor.ui:84
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: rc.cpp:21
+#, kde-format
+msgid "Action:"
+msgstr "동작:"
+
+#. i18n: file: keymap-editor/editor.ui:101
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:24
+#, kde-format
+msgid "Key"
+msgstr "키"
 
 #. i18n: file: keymap-editor/editor.ui:128
 #. i18n: ectx: property (text), widget (QPushButton, addButton)
@@ -34,6 +382,20 @@ msgstr "추가(&A)"
 #, kde-format
 msgid "&Add / Update"
 msgstr "추가 / 업데이트(&A)"
+
+#. i18n: file: keymap-editor/editor.ui:139
+#. i18n: ectx: property (text), widget (QPushButton, moveUpButton)
+#: rc.cpp:30
+#, kde-format
+msgid "Move &Up"
+msgstr "위로 이동(&U)"
+
+#. i18n: file: keymap-editor/editor.ui:150
+#. i18n: ectx: property (text), widget (QPushButton, moveDownButton)
+#: rc.cpp:33
+#, kde-format
+msgid "Move &Down"
+msgstr "아래로 이동(&D)"
 
 #. i18n: file: keymap-editor/editor.ui:161
 #. i18n: ectx: property (text), widget (QPushButton, deleteButton)
@@ -44,14 +406,14 @@ msgstr "추가 / 업데이트(&A)"
 msgid "&Delete"
 msgstr "삭제(&D)"
 
-#. i18n: file: keymap-editor/editor.ui:201
-#. i18n: ectx: property (text), widget (QPushButton, exportButton)
-#. i18n: file: macro-editor/editor.ui:87
-#. i18n: ectx: property (text), widget (QPushButton, exportButton)
-#: rc.cpp:45 rc.cpp:72
+#. i18n: file: keymap-editor/editor.ui:172
+#. i18n: ectx: property (text), widget (QPushButton, clearButton)
+#. i18n: file: macro-editor/editor.ui:58
+#. i18n: ectx: property (text), widget (QPushButton, clearButton)
+#: rc.cpp:39 rc.cpp:66
 #, kde-format
-msgid "&Export"
-msgstr "내보내기(&E)"
+msgid "De&lete All"
+msgstr "모두 삭제(&L)"
 
 #. i18n: file: keymap-editor/editor.ui:190
 #. i18n: ectx: property (text), widget (QPushButton, importButton)
@@ -62,98 +424,14 @@ msgstr "내보내기(&E)"
 msgid "&Import"
 msgstr "가져오기(&I)"
 
-#. i18n: file: keymap-editor/editor.ui:47
-#. i18n: ectx: property (text), widget (QPushButton, loadButton)
-#: rc.cpp:12
+#. i18n: file: keymap-editor/editor.ui:201
+#. i18n: ectx: property (text), widget (QPushButton, exportButton)
+#. i18n: file: macro-editor/editor.ui:87
+#. i18n: ectx: property (text), widget (QPushButton, exportButton)
+#: rc.cpp:45 rc.cpp:72
 #, kde-format
-msgid "&Load"
-msgstr "불러오기(&L)"
-
-#: keymap-editor/actions.cpp:38
-msgid "A with breve [A(]"
-msgstr ""
-
-#: keymap-editor/actions.cpp:36
-msgid "A with circumflex [A^]"
-msgstr ""
-
-#. i18n: file: keymap-editor/editor.ui:84
-#. i18n: ectx: property (text), widget (QLabel, label_4)
-#: rc.cpp:21
-#, kde-format
-msgid "Action:"
-msgstr "동작:"
-
-#: src/unikey-config.h:60
-msgid "Allow to modify surrounding text (experimental)"
-msgstr ""
-
-#: src/unikey-config.h:54
-msgid "Allow type with more freedom"
-msgstr ""
-
-#: src/unikey-config.h:49
-msgid "Auto restore keys with invalid words"
-msgstr ""
-
-#: src/unikey-config.h:29
-msgid "BK HCM 2"
-msgstr "BK HCM 2"
-
-#: keymap-editor/actions.cpp:30
-msgid "Breve: A becomes A("
-msgstr ""
-
-#. i18n: file: keymap-editor/editor.ui:24
-#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: rc.cpp:6
-#, kde-format
-msgid "Built-in Input Methods"
-msgstr "기본 제공 입력기"
-
-#: src/unikey-config.h:30
-msgid "CString"
-msgstr "CString"
-
-#. i18n: file: keymap-editor/editor.ui:67
-#. i18n: ectx: property (text), widget (QLabel, label_3)
-#: rc.cpp:18
-#, kde-format
-msgid "Category:"
-msgstr "범주:"
-
-#: keymap-editor/editor.cpp:58
-msgid "Character complements"
-msgstr ""
-
-#: keymap-editor/actions.cpp:20
-msgid "Circumflex for all applicable characters"
-msgstr ""
-
-#: keymap-editor/actions.cpp:22
-msgid "Circumflex: A becomes A^"
-msgstr ""
-
-#: keymap-editor/actions.cpp:23
-msgid "Circumflex: E becomes E^"
-msgstr ""
-
-#: keymap-editor/actions.cpp:24
-msgid "Circumflex: O becomes O^"
-msgstr ""
-
-#: keymap-editor/actions.cpp:34
-msgid "D with stroke [-D]"
-msgstr ""
-
-#. i18n: file: keymap-editor/editor.ui:172
-#. i18n: ectx: property (text), widget (QPushButton, clearButton)
-#. i18n: file: macro-editor/editor.ui:58
-#. i18n: ectx: property (text), widget (QPushButton, clearButton)
-#: rc.cpp:39 rc.cpp:66
-#, kde-format
-msgid "De&lete All"
-msgstr "모두 삭제(&L)"
+msgid "&Export"
+msgstr "내보내기(&E)"
 
 #. i18n: file: macro-editor/dialog.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, Dialog)
@@ -162,274 +440,6 @@ msgstr "모두 삭제(&L)"
 msgid "Dialog"
 msgstr "대화창"
 
-#: keymap-editor/actions.cpp:40
-msgid "E with circumflex [E^]"
-msgstr ""
-
-#: src/unikey-config.h:45
-msgid "Enable Macro"
-msgstr "매크로 활성화"
-
-#: src/unikey-config.h:44
-msgid "Enable spell check"
-msgstr "철자 검사 활성화"
-
-#: keymap-editor/actions.cpp:19
-msgid "Escape key"
-msgstr "Esc 키"
-
-#: keymap-editor/actions.cpp:25
-msgid "Horn-Breve: U, O, A, become U+, O+, A("
-msgstr ""
-
-#: keymap-editor/actions.cpp:32
-msgid "Horn-Breve: U, O, A, become U+, O+, A(, or create U+"
-msgstr ""
-
-#: keymap-editor/actions.cpp:29
-msgid "Horn: O becomes O+"
-msgstr ""
-
-#: keymap-editor/actions.cpp:28
-msgid "Horn: U becomes U+"
-msgstr ""
-
-#: keymap-editor/actions.cpp:27
-msgid "Horn: U, O become U+, O+"
-msgstr ""
-
-#: src/unikey-config.h:41 src/unikey-im.cpp:331
-msgid "Input Method"
-msgstr "입력기"
-
-#. i18n: file: keymap-editor/editor.ui:30
-#. i18n: ectx: property (text), widget (QLabel, label)
-#: rc.cpp:9
-#, kde-format
-msgid "Input Method:"
-msgstr "입력기:"
-
-#. i18n: file: keymap-editor/editor.ui:101
-#. i18n: ectx: property (text), widget (QLabel, label_2)
-#: rc.cpp:24
-#, kde-format
-msgid "Key"
-msgstr "키"
-
-#. i18n: file: keymap-editor/editor.ui:61
-#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
-#: rc.cpp:15
-#, kde-format
-msgid "Key definition"
-msgstr "키 정의"
-
-#: keymap-editor/model.cpp:32
-msgid "Keymap"
-msgstr "키맵"
-
-#: src/unikey-config.h:66
-msgid "Keymap Editor"
-msgstr "키맵 편집기"
-
-#: macro-editor/model.cpp:27 src/unikey-im.cpp:394
-msgid "Macro"
-msgstr "매크로"
-
-#: src/unikey-im.cpp:645
-msgid "Macro Disabled"
-msgstr "매크로 비활성화됨"
-
-#: src/unikey-config.h:64
-msgid "Macro Editor"
-msgstr "매크로 편집기"
-
-#: src/unikey-im.cpp:644
-msgid "Macro Enabled"
-msgstr "매크로 활성화됨"
-
-#. i18n: file: macro-editor/dialog.ui:32
-#. i18n: ectx: property (text), widget (QLabel, label_2)
-#: rc.cpp:54
-#, kde-format
-msgid "Macro:"
-msgstr "매크로"
-
-#: keymap-editor/editor.cpp:53 src/unikey-config.h:34
-msgid "Microsoft Vietnamese"
-msgstr "Microsoft 베트남어"
-
-#. i18n: file: keymap-editor/editor.ui:150
-#. i18n: ectx: property (text), widget (QPushButton, moveDownButton)
-#: rc.cpp:33
-#, kde-format
-msgid "Move &Down"
-msgstr "아래로 이동(&D)"
-
-#. i18n: file: keymap-editor/editor.ui:139
-#. i18n: ectx: property (text), widget (QPushButton, moveUpButton)
-#: rc.cpp:30
-#, kde-format
-msgid "Move &Up"
-msgstr "위로 이동(&U)"
-
-#: src/unikey-config.h:30
-msgid "NCR Decimal"
-msgstr ""
-
-#: src/unikey-config.h:31
-msgid "NCR Hex"
-msgstr "NCR Hex"
-
-#: keymap-editor/actions.cpp:42
-msgid "O with circumflex [O^]"
-msgstr ""
-
-#: keymap-editor/actions.cpp:44
-msgid "O with horn [O+]"
-msgstr ""
-
-#: src/unikey-config.h:43
-msgid "Output Charset"
-msgstr ""
-
-#: src/unikey-im.cpp:357
-msgid "Output charset"
-msgstr ""
-
-#: src/unikey-config.h:47
-msgid "Process W at word begin"
-msgstr ""
-
-#: keymap-editor/actions.cpp:13
-msgid "Remove existing tone"
-msgstr ""
-
-#: src/unikey-config.h:57
-msgid "Restore typing state from surrounding text"
-msgstr ""
-
-#: keymap-editor/editor.cpp:54 src/unikey-config.h:35
-msgid "Simple Telex"
-msgstr "간소한 Telex"
-
-#: keymap-editor/editor.cpp:55 src/unikey-config.h:36
-msgid "Simple Telex2"
-msgstr "간소한 Telex2"
-
-#: src/unikey-im.cpp:653
-msgid "Spell Check Disabled"
-msgstr "철자 검사 비활성화됨"
-
-#: src/unikey-im.cpp:652
-msgid "Spell Check Enabled"
-msgstr "철자 검사 활성화됨"
-
-#: src/unikey-im.cpp:382
-msgid "Spell check"
-msgstr "철자 검사"
-
-#: keymap-editor/actions.cpp:31
-msgid "Stroke: D becomes -D"
-msgstr ""
-
-#: src/unikey-config.h:28
-msgid "TCVN3"
-msgstr "TCVN3"
-
-#: keymap-editor/editor.cpp:50 src/unikey-config.h:33
-msgid "Telex"
-msgstr "Telex"
-
-#: keymap-editor/actions.cpp:14
-msgid "Tone ' (acute)"
-msgstr ""
-
-#: keymap-editor/actions.cpp:18
-msgid "Tone . (dot below)"
-msgstr ""
-
-#: keymap-editor/actions.cpp:15
-msgid "Tone ` (grave)"
-msgstr ""
-
-#: keymap-editor/editor.cpp:57
-msgid "Tone marks"
-msgstr ""
-
-#: keymap-editor/actions.cpp:17
-msgid "Tone ~ (tilde)"
-msgstr ""
-
-#: keymap-editor/actions.cpp:16
-msgid "Tone ◌̉ (hook above)"
-msgstr ""
-
-#: keymap-editor/actions.cpp:46
-msgid "U with horn [U+]"
-msgstr ""
-
-#: src/unikey-config.h:62
-msgid "Underline the preedit text"
-msgstr ""
-
-#: src/unikey-config.h:28
-msgid "Unicode"
-msgstr ""
-
-#: org.fcitx.Fcitx5.Addon.Unikey.metainfo.xml.in:7 src/unikey.conf.in:3
-msgid "Unikey"
-msgstr "유니키"
-
-#. i18n: file: keymap-editor/editor.ui:14
-#. i18n: ectx: property (windowTitle), widget (QWidget, Editor)
-#: keymap-editor/editor.cpp:103 rc.cpp:3
-#, kde-format
-msgid "Unikey Keymap Editor"
-msgstr "유니키 키맵 편집기"
-
-#. i18n: file: macro-editor/editor.ui:14
-#. i18n: ectx: property (windowTitle), widget (QWidget, Editor)
-#: macro-editor/editor.cpp:52 rc.cpp:57
-#, kde-format
-msgid "Unikey Macro Editor"
-msgstr "유니키 매크로 편집기"
-
-#: src/unikey-addon.conf.in.in:3
-msgid "Unikey Wrapper For Fcitx"
-msgstr "Fcitx용 Unikey 래퍼"
-
-#: src/unikey-config.h:52
-msgid "Use oà, _uý (instead of òa, úy)"
-msgstr ""
-
-#: src/unikey-config.h:35
-msgid "UserIM"
-msgstr "사용자입력기"
-
-#: keymap-editor/editor.cpp:52 src/unikey-config.h:29 src/unikey-config.h:34
-msgid "VIQR"
-msgstr "VIQR"
-
-#: keymap-editor/editor.cpp:51 src/unikey-config.h:33
-msgid "VNI"
-msgstr "VNI"
-
-#: src/unikey-config.h:29
-msgid "VNI Win"
-msgstr "VNI Win"
-
-#: keymap-editor/editor.cpp:59
-msgid "Vietnamese characters"
-msgstr "베트남 문자"
-
-#: org.fcitx.Fcitx5.Addon.Unikey.metainfo.xml.in:8
-msgid "Vietnamese input method"
-msgstr "베트남어 입력기"
-
-#: keymap-editor/model.cpp:34 macro-editor/model.cpp:29
-msgid "Word"
-msgstr "단어"
-
 #. i18n: file: macro-editor/dialog.ui:25
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: rc.cpp:51
@@ -437,30 +447,20 @@ msgstr "단어"
 msgid "Word:"
 msgstr "단어:"
 
-#: keymap-editor/actions.cpp:39
-msgid "a with breve [a(]"
-msgstr ""
+#. i18n: file: macro-editor/dialog.ui:32
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:54
+#, kde-format
+msgid "Macro:"
+msgstr "매크로:"
 
-#: keymap-editor/actions.cpp:37
-msgid "a with circumflex [a^]"
-msgstr ""
+#. i18n: file: macro-editor/editor.ui:36
+#. i18n: ectx: property (text), widget (QPushButton, addButton)
+#: rc.cpp:60
+#, kde-format
+msgid "&Add"
+msgstr "추가(&A)"
 
-#: keymap-editor/actions.cpp:35
-msgid "d with stroke [-d]"
-msgstr ""
-
-#: keymap-editor/actions.cpp:41
-msgid "e with circumflex [e^]"
-msgstr ""
-
-#: keymap-editor/actions.cpp:43
-msgid "o with circumflex [o^]"
-msgstr ""
-
-#: keymap-editor/actions.cpp:45
-msgid "o with horn [o+]"
-msgstr ""
-
-#: keymap-editor/actions.cpp:47
-msgid "u with horn [u+]"
-msgstr ""
+#: src/unikey-addon.conf.in.in:2
+msgid "Unikey Wrapper For Fcitx"
+msgstr "Fcitx용 Unikey 래퍼"
