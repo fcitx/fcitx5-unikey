@@ -34,13 +34,13 @@ public:
     void deleteItem(int row);
     void deleteAllItem();
     void save(CMacroTable *table);
+    void setNeedSave(bool needSave);
     bool needSave() const;
 
 Q_SIGNALS:
     void needSaveChanged(bool);
 
 private:
-    void setNeedSave(bool needSave);
     bool needSave_;
     QSet<QString> keyset_;
     QList<std::pair<QString, QString>> list_;
