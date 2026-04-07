@@ -12,8 +12,8 @@
 #include "model.h"
 #include "vnconv.h"
 #include <QCloseEvent>
-#include <QDebug>
 #include <QDateTime>
+#include <QDebug>
 #include <QDialog>
 #include <QFileDialog>
 #include <QItemSelectionModel>
