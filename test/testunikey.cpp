@@ -18,11 +18,14 @@
 #include <fcitx/addonmanager.h>
 #include <fcitx/inputmethodgroup.h>
 #include <fcitx/inputmethodmanager.h>
+#include <fcitx/inputpanel.h>
 #include <fcitx/instance.h>
 #include <map>
 #include <string>
 
 using namespace fcitx;
+
+namespace {
 
 std::map<std::string, std::string> expectedTelexData{
     {"a", "a"},
@@ -1748,8 +1751,8 @@ std::map<std::string, std::string> expectedTelexData{
     {"yxx", "yx"},
 };
 
-void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
-    dispatcher->schedule([dispatcher, instance]() {
+void setup(Instance *instance) {
+    instance->eventDispatcher().schedule([instance]() {
         auto *unikey = instance->addonManager().addon("unikey", true);
         FCITX_ASSERT(unikey);
         auto defaultGroup = instance->inputMethodManager().currentGroup();
@@ -1760,6 +1763,13 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
             InputMethodGroupItem("unikey"));
         defaultGroup.setDefaultInputMethod("");
         instance->inputMethodManager().setGroup(defaultGroup);
+    });
+}
+
+void testBasic(Instance *instance) {
+    instance->eventDispatcher().schedule([instance]() {
+        auto *unikey = instance->addonManager().addon("unikey", true);
+        FCITX_ASSERT(unikey);
         auto *testfrontend = instance->addonManager().addon("testfrontend");
         auto uuid =
             testfrontend->call<ITestFrontend::createInputContext>("testapp");
@@ -1913,14 +1923,28 @@ void scheduleEvent(EventDispatcher *dispatcher, Instance *instance) {
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
 
         instance->deactivate();
-        dispatcher->schedule([dispatcher, instance]() {
-            dispatcher->detach();
-            instance->exit();
-        });
     });
 }
 
-void runInstance() {}
+void testType(Instance *instance) {
+    instance->eventDispatcher().schedule([instance]() {
+        auto *testfrontend = instance->addonManager().addon("testfrontend");
+        auto uuid =
+            testfrontend->call<ITestFrontend::createInputContext>("testapp");
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
+        ic->focusIn();
+        instance->setCurrentInputMethod(ic, "unikey", false);
+
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("f"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("0"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("BackSpace"),
+                                                    false);
+
+        FCITX_INFO() << "done";
+    });
+}
+
+} // namespace
 
 int main() {
     setupTestingEnvironmentPath(TESTING_BINARY_DIR, {"bin"},
@@ -1933,9 +1957,13 @@ int main() {
     fcitx::Log::setLogRule("default=5,unikey=5");
     Instance instance(FCITX_ARRAY_SIZE(argv), argv);
     instance.addonManager().registerDefaultLoader(nullptr);
-    EventDispatcher dispatcher;
-    dispatcher.attach(&instance.eventLoop());
-    scheduleEvent(&dispatcher, &instance);
+    setup(&instance);
+    testBasic(&instance);
+    testType(&instance);
+    instance.eventDispatcher().schedule([&instance]() {
+        instance.eventDispatcher().detach();
+        instance.exit();
+    });
     instance.exec();
 
     return 0;

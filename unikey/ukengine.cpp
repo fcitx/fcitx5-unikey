@@ -734,14 +734,14 @@ ConSeqInfo CSeqList[] = {{1, {vnl_b, vnl_nonVnChar, vnl_nonVnChar}, false},
                          {1, {vnl_v, vnl_nonVnChar, vnl_nonVnChar}, false},
                          {1, {vnl_x, vnl_nonVnChar, vnl_nonVnChar}, false}};
 
-const int VSeqCount = sizeof(VSeqList) / sizeof(VowelSeqInfo);
+constexpr int VSeqCount = sizeof(VSeqList) / sizeof(VowelSeqInfo);
 struct VSeqPair {
     VnLexiName v[3];
     VowelSeq vs;
 };
 VSeqPair SortedVSeqList[VSeqCount];
 
-const int CSeqCount = sizeof(CSeqList) / sizeof(ConSeqInfo);
+constexpr int CSeqCount = sizeof(CSeqList) / sizeof(ConSeqInfo);
 struct CSeqPair {
     VnLexiName c[3];
     ConSeq cs;
@@ -906,10 +906,15 @@ int VCPairCompare(const void *p1, const void *p2) {
     return 0;
 }
 
+bool isValidVSeq(VowelSeq v) { return v >= 0 && v < VSeqCount; }
+
 //----------------------------------------------------------
 bool isValidCV(ConSeq c, VowelSeq v) {
     if (c == cs_nil || v == vs_nil)
         return true;
+
+    if (c >= CSeqCount || v >= VSeqCount)
+        return false;
 
     VowelSeqInfo &vInfo = VSeqList[v];
 
@@ -940,6 +945,9 @@ bool isValidCV(ConSeq c, VowelSeq v) {
 bool isValidVC(VowelSeq v, ConSeq c) {
     if (v == vs_nil || c == cs_nil)
         return true;
+
+    if (v >= VSeqCount || c >= CSeqCount)
+        return false;
 
     VowelSeqInfo &vInfo = VSeqList[v];
     if (!vInfo.conSuffix)
@@ -2566,7 +2574,8 @@ int UkEngine::processBackspace(int &backs, unsigned char *outBuf, int &outSize,
         m_buffer[m_current].form == vnw_c ||
         m_buffer[m_current - 1].form == vnw_c ||
         m_buffer[m_current - 1].form == vnw_cvc ||
-        m_buffer[m_current - 1].form == vnw_vc) {
+        m_buffer[m_current - 1].form == vnw_vc ||
+        !isValidVSeq(m_buffer[m_current - 1].vseq)) {
 
         m_current--;
         backs = m_backs;
