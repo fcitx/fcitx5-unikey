@@ -777,11 +777,24 @@ void UnikeyState::updatePreedit() {
     if (!preeditStr_.empty()) {
         const auto useClientPreedit =
             ic_->capabilityFlags().test(CapabilityFlag::Preedit);
-        Text preedit(preeditStr_,
-                     useClientPreedit && *engine_->config().displayUnderline
-                         ? TextFormatFlag::Underline
-                         : TextFormatFlag::NoFlag);
-        preedit.setCursor(preeditStr_.size());
+        TextFormatFlags formatFlags = TextFormatFlag::NoFlag;
+        size_t cursor = preeditStr_.size();
+        if (useClientPreedit) {
+            switch (*engine_->config().preeditStyle) {
+            case EmbeddedPreeditStyle::None:
+                formatFlags = TextFormatFlag::NoFlag;
+                break;
+            case EmbeddedPreeditStyle::Underline:
+                formatFlags = TextFormatFlag::Underline;
+                break;
+            case EmbeddedPreeditStyle::Highlight:
+                formatFlags = TextFormatFlag::HighLight;
+                cursor = 0;
+                break;
+            }
+        }
+        Text preedit(preeditStr_, formatFlags);
+        preedit.setCursor(cursor);
         if (useClientPreedit) {
             inputPanel.setClientPreedit(preedit);
         } else {

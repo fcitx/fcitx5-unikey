@@ -36,6 +36,11 @@ FCITX_CONFIG_ENUM_NAME_WITH_I18N(UkInputMethod, N_("Telex"), N_("VNI"),
                                  N_("UserIM"), N_("Simple Telex"),
                                  N_("Simple Telex2"));
 
+enum class EmbeddedPreeditStyle { None, Underline, Highlight };
+
+FCITX_CONFIG_ENUM_NAME_WITH_I18N(EmbeddedPreeditStyle, N_("None"),
+                                 N_("Underline"), N_("Highlight"));
+
 FCITX_CONFIGURATION(
     UnikeyConfig,
     OptionWithAnnotation<UkInputMethod, UkInputMethodI18NAnnotation> im{
@@ -59,8 +64,9 @@ FCITX_CONFIGURATION(
     Option<bool> modifySurroundingText{
         this, "ModifySurroundingText",
         _("Allow to modify surrounding text (experimental)"), false};
-    Option<bool> displayUnderline{this, "DisplayUnderline",
-                                  _("Underline the preedit text"), true};
+    Option<EmbeddedPreeditStyle> preeditStyle{this, "PreeditStyle",
+                                              _("Style of the preedit text"),
+                                              EmbeddedPreeditStyle::Underline};
 #ifdef ENABLE_QT
     ExternalOption macroEditor{this, "MacroEditor", _("Macro Editor"),
                                "fcitx://config/addon/unikey/macro"};
