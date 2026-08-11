@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2026-04-05 20:24+0000\n"
+"POT-Creation-Date: 2026-08-11 20:24+0000\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
 "Last-Translator: Junghee Lee <daemul72@gmail.com>, 2026\n"
 "Language-Team: Korean (https://app.transifex.com/fcitx/teams/12005/ko/)\n"
@@ -243,55 +243,67 @@ msgstr "NCR 16진수"
 msgid "UserIM"
 msgstr "사용자 입력기"
 
-#: src/unikey-config.h:42 src/unikey-im.cpp:368
+#: src/unikey-config.h:41
+msgid "None"
+msgstr ""
+
+#: src/unikey-config.h:42
+msgid "Underline"
+msgstr ""
+
+#: src/unikey-config.h:42
+msgid "Highlight"
+msgstr ""
+
+#: src/unikey-config.h:47 src/unikey-im.cpp:368
 msgid "Input Method"
 msgstr "입력기"
 
-#: src/unikey-config.h:44
+#: src/unikey-config.h:49
 msgid "Output Charset"
 msgstr "출력 문자 집합"
 
-#: src/unikey-config.h:45
+#: src/unikey-config.h:50
 msgid "Enable spell check"
 msgstr "철자 검사 활성화"
 
-#: src/unikey-config.h:46
+#: src/unikey-config.h:51
 msgid "Enable Macro"
 msgstr "매크로 활성화"
 
-#: src/unikey-config.h:48
+#: src/unikey-config.h:53
 msgid "Process W at word begin"
 msgstr "단어 시작에서 W 처리"
 
-#: src/unikey-config.h:50
+#: src/unikey-config.h:55
 msgid "Auto restore keys with invalid words"
 msgstr "잘못된 단어의 키 자동 복원"
 
-#: src/unikey-config.h:53
+#: src/unikey-config.h:58
 msgid "Use oà, _uý (instead of òa, úy)"
 msgstr "òa, úy 대신 oà, _uý 사용"
 
-#: src/unikey-config.h:55
+#: src/unikey-config.h:60
 msgid "Allow type with more freedom"
 msgstr "더 자유로운 입력 허용"
 
-#: src/unikey-config.h:58
+#: src/unikey-config.h:63
 msgid "Restore typing state from surrounding text"
 msgstr "주변 텍스트에서 입력 상태 복원"
 
-#: src/unikey-config.h:61
+#: src/unikey-config.h:66
 msgid "Allow to modify surrounding text (experimental)"
 msgstr "주변 텍스트 수정 허용 (실험용)"
 
-#: src/unikey-config.h:63
-msgid "Underline the preedit text"
-msgstr "조합 중 텍스트에 밑줄 표시"
+#: src/unikey-config.h:68
+msgid "Style of the preedit text"
+msgstr ""
 
-#: src/unikey-config.h:65
+#: src/unikey-config.h:71
 msgid "Macro Editor"
 msgstr "매크로 편집기"
 
-#: src/unikey-config.h:67
+#: src/unikey-config.h:73
 msgid "Keymap Editor"
 msgstr "키맵 편집기"
 

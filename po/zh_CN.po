@@ -4,14 +4,14 @@
 #
 # Translators:
 # wwj402 <wwj402@gmail.com>, 2018
-# csslayer <wengxt@gmail.com>, 2022
+# Xuetian Weng <wengxt@gmail.com>, 2022
 # rocka, 2023
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2023-08-26 20:24+0000\n"
+"POT-Creation-Date: 2026-08-11 20:24+0000\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
 "Last-Translator: rocka, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/fcitx/teams/12005/"
@@ -22,110 +22,41 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#. i18n: file: macro-editor/editor.ui:36
-#. i18n: ectx: property (text), widget (QPushButton, addButton)
-#: rc.cpp:60
-#, kde-format
-msgid "&Add"
-msgstr "添加(&A)"
+#: keymap-editor/model.cpp:43
+msgid "Keymap"
+msgstr "按键映射"
 
-#. i18n: file: keymap-editor/editor.ui:128
-#. i18n: ectx: property (text), widget (QPushButton, addButton)
-#: rc.cpp:27
-#, kde-format
-msgid "&Add / Update"
-msgstr "添加 / 更新(&A)"
+#: keymap-editor/model.cpp:46 macro-editor/model.cpp:36
+msgid "Word"
+msgstr "单词"
 
-#. i18n: file: keymap-editor/editor.ui:161
-#. i18n: ectx: property (text), widget (QPushButton, deleteButton)
-#. i18n: file: macro-editor/editor.ui:47
-#. i18n: ectx: property (text), widget (QPushButton, deleteButton)
-#: rc.cpp:36 rc.cpp:63
-#, kde-format
-msgid "&Delete"
-msgstr "删除(&D)"
+#: keymap-editor/actions.cpp:13
+msgid "Remove existing tone"
+msgstr "删除已有声调"
 
-#. i18n: file: keymap-editor/editor.ui:201
-#. i18n: ectx: property (text), widget (QPushButton, exportButton)
-#. i18n: file: macro-editor/editor.ui:87
-#. i18n: ectx: property (text), widget (QPushButton, exportButton)
-#: rc.cpp:45 rc.cpp:72
-#, kde-format
-msgid "&Export"
-msgstr "导出(&E)"
+#: keymap-editor/actions.cpp:14
+msgid "Tone ' (acute)"
+msgstr "声调 ' (尖音符)"
 
-#. i18n: file: keymap-editor/editor.ui:190
-#. i18n: ectx: property (text), widget (QPushButton, importButton)
-#. i18n: file: macro-editor/editor.ui:76
-#. i18n: ectx: property (text), widget (QPushButton, importButton)
-#: rc.cpp:42 rc.cpp:69
-#, kde-format
-msgid "&Import"
-msgstr "导入(&I)"
+#: keymap-editor/actions.cpp:15
+msgid "Tone ` (grave)"
+msgstr "声调 ` (重音符)"
 
-#. i18n: file: keymap-editor/editor.ui:47
-#. i18n: ectx: property (text), widget (QPushButton, loadButton)
-#: rc.cpp:12
-#, kde-format
-msgid "&Load"
-msgstr "加载(&L)"
+#: keymap-editor/actions.cpp:16
+msgid "Tone ◌̉ (hook above)"
+msgstr "声调 ◌̉ (上钩符)"
 
-#: keymap-editor/actions.cpp:38
-msgid "A with breve [A(]"
-msgstr "带短音符的 A [A(]"
+#: keymap-editor/actions.cpp:17
+msgid "Tone ~ (tilde)"
+msgstr "声调 ~ (波浪号)"
 
-#: keymap-editor/actions.cpp:36
-msgid "A with circumflex [A^]"
-msgstr "带扬抑符的 A [A^]"
+#: keymap-editor/actions.cpp:18
+msgid "Tone . (dot below)"
+msgstr "声调 . (下句点)"
 
-#. i18n: file: keymap-editor/editor.ui:84
-#. i18n: ectx: property (text), widget (QLabel, label_4)
-#: rc.cpp:21
-#, kde-format
-msgid "Action:"
-msgstr "动作："
-
-#: src/unikey-config.h:60
-msgid "Allow to modify surrounding text (experimental)"
-msgstr "允许修改光标周围的文本 (实验性)"
-
-#: src/unikey-config.h:54
-msgid "Allow type with more freedom"
-msgstr "允许更自由的输入"
-
-#: src/unikey-config.h:49
-msgid "Auto restore keys with invalid words"
-msgstr "自动恢复无效词的键"
-
-#: src/unikey-config.h:29
-msgid "BK HCM 2"
-msgstr "BK HCM 2"
-
-#: keymap-editor/actions.cpp:30
-msgid "Breve: A becomes A("
-msgstr "短音符：A 变成 A("
-
-#. i18n: file: keymap-editor/editor.ui:24
-#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: rc.cpp:6
-#, kde-format
-msgid "Built-in Input Methods"
-msgstr "内置输入法"
-
-#: src/unikey-config.h:30
-msgid "CString"
-msgstr "CString"
-
-#. i18n: file: keymap-editor/editor.ui:67
-#. i18n: ectx: property (text), widget (QLabel, label_3)
-#: rc.cpp:18
-#, kde-format
-msgid "Category:"
-msgstr "分类："
-
-#: keymap-editor/editor.cpp:58
-msgid "Character complements"
-msgstr "字符补充"
+#: keymap-editor/actions.cpp:19
+msgid "Escape key"
+msgstr "Esc 键"
 
 #: keymap-editor/actions.cpp:20
 msgid "Circumflex for all applicable characters"
@@ -143,9 +74,350 @@ msgstr "扬抑符：E 变为 E^"
 msgid "Circumflex: O becomes O^"
 msgstr "扬抑符：O 变为 O^"
 
+#: keymap-editor/actions.cpp:25
+msgid "Horn-Breve: U, O, A, become U+, O+, A("
+msgstr "触角-短音符：U，O，A 变为 U+，O+，A("
+
+#: keymap-editor/actions.cpp:27
+msgid "Horn: U, O become U+, O+"
+msgstr "触角：U，O 变为 U+，O+"
+
+#: keymap-editor/actions.cpp:28
+msgid "Horn: U becomes U+"
+msgstr "触角：U 变为 U+"
+
+#: keymap-editor/actions.cpp:29
+msgid "Horn: O becomes O+"
+msgstr "触角：O 变为 O+"
+
+#: keymap-editor/actions.cpp:30
+msgid "Breve: A becomes A("
+msgstr "短音符：A 变成 A("
+
+#: keymap-editor/actions.cpp:31
+msgid "Stroke: D becomes -D"
+msgstr "删节线：D 变为 -D"
+
+#: keymap-editor/actions.cpp:32
+msgid "Horn-Breve: U, O, A, become U+, O+, A(, or create U+"
+msgstr "触角-短音符：U，O，A 变为 U+，O+，A(，或者添加 U+"
+
 #: keymap-editor/actions.cpp:34
 msgid "D with stroke [-D]"
 msgstr "带删节线的 D [-D]"
+
+#: keymap-editor/actions.cpp:35
+msgid "d with stroke [-d]"
+msgstr "带删节线的 d [-d]"
+
+#: keymap-editor/actions.cpp:36
+msgid "A with circumflex [A^]"
+msgstr "带扬抑符的 A [A^]"
+
+#: keymap-editor/actions.cpp:37
+msgid "a with circumflex [a^]"
+msgstr "带扬抑符的 a [a^]"
+
+#: keymap-editor/actions.cpp:38
+msgid "A with breve [A(]"
+msgstr "带短音符的 A [A(]"
+
+#: keymap-editor/actions.cpp:39
+msgid "a with breve [a(]"
+msgstr "带短音符的 a [a(]"
+
+#: keymap-editor/actions.cpp:40
+msgid "E with circumflex [E^]"
+msgstr "带扬抑符的 E [E^]"
+
+#: keymap-editor/actions.cpp:41
+msgid "e with circumflex [e^]"
+msgstr "带扬抑符的 e [e^]"
+
+#: keymap-editor/actions.cpp:42
+msgid "O with circumflex [O^]"
+msgstr "带扬抑符的 O [O^]"
+
+#: keymap-editor/actions.cpp:43
+msgid "o with circumflex [o^]"
+msgstr "带扬抑符的 o [o^]"
+
+#: keymap-editor/actions.cpp:44
+msgid "O with horn [O+]"
+msgstr "带触角的 O [O+]"
+
+#: keymap-editor/actions.cpp:45
+msgid "o with horn [o+]"
+msgstr "带触角的 o [o+]"
+
+#: keymap-editor/actions.cpp:46
+msgid "U with horn [U+]"
+msgstr "带触角的 U [U+]"
+
+#: keymap-editor/actions.cpp:47
+msgid "u with horn [u+]"
+msgstr "带触角的 u [u+]"
+
+#: keymap-editor/editor.cpp:60 src/unikey-config.h:34
+msgid "Telex"
+msgstr "Telex"
+
+#: keymap-editor/editor.cpp:61 src/unikey-config.h:34
+msgid "VNI"
+msgstr "VNI"
+
+#: keymap-editor/editor.cpp:62 src/unikey-config.h:30 src/unikey-config.h:35
+msgid "VIQR"
+msgstr "VIQR"
+
+#: keymap-editor/editor.cpp:63 src/unikey-config.h:35
+msgid "Microsoft Vietnamese"
+msgstr "微软越南语"
+
+#: keymap-editor/editor.cpp:64 src/unikey-config.h:36
+msgid "Simple Telex"
+msgstr "简化 Telex"
+
+#: keymap-editor/editor.cpp:65 src/unikey-config.h:37
+msgid "Simple Telex2"
+msgstr "简化 Telex2"
+
+#: keymap-editor/editor.cpp:67
+msgid "Tone marks"
+msgstr "声调符号"
+
+#: keymap-editor/editor.cpp:68
+msgid "Character complements"
+msgstr "字符补充"
+
+#: keymap-editor/editor.cpp:69
+msgid "Vietnamese characters"
+msgstr "越南语字符"
+
+#. i18n: file: keymap-editor/editor.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, Editor)
+#: keymap-editor/editor.cpp:113 rc.cpp:3
+#, kde-format
+msgid "Unikey Keymap Editor"
+msgstr "Unikey 按键映射编辑器"
+
+#: macro-editor/model.cpp:33 src/unikey-im.cpp:431
+msgid "Macro"
+msgstr "宏"
+
+#. i18n: file: macro-editor/editor.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, Editor)
+#: macro-editor/editor.cpp:62 rc.cpp:57
+#, kde-format
+msgid "Unikey Macro Editor"
+msgstr "Unikey 宏编辑器"
+
+#: src/unikey-config.h:29
+msgid "Unicode"
+msgstr "Unicode"
+
+#: src/unikey-config.h:29
+msgid "TCVN3"
+msgstr "TCVN3"
+
+#: src/unikey-config.h:30
+msgid "VNI Win"
+msgstr "VNI Win"
+
+#: src/unikey-config.h:30
+msgid "BK HCM 2"
+msgstr "BK HCM 2"
+
+#: src/unikey-config.h:31
+msgid "CString"
+msgstr "CString"
+
+#: src/unikey-config.h:31
+msgid "NCR Decimal"
+msgstr "十进制 NCR"
+
+#: src/unikey-config.h:32
+msgid "NCR Hex"
+msgstr "十六进制 NCR"
+
+#: src/unikey-config.h:36
+msgid "UserIM"
+msgstr "用户输入法"
+
+#: src/unikey-config.h:41
+msgid "None"
+msgstr ""
+
+#: src/unikey-config.h:42
+msgid "Underline"
+msgstr ""
+
+#: src/unikey-config.h:42
+msgid "Highlight"
+msgstr ""
+
+#: src/unikey-config.h:47 src/unikey-im.cpp:368
+msgid "Input Method"
+msgstr "输入法"
+
+#: src/unikey-config.h:49
+msgid "Output Charset"
+msgstr "输出字符集"
+
+#: src/unikey-config.h:50
+msgid "Enable spell check"
+msgstr "启用拼写检查"
+
+#: src/unikey-config.h:51
+msgid "Enable Macro"
+msgstr "启用宏"
+
+#: src/unikey-config.h:53
+msgid "Process W at word begin"
+msgstr "在单词开头处理 W"
+
+#: src/unikey-config.h:55
+msgid "Auto restore keys with invalid words"
+msgstr "自动恢复无效词的键"
+
+#: src/unikey-config.h:58
+msgid "Use oà, _uý (instead of òa, úy)"
+msgstr "使用 oà, _uý (替换 òa, úy)"
+
+#: src/unikey-config.h:60
+msgid "Allow type with more freedom"
+msgstr "允许更自由的输入"
+
+#: src/unikey-config.h:63
+msgid "Restore typing state from surrounding text"
+msgstr "从周围文字重建输入状态"
+
+#: src/unikey-config.h:66
+msgid "Allow to modify surrounding text (experimental)"
+msgstr "允许修改光标周围的文本 (实验性)"
+
+#: src/unikey-config.h:68
+msgid "Style of the preedit text"
+msgstr ""
+
+#: src/unikey-config.h:71
+msgid "Macro Editor"
+msgstr "宏编辑器"
+
+#: src/unikey-config.h:73
+msgid "Keymap Editor"
+msgstr "按键映射编辑器"
+
+#: src/unikey-im.cpp:394
+msgid "Output charset"
+msgstr "输出字符集"
+
+#: src/unikey-im.cpp:419
+msgid "Spell check"
+msgstr "拼写检查"
+
+#: src/unikey-im.cpp:690
+msgid "Macro Enabled"
+msgstr "宏已启用"
+
+#: src/unikey-im.cpp:691
+msgid "Macro Disabled"
+msgstr "宏已禁用"
+
+#: src/unikey-im.cpp:698
+msgid "Spell Check Enabled"
+msgstr "拼写检查已启用"
+
+#: src/unikey-im.cpp:699
+msgid "Spell Check Disabled"
+msgstr "拼写检查已禁用"
+
+#: org.fcitx.Fcitx5.Addon.Unikey.metainfo.xml.in:7 src/unikey.conf.in:2
+msgid "Unikey"
+msgstr "Unikey"
+
+#: org.fcitx.Fcitx5.Addon.Unikey.metainfo.xml.in:8
+msgid "Vietnamese input method"
+msgstr "越南语输入法"
+
+#. i18n: file: keymap-editor/editor.ui:24
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:6
+#, kde-format
+msgid "Built-in Input Methods"
+msgstr "内置输入法"
+
+#. i18n: file: keymap-editor/editor.ui:30
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:9
+#, kde-format
+msgid "Input Method:"
+msgstr "输入法："
+
+#. i18n: file: keymap-editor/editor.ui:47
+#. i18n: ectx: property (text), widget (QPushButton, loadButton)
+#: rc.cpp:12
+#, kde-format
+msgid "&Load"
+msgstr "加载(&L)"
+
+#. i18n: file: keymap-editor/editor.ui:61
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: rc.cpp:15
+#, kde-format
+msgid "Key definition"
+msgstr "按键定义"
+
+#. i18n: file: keymap-editor/editor.ui:67
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:18
+#, kde-format
+msgid "Category:"
+msgstr "分类："
+
+#. i18n: file: keymap-editor/editor.ui:84
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: rc.cpp:21
+#, kde-format
+msgid "Action:"
+msgstr "动作："
+
+#. i18n: file: keymap-editor/editor.ui:101
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:24
+#, kde-format
+msgid "Key"
+msgstr "按键"
+
+#. i18n: file: keymap-editor/editor.ui:128
+#. i18n: ectx: property (text), widget (QPushButton, addButton)
+#: rc.cpp:27
+#, kde-format
+msgid "&Add / Update"
+msgstr "添加 / 更新(&A)"
+
+#. i18n: file: keymap-editor/editor.ui:139
+#. i18n: ectx: property (text), widget (QPushButton, moveUpButton)
+#: rc.cpp:30
+#, kde-format
+msgid "Move &Up"
+msgstr "上移(&U)"
+
+#. i18n: file: keymap-editor/editor.ui:150
+#. i18n: ectx: property (text), widget (QPushButton, moveDownButton)
+#: rc.cpp:33
+#, kde-format
+msgid "Move &Down"
+msgstr "下移(&D)"
+
+#. i18n: file: keymap-editor/editor.ui:161
+#. i18n: ectx: property (text), widget (QPushButton, deleteButton)
+#. i18n: file: macro-editor/editor.ui:47
+#. i18n: ectx: property (text), widget (QPushButton, deleteButton)
+#: rc.cpp:36 rc.cpp:63
+#, kde-format
+msgid "&Delete"
+msgstr "删除(&D)"
 
 #. i18n: file: keymap-editor/editor.ui:172
 #. i18n: ectx: property (text), widget (QPushButton, clearButton)
@@ -156,280 +428,30 @@ msgstr "带删节线的 D [-D]"
 msgid "De&lete All"
 msgstr "全部删除(&L)"
 
+#. i18n: file: keymap-editor/editor.ui:190
+#. i18n: ectx: property (text), widget (QPushButton, importButton)
+#. i18n: file: macro-editor/editor.ui:76
+#. i18n: ectx: property (text), widget (QPushButton, importButton)
+#: rc.cpp:42 rc.cpp:69
+#, kde-format
+msgid "&Import"
+msgstr "导入(&I)"
+
+#. i18n: file: keymap-editor/editor.ui:201
+#. i18n: ectx: property (text), widget (QPushButton, exportButton)
+#. i18n: file: macro-editor/editor.ui:87
+#. i18n: ectx: property (text), widget (QPushButton, exportButton)
+#: rc.cpp:45 rc.cpp:72
+#, kde-format
+msgid "&Export"
+msgstr "导出(&E)"
+
 #. i18n: file: macro-editor/dialog.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, Dialog)
 #: rc.cpp:48
 #, kde-format
 msgid "Dialog"
 msgstr "对话框"
-
-#: keymap-editor/actions.cpp:40
-msgid "E with circumflex [E^]"
-msgstr "带扬抑符的 E [E^]"
-
-#: src/unikey-config.h:45
-msgid "Enable Macro"
-msgstr "启用宏"
-
-#: src/unikey-config.h:44
-msgid "Enable spell check"
-msgstr "启用拼写检查"
-
-#: keymap-editor/actions.cpp:19
-msgid "Escape key"
-msgstr "Esc 键"
-
-#: keymap-editor/actions.cpp:25
-msgid "Horn-Breve: U, O, A, become U+, O+, A("
-msgstr "触角-短音符：U，O，A 变为 U+，O+，A("
-
-#: keymap-editor/actions.cpp:32
-msgid "Horn-Breve: U, O, A, become U+, O+, A(, or create U+"
-msgstr "触角-短音符：U，O，A 变为 U+，O+，A(，或者添加 U+"
-
-#: keymap-editor/actions.cpp:29
-msgid "Horn: O becomes O+"
-msgstr "触角：O 变为 O+"
-
-#: keymap-editor/actions.cpp:28
-msgid "Horn: U becomes U+"
-msgstr "触角：U 变为 U+"
-
-#: keymap-editor/actions.cpp:27
-msgid "Horn: U, O become U+, O+"
-msgstr "触角：U，O 变为 U+，O+"
-
-#: src/unikey-config.h:41 src/unikey-im.cpp:331
-msgid "Input Method"
-msgstr "输入法"
-
-#. i18n: file: keymap-editor/editor.ui:30
-#. i18n: ectx: property (text), widget (QLabel, label)
-#: rc.cpp:9
-#, kde-format
-msgid "Input Method:"
-msgstr "输入法："
-
-#. i18n: file: keymap-editor/editor.ui:101
-#. i18n: ectx: property (text), widget (QLabel, label_2)
-#: rc.cpp:24
-#, kde-format
-msgid "Key"
-msgstr "按键"
-
-#. i18n: file: keymap-editor/editor.ui:61
-#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
-#: rc.cpp:15
-#, kde-format
-msgid "Key definition"
-msgstr "按键定义"
-
-#: keymap-editor/model.cpp:32
-msgid "Keymap"
-msgstr "按键映射"
-
-#: src/unikey-config.h:66
-msgid "Keymap Editor"
-msgstr "按键映射编辑器"
-
-#: macro-editor/model.cpp:27 src/unikey-im.cpp:394
-msgid "Macro"
-msgstr "宏"
-
-#: src/unikey-im.cpp:645
-msgid "Macro Disabled"
-msgstr "宏已禁用"
-
-#: src/unikey-config.h:64
-msgid "Macro Editor"
-msgstr "宏编辑器"
-
-#: src/unikey-im.cpp:644
-msgid "Macro Enabled"
-msgstr "宏已启用"
-
-#. i18n: file: macro-editor/dialog.ui:32
-#. i18n: ectx: property (text), widget (QLabel, label_2)
-#: rc.cpp:54
-#, kde-format
-msgid "Macro:"
-msgstr "宏："
-
-#: keymap-editor/editor.cpp:53 src/unikey-config.h:34
-msgid "Microsoft Vietnamese"
-msgstr "微软越南语"
-
-#. i18n: file: keymap-editor/editor.ui:150
-#. i18n: ectx: property (text), widget (QPushButton, moveDownButton)
-#: rc.cpp:33
-#, kde-format
-msgid "Move &Down"
-msgstr "下移(&D)"
-
-#. i18n: file: keymap-editor/editor.ui:139
-#. i18n: ectx: property (text), widget (QPushButton, moveUpButton)
-#: rc.cpp:30
-#, kde-format
-msgid "Move &Up"
-msgstr "上移(&U)"
-
-#: src/unikey-config.h:30
-msgid "NCR Decimal"
-msgstr "十进制 NCR"
-
-#: src/unikey-config.h:31
-msgid "NCR Hex"
-msgstr "十六进制 NCR"
-
-#: keymap-editor/actions.cpp:42
-msgid "O with circumflex [O^]"
-msgstr "带扬抑符的 O [O^]"
-
-#: keymap-editor/actions.cpp:44
-msgid "O with horn [O+]"
-msgstr "带触角的 O [O+]"
-
-#: src/unikey-config.h:43
-msgid "Output Charset"
-msgstr "输出字符集"
-
-#: src/unikey-im.cpp:357
-msgid "Output charset"
-msgstr "输出字符集"
-
-#: src/unikey-config.h:47
-msgid "Process W at word begin"
-msgstr "在单词开头处理 W"
-
-#: keymap-editor/actions.cpp:13
-msgid "Remove existing tone"
-msgstr "删除已有声调"
-
-#: src/unikey-config.h:57
-msgid "Restore typing state from surrounding text"
-msgstr "从周围文字重建输入状态"
-
-#: keymap-editor/editor.cpp:54 src/unikey-config.h:35
-msgid "Simple Telex"
-msgstr "简化 Telex"
-
-#: keymap-editor/editor.cpp:55 src/unikey-config.h:36
-msgid "Simple Telex2"
-msgstr "简化 Telex2"
-
-#: src/unikey-im.cpp:653
-msgid "Spell Check Disabled"
-msgstr "拼写检查已禁用"
-
-#: src/unikey-im.cpp:652
-msgid "Spell Check Enabled"
-msgstr "拼写检查已启用"
-
-#: src/unikey-im.cpp:382
-msgid "Spell check"
-msgstr "拼写检查"
-
-#: keymap-editor/actions.cpp:31
-msgid "Stroke: D becomes -D"
-msgstr "删节线：D 变为 -D"
-
-#: src/unikey-config.h:28
-msgid "TCVN3"
-msgstr "TCVN3"
-
-#: keymap-editor/editor.cpp:50 src/unikey-config.h:33
-msgid "Telex"
-msgstr "Telex"
-
-#: keymap-editor/actions.cpp:14
-msgid "Tone ' (acute)"
-msgstr "声调 ' (尖音符)"
-
-#: keymap-editor/actions.cpp:18
-msgid "Tone . (dot below)"
-msgstr "声调 . (下句点)"
-
-#: keymap-editor/actions.cpp:15
-msgid "Tone ` (grave)"
-msgstr "声调 ` (重音符)"
-
-#: keymap-editor/editor.cpp:57
-msgid "Tone marks"
-msgstr "声调符号"
-
-#: keymap-editor/actions.cpp:17
-msgid "Tone ~ (tilde)"
-msgstr "声调 ~ (波浪号)"
-
-#: keymap-editor/actions.cpp:16
-msgid "Tone ◌̉ (hook above)"
-msgstr "声调 ◌̉ (上钩符)"
-
-#: keymap-editor/actions.cpp:46
-msgid "U with horn [U+]"
-msgstr "带触角的 U [U+]"
-
-#: src/unikey-config.h:62
-msgid "Underline the preedit text"
-msgstr "预编辑文本显示下划线"
-
-#: src/unikey-config.h:28
-msgid "Unicode"
-msgstr "Unicode"
-
-#: org.fcitx.Fcitx5.Addon.Unikey.metainfo.xml.in:7 src/unikey.conf.in:3
-msgid "Unikey"
-msgstr "Unikey"
-
-#. i18n: file: keymap-editor/editor.ui:14
-#. i18n: ectx: property (windowTitle), widget (QWidget, Editor)
-#: keymap-editor/editor.cpp:103 rc.cpp:3
-#, kde-format
-msgid "Unikey Keymap Editor"
-msgstr "Unikey 按键映射编辑器"
-
-#. i18n: file: macro-editor/editor.ui:14
-#. i18n: ectx: property (windowTitle), widget (QWidget, Editor)
-#: macro-editor/editor.cpp:52 rc.cpp:57
-#, kde-format
-msgid "Unikey Macro Editor"
-msgstr "Unikey 宏编辑器"
-
-#: src/unikey-addon.conf.in.in:3
-msgid "Unikey Wrapper For Fcitx"
-msgstr "Fcitx 的 Unikey 封装"
-
-#: src/unikey-config.h:52
-msgid "Use oà, _uý (instead of òa, úy)"
-msgstr "使用 oà, _uý (替换 òa, úy)"
-
-#: src/unikey-config.h:35
-msgid "UserIM"
-msgstr "用户输入法"
-
-#: keymap-editor/editor.cpp:52 src/unikey-config.h:29 src/unikey-config.h:34
-msgid "VIQR"
-msgstr "VIQR"
-
-#: keymap-editor/editor.cpp:51 src/unikey-config.h:33
-msgid "VNI"
-msgstr "VNI"
-
-#: src/unikey-config.h:29
-msgid "VNI Win"
-msgstr "VNI Win"
-
-#: keymap-editor/editor.cpp:59
-msgid "Vietnamese characters"
-msgstr "越南语字符"
-
-#: org.fcitx.Fcitx5.Addon.Unikey.metainfo.xml.in:8
-msgid "Vietnamese input method"
-msgstr "越南语输入法"
-
-#: keymap-editor/model.cpp:34 macro-editor/model.cpp:29
-msgid "Word"
-msgstr "单词"
 
 #. i18n: file: macro-editor/dialog.ui:25
 #. i18n: ectx: property (text), widget (QLabel, label)
@@ -438,30 +460,20 @@ msgstr "单词"
 msgid "Word:"
 msgstr "单词："
 
-#: keymap-editor/actions.cpp:39
-msgid "a with breve [a(]"
-msgstr "带短音符的 a [a(]"
+#. i18n: file: macro-editor/dialog.ui:32
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:54
+#, kde-format
+msgid "Macro:"
+msgstr "宏："
 
-#: keymap-editor/actions.cpp:37
-msgid "a with circumflex [a^]"
-msgstr "带扬抑符的 a [a^]"
+#. i18n: file: macro-editor/editor.ui:36
+#. i18n: ectx: property (text), widget (QPushButton, addButton)
+#: rc.cpp:60
+#, kde-format
+msgid "&Add"
+msgstr "添加(&A)"
 
-#: keymap-editor/actions.cpp:35
-msgid "d with stroke [-d]"
-msgstr "带删节线的 d [-d]"
-
-#: keymap-editor/actions.cpp:41
-msgid "e with circumflex [e^]"
-msgstr "带扬抑符的 e [e^]"
-
-#: keymap-editor/actions.cpp:43
-msgid "o with circumflex [o^]"
-msgstr "带扬抑符的 o [o^]"
-
-#: keymap-editor/actions.cpp:45
-msgid "o with horn [o+]"
-msgstr "带触角的 o [o+]"
-
-#: keymap-editor/actions.cpp:47
-msgid "u with horn [u+]"
-msgstr "带触角的 u [u+]"
+#: src/unikey-addon.conf.in.in:2
+msgid "Unikey Wrapper For Fcitx"
+msgstr "Fcitx 的 Unikey 封装"
