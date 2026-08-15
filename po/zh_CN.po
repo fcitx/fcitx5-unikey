@@ -4,16 +4,16 @@
 #
 # Translators:
 # wwj402 <wwj402@gmail.com>, 2018
-# Xuetian Weng <wengxt@gmail.com>, 2022
 # rocka, 2023
+# Xuetian Weng <wengxt@gmail.com>, 2026
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fcitx5-unikey\n"
 "Report-Msgid-Bugs-To: fcitx-dev@googlegroups.com\n"
-"POT-Creation-Date: 2026-08-12 20:24+0000\n"
+"POT-Creation-Date: 2026-08-15 20:24+0000\n"
 "PO-Revision-Date: 2018-06-12 22:55+0000\n"
-"Last-Translator: rocka, 2023\n"
+"Last-Translator: Xuetian Weng <wengxt@gmail.com>, 2026\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/fcitx/teams/12005/"
 "zh_CN/)\n"
 "Language: zh_CN\n"
@@ -246,15 +246,15 @@ msgstr "用户输入法"
 
 #: src/unikey-config.h:41
 msgid "None"
-msgstr ""
+msgstr "无"
 
 #: src/unikey-config.h:42
 msgid "Underline"
-msgstr ""
+msgstr "下划线"
 
 #: src/unikey-config.h:42
 msgid "Highlight"
-msgstr ""
+msgstr "高亮"
 
 #: src/unikey-config.h:47 src/unikey-im.cpp:368
 msgid "Input Method"
@@ -298,7 +298,7 @@ msgstr "允许修改光标周围的文本 (实验性)"
 
 #: src/unikey-config.h:68
 msgid "Style of the preedit text"
-msgstr ""
+msgstr "预编辑文本显示风格"
 
 #: src/unikey-config.h:71
 msgid "Macro Editor"
