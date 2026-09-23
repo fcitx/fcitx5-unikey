@@ -9,3 +9,7 @@ add_executable(testunikey testunikey.cpp)
 target_link_libraries(testunikey Fcitx5::Core Fcitx5::Module::TestFrontend)
 add_dependencies(testunikey unikey copy-addon copy-im)
 add_test(NAME testunikey COMMAND testunikey)
+
+add_executable(testkeymap testkeymap.cpp)
+target_link_libraries(testkeymap unikey-lib Fcitx5::Utils)
+add_test(NAME testkeymap COMMAND testkeymap)

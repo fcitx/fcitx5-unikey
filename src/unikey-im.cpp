@@ -61,7 +61,6 @@ namespace {
 
 FCITX_DEFINE_LOG_CATEGORY(unikey, "unikey");
 
-constexpr auto CONVERT_BUF_SIZE = 1024;
 constexpr auto MAX_LENGTH_VNWORD = 7;
 const unsigned int Unikey_OC[] = {CONV_CHARSET_XUTF8,  CONV_CHARSET_TCVN3,
                                   CONV_CHARSET_VNIWIN, CONV_CHARSET_VIQR,
@@ -99,32 +98,19 @@ VnLexiName charToVnLexi(uint32_t ch) {
 bool isVnChar(uint32_t ch) { return charToVnLexi(ch) != vnl_nonVnChar; }
 
 // code from x-unikey, for convert charset that not is XUtf-8
-int latinToUtf(unsigned char *dst, const unsigned char *src, int inSize,
-               int *pOutSize) {
-    int i;
-    int outLeft;
-    unsigned char ch;
-
-    outLeft = *pOutSize;
-
-    for (i = 0; i < inSize; i++) {
-        ch = *src++;
+std::string latinToUtf(const unsigned char *src, int inSize) {
+    std::string result;
+    result.reserve(inSize * 2);
+    for (int i = 0; i < inSize; i++) {
+        unsigned char ch = src[i];
         if (ch < 0x80) {
-            outLeft -= 1;
-            if (outLeft >= 0) {
-                *dst++ = ch;
-            }
+            result.push_back(ch);
         } else {
-            outLeft -= 2;
-            if (outLeft >= 0) {
-                *dst++ = (0xC0 | ch >> 6);
-                *dst++ = (0x80 | (ch & 0x3F));
-            }
+            result.push_back(0xC0 | ch >> 6);
+            result.push_back(0x80 | (ch & 0x3F));
         }
     }
-
-    *pOutSize = outLeft;
-    return (outLeft >= 0);
+    return result;
 }
 
 } // namespace
@@ -166,6 +152,8 @@ public:
     void handleIgnoredKey();
     void commit();
     void syncState(KeySym sym = FcitxKey_None);
+    // Append the output of ukengine to preedit, converted to UTF-8.
+    void appendEngineOutput();
     void updatePreedit();
 
     void eraseChars(int num_chars) {
@@ -224,7 +212,7 @@ public:
         if (length == utf8::INVALID_LENGTH) {
             return;
         }
-        if (cursor <= 0 && cursor > length) {
+        if (cursor <= 0 || cursor > length) {
             return;
         }
 
@@ -301,7 +289,7 @@ public:
         if (length == utf8::INVALID_LENGTH) {
             return;
         }
-        if (cursor <= 0 && cursor > length) {
+        if (cursor <= 0 || cursor > length) {
             return;
         }
 
@@ -543,18 +531,7 @@ void UnikeyState::preedit(KeyEvent &keyEvent) {
 
         // change tone position after press backspace
         if (uic_.bufChars() > 0) {
-            if (engine_->config().oc.value() == UkConv::XUTF8) {
-                preeditStr_.append(reinterpret_cast<const char *>(uic_.buf()),
-                                   uic_.bufChars());
-            } else {
-                unsigned char buf[CONVERT_BUF_SIZE];
-                int bufSize = CONVERT_BUF_SIZE;
-
-                latinToUtf(buf, uic_.buf(), uic_.bufChars(), &bufSize);
-                preeditStr_.append((const char *)buf,
-                                   CONVERT_BUF_SIZE - bufSize);
-            }
-
+            appendEngineOutput();
             autoCommit_ = false;
         }
         updatePreedit();
@@ -751,22 +728,23 @@ void UnikeyState::syncState(KeySym sym) {
     }
 
     if (uic_.bufChars() > 0) {
-        if (*engine_->config().oc == UkConv::XUTF8) {
-            preeditStr_.append(reinterpret_cast<const char *>(uic_.buf()),
-                               uic_.bufChars());
-        } else {
-            unsigned char buf[CONVERT_BUF_SIZE + 1];
-            int bufSize = CONVERT_BUF_SIZE;
-
-            latinToUtf(buf, uic_.buf(), uic_.bufChars(), &bufSize);
-            preeditStr_.append((const char *)buf, CONVERT_BUF_SIZE - bufSize);
-        }
+        appendEngineOutput();
     } else if (sym != FcitxKey_Shift_L && sym != FcitxKey_Shift_R &&
                sym != FcitxKey_None) // if ukengine not process
     {
         preeditStr_.append(utf8::UCS4ToUTF8(sym));
     }
     // end process result of ukengine
+}
+
+void UnikeyState::appendEngineOutput() {
+    const auto *buf = uic_.buf();
+    const auto len = uic_.bufChars();
+    if (*engine_->config().oc == UkConv::XUTF8) {
+        preeditStr_.append(reinterpret_cast<const char *>(buf), len);
+    } else {
+        preeditStr_.append(latinToUtf(buf, len));
+    }
 }
 
 void UnikeyState::updatePreedit() {

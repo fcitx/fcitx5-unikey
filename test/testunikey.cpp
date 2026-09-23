@@ -1891,6 +1891,15 @@ void testBasic(Instance *instance) {
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("e"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
 
+        // Cursor at the beginning of surrounding text, nothing to rebuild.
+        ic->reset();
+        ic->surroundingText().setText("abc", 0, 0);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("á");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("s"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
         config.setValueByPath("ModifySurroundingText", "True");
         unikey->setConfig(config);
 
@@ -1921,6 +1930,29 @@ void testBasic(Instance *instance) {
         testfrontend->call<ITestFrontend::pushCommitExpectation>("s");
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("s"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
+        ic->reset();
+        ic->surroundingText().setText("nga", 0, 0);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("s");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("s"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
+        // Non UTF-8 output charset, each byte is mapped to a latin-1 char.
+        config.setValueByPath("ModifySurroundingText", "False");
+        config.setValueByPath("OutputCharset", "TCVN3");
+        unikey->setConfig(config);
+        ic->reset();
+        ic->surroundingText().invalidate();
+        ic->updateSurroundingText();
+        // á is 0xB8 in TCVN3.
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("\u00B8");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("s"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
+        config.setValueByPath("OutputCharset", "Unicode");
+        unikey->setConfig(config);
 
         instance->deactivate();
     });
