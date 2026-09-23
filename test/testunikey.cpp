@@ -1875,6 +1875,21 @@ void testBasic(Instance *instance) {
                                                         false);
         }
 
+        // Non UTF-8 output charset, each byte is mapped to a latin-1 char.
+        config.setValueByPath("OutputCharset", "TCVN3");
+        unikey->setConfig(config);
+        ic->reset();
+        ic->surroundingText().invalidate();
+        ic->updateSurroundingText();
+        // á is 0xB8 in TCVN3.
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("\u00B8");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("s"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
+        config.setValueByPath("OutputCharset", "Unicode");
+        unikey->setConfig(config);
+
         ic->reset();
         ic->surroundingText().setText("q", 1, 1);
         ic->updateSurroundingText();
