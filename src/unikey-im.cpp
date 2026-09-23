@@ -224,7 +224,7 @@ public:
         if (length == utf8::INVALID_LENGTH) {
             return;
         }
-        if (cursor <= 0 && cursor > length) {
+        if (cursor <= 0 || cursor > length) {
             return;
         }
 
@@ -301,7 +301,7 @@ public:
         if (length == utf8::INVALID_LENGTH) {
             return;
         }
-        if (cursor <= 0 && cursor > length) {
+        if (cursor <= 0 || cursor > length) {
             return;
         }
 

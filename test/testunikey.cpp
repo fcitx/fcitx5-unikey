@@ -1891,6 +1891,15 @@ void testBasic(Instance *instance) {
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("e"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
 
+        // Cursor at the beginning of surrounding text, nothing to rebuild.
+        ic->reset();
+        ic->surroundingText().setText("abc", 0, 0);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("á");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("s"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
         config.setValueByPath("ModifySurroundingText", "True");
         unikey->setConfig(config);
 
@@ -1917,6 +1926,13 @@ void testBasic(Instance *instance) {
 
         ic->reset();
         ic->surroundingText().setText("application", 11, 11);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("s");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("s"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
+        ic->reset();
+        ic->surroundingText().setText("nga", 0, 0);
         ic->updateSurroundingText();
         testfrontend->call<ITestFrontend::pushCommitExpectation>("s");
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("s"), false);
