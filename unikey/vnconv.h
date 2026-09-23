@@ -64,9 +64,6 @@ extern "C" {
 DllInterface int VnConvert(int inCharset, int outCharset, UKBYTE *input,
                            UKBYTE *output, int *pInLen, int *pMaxOutLen);
 
-DllInterface int VnFileConvert(int inCharset, int outCharset,
-                               const char *inFile, const char *outFile);
-
 #if defined(__cplusplus)
 }
 #endif
