@@ -147,7 +147,9 @@ DllExport std::vector<UkKeyMapping> UkLoadKeyOrderMap(int fd) {
             auto c = static_cast<uint8_t>(name[0]);
             if (keyMap[c] != vneNormal) {
                 // already assigned, don't accept this map
-                break;
+                FCITX_ERROR() << "Error in user key layout, line " << lineCount
+                              << ": key is already assigned";
+                continue;
             }
             // cout << "key: " << c << " value: " <<
             // UkEvLabelList[i].ev << endl; //DEBUG
