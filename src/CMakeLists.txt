@@ -1,10 +1,14 @@
 
 set( fcitx_unikey_sources
     unikey-im.cpp
+    unikey-directcommit.cpp
+    unikey-inputmode.cpp
     )
 
+pkg_check_modules(XCBXTest REQUIRED IMPORTED_TARGET xcb xcb-xtest)
+
 add_fcitx5_addon(unikey ${fcitx_unikey_sources})
-target_link_libraries(unikey Fcitx5::Core Fcitx5::Config unikey-lib)
+target_link_libraries(unikey Fcitx5::Core Fcitx5::Config unikey-lib PkgConfig::XCBXTest)
 target_include_directories(unikey PRIVATE ${PROJECT_BINARY_DIR})
 if (ENABLE_QT)
 target_compile_definitions(unikey PRIVATE "-DENABLE_QT")

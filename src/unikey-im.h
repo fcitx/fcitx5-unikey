@@ -27,6 +27,8 @@
 #include <unikeyinputcontext.h>
 #include <vector>
 
+struct xcb_connection_t;
+
 namespace fcitx {
 
 class UnikeyState;
@@ -70,6 +72,7 @@ public:
     void updateUI(InputContext *ic);
     void updateMacroAction(InputContext *ic);
     void updateSpellAction(InputContext *ic);
+    void updateInputModeAction(InputContext *ic);
     void updateCharsetAction(InputContext *ic);
     void updateInputMethodAction(InputContext *ic);
 
@@ -77,9 +80,15 @@ public:
                         InputContext & /*inputContext*/) override;
 
     UnikeyInputMethod *im() { return &im_; }
+    // Send BackSpace through the X server (ibus-bamboo XTestFakeKeyEvent).
+    bool sendFakeBackspace(int n);
+    // Finish the current word of ic.
+    void commitCurrent(InputContext *ic);
 
 private:
     void populateConfig();
+    void initInputModeAction();
+    void migrateInputModeConfig();
     void reloadMacroTable() {
         auto path = StandardPaths::global().locate(StandardPathsType::PkgConfig,
                                                    "unikey/macro");
@@ -101,8 +110,15 @@ private:
     std::vector<std::unique_ptr<SimpleAction>> charsetSubAction_;
     std::unique_ptr<Menu> charsetMenu_;
     std::unique_ptr<SimpleAction> spellCheckAction_;
+    std::unique_ptr<SimpleAction> inputModeAction_;
+    std::vector<std::unique_ptr<SimpleAction>> inputModeSubAction_;
+    std::unique_ptr<Menu> inputModeMenu_;
     std::unique_ptr<SimpleAction> macroAction_;
     std::vector<ScopedConnection> connections_;
+    struct XcbDisconnect {
+        void operator()(xcb_connection_t *conn) const;
+    };
+    std::unique_ptr<xcb_connection_t, XcbDisconnect> xtestConn_;
     std::vector<std::unique_ptr<fcitx::HandlerTableEntry<fcitx::EventHandler>>>
         eventWatchers_;
 };

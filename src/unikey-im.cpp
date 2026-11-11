@@ -10,6 +10,7 @@
 #include "inputproc.h"
 #include "keycons.h"
 #include "unikey-config.h"
+#include "unikey-directcommit.h"
 #include "unikeyinputcontext.h"
 #include "usrkeymap.h"
 #include "vnconv.h"
@@ -132,7 +133,9 @@ int latinToUtf(unsigned char *dst, const unsigned char *src, int inSize,
 class UnikeyState final : public InputContextProperty {
 public:
     UnikeyState(UnikeyEngine *engine, InputContext *ic)
-        : engine_(engine), uic_(engine->im()), ic_(ic) {}
+        : engine_(engine), uic_(engine->im()), ic_(ic),
+          direct_(engine, ic, [this](KeyEvent &event) { keyEvent(event); }) {
+    }
 
     void keyEvent(KeyEvent &keyEvent) {
         // Ignore all key release.
@@ -167,6 +170,10 @@ public:
     void commit();
     void syncState(KeySym sym = FcitxKey_None);
     void updatePreedit();
+    // Undo the Vietnamese conversion of the current word, e.g. "việt" back
+    // to "vieejt", and finish the word. Returns false if nothing changed.
+    bool restoreKeys();
+    DirectCommit &direct() { return direct_; }
 
     void eraseChars(int num_chars) {
         int i;
@@ -189,6 +196,7 @@ public:
     void reset() {
         uic_.resetBuf();
         preeditStr_.clear();
+        direct_.reset();
         updatePreedit();
         lastShiftPressed_ = FcitxKey_None;
     }
@@ -204,7 +212,7 @@ public:
         // sense.
         // conflict with the rebuildPreedit feature
         if (!*engine_->config().surroundingText ||
-            *engine_->config().modifySurroundingText ||
+            *engine_->config().modifySurroundingText || direct_.enabled() ||
             *engine_->config().oc != UkConv::XUTF8) {
             return;
         }
@@ -280,7 +288,7 @@ public:
 
     // After rebuild preedit, make sure nothing else calls commit
     void rebuildPreedit() {
-        if (!*engine_->config().modifySurroundingText ||
+        if (!*engine_->config().modifySurroundingText || direct_.enabled() ||
             *engine_->config().oc != UkConv::XUTF8) {
             return;
         }
@@ -349,6 +357,7 @@ private:
     UnikeyEngine *engine_;
     UnikeyInputContext uic_;
     InputContext *ic_;
+    DirectCommit direct_;
     bool lastKeyWithShift_ = false;
     std::string preeditStr_;
     bool autoCommit_ = false;
@@ -448,6 +457,8 @@ UnikeyEngine::UnikeyEngine(Instance *instance)
             state->mayRebuildStateFromSurroundingText_ = true;
         }));
 
+    initInputModeAction();
+
     reloadConfig();
 }
 
@@ -460,6 +471,7 @@ void UnikeyEngine::activate(const InputMethodEntry & /*entry*/,
     statusArea.addAction(StatusGroup::InputMethod, charsetAction_.get());
     statusArea.addAction(StatusGroup::InputMethod, spellCheckAction_.get());
     statusArea.addAction(StatusGroup::InputMethod, macroAction_.get());
+    statusArea.addAction(StatusGroup::InputMethod, inputModeAction_.get());
 
     auto *ic = event.inputContext();
     updateUI(ic);
@@ -482,8 +494,21 @@ void UnikeyEngine::keyEvent(const InputMethodEntry & /*entry*/,
                             KeyEvent &keyEvent) {
     auto *ic = keyEvent.inputContext();
     auto *state = ic->propertyFor(&factory_);
+    if (state->direct().preKeyEvent(keyEvent, [state] { state->commit(); })) {
+        return;
+    }
+    if (!keyEvent.isRelease() &&
+        keyEvent.key().checkKeyList(*config_.restoreKey) &&
+        state->restoreKeys()) {
+        keyEvent.filterAndAccept();
+        return;
+    }
     state->rebuildFromSurroundingText();
-    state->keyEvent(keyEvent);
+    state->direct().keyEvent(keyEvent);
+}
+
+void UnikeyEngine::commitCurrent(InputContext *ic) {
+    ic->propertyFor(&factory_)->commit();
 }
 
 void UnikeyState::preedit(KeyEvent &keyEvent) {
@@ -556,6 +581,9 @@ void UnikeyState::preedit(KeyEvent &keyEvent) {
             }
 
             autoCommit_ = false;
+        }
+        if (uic_.bufChars() == 0 && direct_.passBackspace(preeditStr_)) {
+            return;
         }
         updatePreedit();
 
@@ -662,6 +690,7 @@ void UnikeyEngine::populateConfig() {
 
 void UnikeyEngine::reloadConfig() {
     readAsIni(config_, "conf/unikey.conf");
+    migrateInputModeConfig();
     reloadKeymap();
     populateConfig();
     reloadMacroTable();
@@ -725,6 +754,7 @@ void UnikeyEngine::updateUI(InputContext *ic) {
     updateCharsetAction(ic);
     updateMacroAction(ic);
     updateSpellAction(ic);
+    updateInputModeAction(ic);
 }
 
 void UnikeyState::handleIgnoredKey() {
@@ -734,7 +764,9 @@ void UnikeyState::handleIgnoredKey() {
 }
 
 void UnikeyState::commit() {
-    if (!preeditStr_.empty()) {
+    if (direct_.enabled()) {
+        direct_.commit(preeditStr_);
+    } else if (!preeditStr_.empty()) {
         ic_->commitString(preeditStr_);
     }
     reset();
@@ -769,7 +801,25 @@ void UnikeyState::syncState(KeySym sym) {
     // end process result of ukengine
 }
 
+bool UnikeyState::restoreKeys() {
+    if (preeditStr_.empty()) {
+        return false;
+    }
+    uic_.restoreKeyStrokes();
+    if (uic_.backspaces() == 0 && uic_.bufChars() == 0) {
+        return false;
+    }
+    syncState();
+    updatePreedit();
+    commit();
+    return true;
+}
+
 void UnikeyState::updatePreedit() {
+    if (direct_.enabled()) {
+        direct_.update(preeditStr_);
+        return;
+    }
     auto &inputPanel = ic_->inputPanel();
 
     inputPanel.reset();
