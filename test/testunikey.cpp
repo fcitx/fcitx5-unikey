@@ -1944,6 +1944,32 @@ void testType(Instance *instance) {
     });
 }
 
+void testLongAutoCommitRun(Instance *instance) {
+    instance->eventDispatcher().schedule([instance]() {
+        auto *testfrontend = instance->addonManager().addon("testfrontend");
+        auto uuid =
+            testfrontend->call<ITestFrontend::createInputContext>("testapp");
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
+        ic->focusIn();
+        instance->setCurrentInputMethod(ic, "unikey", false);
+
+        // With macro off, digits and consonants at a word beginning bypass the
+        // key filter, so a long run of them (e.g. a held key) must not
+        // overflow the engine buffer.
+        auto *unikey = instance->addonManager().addon("unikey", true);
+        RawConfig config;
+        config.setValueByPath("Macro", "False");
+        config.setValueByPath("ModifySurroundingText", "False");
+        unikey->setConfig(config);
+        for (const char *key : {"1", "b"}) {
+            for (int i = 0; i < 300; i++) {
+                testfrontend->call<ITestFrontend::keyEvent>(uuid, Key(key),
+                                                            false);
+            }
+        }
+    });
+}
+
 } // namespace
 
 int main() {
@@ -1960,6 +1986,7 @@ int main() {
     setup(&instance);
     testBasic(&instance);
     testType(&instance);
+    testLongAutoCommitRun(&instance);
     instance.eventDispatcher().schedule([&instance]() {
         instance.eventDispatcher().detach();
         instance.exit();
