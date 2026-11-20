@@ -2292,6 +2292,9 @@ int UkEngine::processEscChar(UkKeyEvent &ev) {
 //----------------------------------------------------------
 void UkEngine::pass(int keyCode) {
     UkKeyEvent ev;
+    // Like process(), keep room in m_buffer; a long run of passed keys would
+    // otherwise write past its end.
+    prepareBuffer();
     m_pCtrl->input.keyCodeToEvent(keyCode, ev);
     processAppend(ev);
 }
