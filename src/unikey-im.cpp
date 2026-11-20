@@ -236,6 +236,12 @@ public:
             return;
         }
 
+        // The cursor is inside a word, e.g. after a click between "l" and
+        // "ine". New keys are not a continuation of the letters before it.
+        if (end != text.end() && isVnChar(utf8::getChar(end, text.end()))) {
+            return;
+        }
+
         const auto isValidStateCharacter = [](char c) {
             return isWordAutoCommit(c) && !charutils::isdigit(c);
         };

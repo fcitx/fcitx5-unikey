@@ -1891,6 +1891,18 @@ void testBasic(Instance *instance) {
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("e"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
 
+        // The cursor is inside a word (e.g. after a mouse click), so the
+        // letters before it must not be restored as the current word. "uas"
+        // alone gives "úa"; with "q" restored it would give "uá".
+        ic->reset();
+        ic->surroundingText().setText("qa", 1, 1);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("úa");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("u"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("s"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
         config.setValueByPath("ModifySurroundingText", "True");
         unikey->setConfig(config);
 
