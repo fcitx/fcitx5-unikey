@@ -1944,6 +1944,23 @@ void testType(Instance *instance) {
     });
 }
 
+void testInvalidConsonant(Instance *instance) {
+    instance->eventDispatcher().schedule([instance]() {
+        auto *testfrontend = instance->addonManager().addon("testfrontend");
+        auto uuid =
+            testfrontend->call<ITestFrontend::createInputContext>("testapp");
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
+        ic->focusIn();
+        instance->setCurrentInputMethod(ic, "unikey", false);
+
+        // "z" alone is not a valid consonant sequence, so the consonant typed
+        // after it must not index the consonant table with cs_nil.
+        for (const char *key : {"z", "z", "a", "BackSpace", "z"}) {
+            testfrontend->call<ITestFrontend::keyEvent>(uuid, Key(key), false);
+        }
+    });
+}
+
 } // namespace
 
 int main() {
@@ -1960,6 +1977,7 @@ int main() {
     setup(&instance);
     testBasic(&instance);
     testType(&instance);
+    testInvalidConsonant(&instance);
     instance.eventDispatcher().schedule([&instance]() {
         instance.eventDispatcher().detach();
         instance.exit();
