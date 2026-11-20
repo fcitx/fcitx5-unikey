@@ -2224,7 +2224,9 @@ int UkEngine::appendConsonnant(UkKeyEvent &ev) {
     case vnw_vc:
     case vnw_cvc:
         cs = prev.cseq;
-        if (CSeqList[cs].len == 3)
+        // A lone letter that is not a consonant sequence by itself (e.g. "z")
+        // is stored with cs_nil, which must not be used as a table index.
+        if (cs == cs_nil || CSeqList[cs].len == 3)
             newCs = cs_nil;
         else if (CSeqList[cs].len == 2)
             newCs = lookupCSeq(CSeqList[cs].c[0], CSeqList[cs].c[1], lowerSym);
