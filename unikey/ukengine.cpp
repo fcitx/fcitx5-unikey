@@ -907,13 +907,14 @@ int VCPairCompare(const void *p1, const void *p2) {
 }
 
 bool isValidVSeq(VowelSeq v) { return v >= 0 && v < VSeqCount; }
+bool isValidCSeq(ConSeq c) { return c >= 0 && c < CSeqCount; }
 
 //----------------------------------------------------------
 bool isValidCV(ConSeq c, VowelSeq v) {
     if (c == cs_nil || v == vs_nil)
         return true;
 
-    if (c >= CSeqCount || v >= VSeqCount)
+    if (!isValidCSeq(c) || !isValidVSeq(v))
         return false;
 
     VowelSeqInfo &vInfo = VSeqList[v];
@@ -946,7 +947,7 @@ bool isValidVC(VowelSeq v, ConSeq c) {
     if (v == vs_nil || c == cs_nil)
         return true;
 
-    if (v >= VSeqCount || c >= CSeqCount)
+    if (!isValidVSeq(v) || !isValidCSeq(c))
         return false;
 
     VowelSeqInfo &vInfo = VSeqList[v];
@@ -2163,7 +2164,7 @@ int UkEngine::appendConsonnant(UkKeyEvent &ev) {
             c1 = m_buffer[m_current - 1 - prev.c1Offset].cseq;
 
         newCs = lookupCSeq(lowerSym);
-        isValid = isValidCVC(c1, newVs, newCs);
+        isValid = isValidCSeq(newCs) && isValidCVC(c1, newVs, newCs);
 
         if (isValid) {
             // check u+o -> u+o+
@@ -2224,7 +2225,10 @@ int UkEngine::appendConsonnant(UkKeyEvent &ev) {
     case vnw_vc:
     case vnw_cvc:
         cs = prev.cseq;
-        if (CSeqList[cs].len == 3)
+        // A lone letter that is not a consonant sequence by itself (e.g.
+        // "z") is stored with cs_nil, which must not be used as a table
+        // index.
+        if (!isValidCSeq(cs) || CSeqList[cs].len == 3)
             newCs = cs_nil;
         else if (CSeqList[cs].len == 2)
             newCs = lookupCSeq(CSeqList[cs].c[0], CSeqList[cs].c[1], lowerSym);

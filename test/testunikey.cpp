@@ -1982,6 +1982,96 @@ void testType(Instance *instance) {
     });
 }
 
+void testInvalidConsonant(Instance *instance) {
+    instance->eventDispatcher().schedule([instance]() {
+        auto *unikey = instance->addonManager().addon("unikey", true);
+        FCITX_ASSERT(unikey);
+        auto *testfrontend = instance->addonManager().addon("testfrontend");
+        auto uuid =
+            testfrontend->call<ITestFrontend::createInputContext>("testapp");
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
+        ic->focusIn();
+        instance->setCurrentInputMethod(ic, "unikey", false);
+
+        auto typeAndCommit = [&](std::initializer_list<const char *> keys,
+                                 const std::string &expect) {
+            testfrontend->call<ITestFrontend::pushCommitExpectation>(expect);
+            for (const char *key : keys) {
+                testfrontend->call<ITestFrontend::keyEvent>(uuid, Key(key),
+                                                            false);
+            }
+            testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"),
+                                                        false);
+        };
+
+        // Test with default config (Telex, SpellCheck=True,
+        // AutoNonVnRestore=True, Macro=True).
+        RawConfig config;
+        config.setValueByPath("InputMethod", "Telex");
+        config.setValueByPath("OutputCharset", "XUTF8");
+        config.setValueByPath("SpellCheck", "True");
+        config.setValueByPath("AutoNonVnRestore", "True");
+        config.setValueByPath("Macro", "True");
+        config.setValueByPath("ModifySurroundingText", "False");
+        unikey->setConfig(config);
+
+        // Lone "z" at word start followed by consonants (vnw_c with cs_nil).
+        typeAndCommit({"z", "z"}, "zz");
+        typeAndCommit({"z", "t"}, "zt");
+        typeAndCommit({"z", "z", "a", "BackSpace", "z"}, "zzz");
+        typeAndCommit({"z", "a", "BackSpace", "z"}, "zz");
+
+        // Colloquial initial "z" words and valid "dz" cluster.
+        typeAndCommit({"z", "o", "o"}, "zô");
+        typeAndCommit({"z", "e", "e"}, "zê");
+        typeAndCommit({"z", "a", "w", "c", "s"}, "zắc");
+        typeAndCommit({"z", "a", "a", "y", "j"}, "zậy");
+        typeAndCommit({"d", "z", "o", "o"}, "dzô");
+        typeAndCommit({"d", "z", "o", "o", "s"}, "dzố");
+
+        // "z" is never a valid ending consonant after vowel(s).
+        typeAndCommit({"a", "z", "z"}, "azz");
+        typeAndCommit({"b", "a", "z", "t"}, "bazt");
+        typeAndCommit({"a", "z", "s"}, "azs");
+        typeAndCommit({"b", "a", "z", "s"}, "bazs");
+        typeAndCommit({"b", "a", "i", "z", "s"}, "baizs");
+        typeAndCommit({"h", "u", "o", "w", "z"}, "huowz");
+
+        // "dd" enables singleMode (processNoSpellCheck), followed by "zz".
+        typeAndCommit({"d", "d", "z", "z"}, "đzz");
+
+        // Telex tone removal with "z", then another "z".
+        typeAndCommit({"b", "a", "s", "z"}, "ba");
+        typeAndCommit({"b", "a", "s", "z", "z"}, "baz");
+
+        // VNI: "z" after vowel must not shift tone position or accept tone.
+        config.setValueByPath("InputMethod", "VNI");
+        config.setValueByPath("AutoNonVnRestore", "False");
+        unikey->setConfig(config);
+        typeAndCommit({"h", "o", "a", "1", "z"}, "hóaz");
+        typeAndCommit({"h", "u", "o", "7", "z"}, "huơz");
+        typeAndCommit({"b", "a", "z", "1"}, "baz1");
+
+        config.setValueByPath("InputMethod", "Telex");
+        config.setValueByPath("AutoNonVnRestore", "True");
+        // Macro=False exercises autoCommit putChar() -> engine_.pass() path.
+        config.setValueByPath("Macro", "False");
+        unikey->setConfig(config);
+        testfrontend->call<ITestFrontend::pushCommitExpectation>(" ");
+        for (const char *key : {"z", "z", "space"}) {
+            testfrontend->call<ITestFrontend::keyEvent>(uuid, Key(key), false);
+        }
+
+        // SpellCheck=False exercises processNoSpellCheck() resetting "z" to
+        // vnw_c.
+        config.setValueByPath("Macro", "True");
+        config.setValueByPath("SpellCheck", "False");
+        config.setValueByPath("AutoNonVnRestore", "False");
+        unikey->setConfig(config);
+        typeAndCommit({"z", "z", "a", "BackSpace", "z"}, "zzz");
+    });
+}
+
 } // namespace
 
 int main() {
@@ -1998,6 +2088,7 @@ int main() {
     setup(&instance);
     testBasic(&instance);
     testType(&instance);
+    testInvalidConsonant(&instance);
     instance.eventDispatcher().schedule([&instance]() {
         instance.eventDispatcher().detach();
         instance.exit();
