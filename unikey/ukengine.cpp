@@ -2291,6 +2291,7 @@ int UkEngine::processEscChar(UkKeyEvent &ev) {
 
 //----------------------------------------------------------
 void UkEngine::pass(int keyCode) {
+    prepareBuffer();
     UkKeyEvent ev;
     m_pCtrl->input.keyCodeToEvent(keyCode, ev);
     processAppend(ev);
@@ -2642,6 +2643,7 @@ UkEngine::UkEngine() {
     m_reverted = false;
     m_toEscape = false;
     m_keyRestored = false;
+    m_keyRestoring = false;
 }
 
 //----------------------------------------------------
@@ -2667,7 +2669,8 @@ void UkEngine::prepareBuffer() {
     }
 
     // prepare key stroke buffer
-    if (m_keyCurrent > 0 && m_keyCurrent + 1 >= m_keyBufSize) {
+    if (!m_keyRestoring && m_keyCurrent > 0 &&
+        m_keyCurrent + 1 >= m_keyBufSize) {
         // Get rid of at least half of the current entries
         rid = m_keyCurrent / 2;
         memmove(m_keyStrokes, m_keyStrokes + rid,
@@ -2857,6 +2860,7 @@ int UkEngine::restoreKeyStrokes(int &backs, unsigned char *outBuf, int &outSize,
         }
         m_pCtrl->input.keyCodeToSymbol(m_keyStrokes[i].ev.keyCode, ev);
         m_keyStrokes[i].converted = false;
+        prepareBuffer();
         processAppend(ev);
     }
     outSize = count;

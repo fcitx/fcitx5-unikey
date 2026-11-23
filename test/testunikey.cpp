@@ -1966,6 +1966,8 @@ void testBasic(Instance *instance) {
 
 void testType(Instance *instance) {
     instance->eventDispatcher().schedule([instance]() {
+        auto *unikey = instance->addonManager().addon("unikey", true);
+        FCITX_ASSERT(unikey);
         auto *testfrontend = instance->addonManager().addon("testfrontend");
         auto uuid =
             testfrontend->call<ITestFrontend::createInputContext>("testapp");
@@ -1977,6 +1979,77 @@ void testType(Instance *instance) {
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("0"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("BackSpace"),
                                                     false);
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("f");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
+        // Exercise UkEngine::pass() beyond MAX_UK_ENGINE (128) with
+        // Macro=False.
+        RawConfig config;
+        config.setValueByPath("InputMethod", "Telex");
+        config.setValueByPath("OutputCharset", "XUTF8");
+        config.setValueByPath("SpellCheck", "True");
+        config.setValueByPath("AutoNonVnRestore", "True");
+        config.setValueByPath("Macro", "False");
+        config.setValueByPath("ModifySurroundingText", "False");
+        unikey->setConfig(config);
+        for (int i = 0; i < 140; ++i) {
+            testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("1"), false);
+        }
+
+        // Exercise UkEngine::restoreKeyStrokes() replay when m_buffer is near
+        // full.
+        config.setValueByPath("Macro", "True");
+        unikey->setConfig(config);
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("bà ");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("b"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        for (int i = 0; i < 63; ++i) {
+            testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("s"), false);
+            testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("f"), false);
+        }
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("space"), false);
+
+        testfrontend->call<ITestFrontend::pushCommitExpectation>(
+            std::string(110, 'x') + " ");
+        for (int i = 0; i < 110; ++i) {
+            testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("x"), false);
+        }
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("space"), false);
+
+        std::string expectedRestored = "ba";
+        for (int i = 0; i < 10; ++i) {
+            expectedRestored += "sf";
+        }
+        expectedRestored += "l ";
+        testfrontend->call<ITestFrontend::pushCommitExpectation>(
+            expectedRestored);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("b"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        for (int i = 0; i < 10; ++i) {
+            testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("s"), false);
+            testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("f"), false);
+        }
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("l"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("space"), false);
+
+        // Also test direct Shift+space restoreKeyStrokes() when m_keyCurrent ==
+        // 127.
+        ic->reset();
+        std::string expectedShiftRestore = "ba";
+        for (int i = 0; i < 63; ++i) {
+            expectedShiftRestore += "sf";
+        }
+        testfrontend->call<ITestFrontend::pushCommitExpectation>(
+            expectedShiftRestore);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("b"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        for (int i = 0; i < 63; ++i) {
+            testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("s"), false);
+            testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("f"), false);
+        }
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Shift+space"),
+                                                    false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
 
         FCITX_INFO() << "done";
     });
