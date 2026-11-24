@@ -2323,20 +2323,10 @@ int UkEngine::processNoSpellCheck(UkKeyEvent &ev) {
     return 1;
 }
 //----------------------------------------------------------
-int UkEngine::process(unsigned int keyCode, int &backs, unsigned char *outBuf,
-                      int &outSize, UkOutputType &outType) {
+// Handle one key and record it in the key stroke buffer.
+//----------------------------------------------------------
+int UkEngine::processKey(unsigned int keyCode) {
     UkKeyEvent ev;
-    prepareBuffer();
-    m_backs = 0;
-    m_changePos = m_current + 1;
-    m_pOutBuf = outBuf;
-    m_pOutSize = &outSize;
-    m_outputWritten = false;
-    m_reverted = false;
-    m_keyRestored = false;
-    m_keyRestoring = false;
-    m_outType = UkCharOutput;
-
     m_pCtrl->input.keyCodeToEvent(keyCode, ev);
 
     int ret;
@@ -2380,6 +2370,24 @@ int UkEngine::process(unsigned int keyCode, int &backs, unsigned char *outBuf,
         m_keyStrokes[m_keyCurrent].ev = ev;
         m_keyStrokes[m_keyCurrent].converted = (ret && !m_keyRestored);
     }
+    return ret;
+}
+
+//----------------------------------------------------------
+int UkEngine::process(unsigned int keyCode, int &backs, unsigned char *outBuf,
+                      int &outSize, UkOutputType &outType) {
+    prepareBuffer();
+    m_backs = 0;
+    m_changePos = m_current + 1;
+    m_pOutBuf = outBuf;
+    m_pOutSize = &outSize;
+    m_outputWritten = false;
+    m_reverted = false;
+    m_keyRestored = false;
+    m_keyRestoring = false;
+    m_outType = UkCharOutput;
+
+    int ret = processKey(keyCode);
 
     if (ret == 0) {
         backs = 0;
@@ -2927,15 +2935,14 @@ int UkEngine::processWordEnd(UkKeyEvent &ev) {
 
     int outSize = 0;
     if (addMissingRimeMark(ev)) {
-        outSize = *m_pOutSize;
-        writeOutput(m_pOutBuf, outSize);
+        // Write the key that ended the word in the output charset too,
+        // except for Enter (key code 0), which the frontend handles.
+        if (ev.keyCode)
+            putKeyInBuffer(ev);
+        writeOutput(m_pOutBuf, *m_pOutSize);
         m_outputWritten = true;
-        putKeyInBuffer(ev);
-        if (ev.keyCode && outSize < *m_pOutSize) {
-            m_pOutBuf[outSize] = ev.keyCode;
-            outSize++;
-        }
-        *m_pOutSize = outSize;
+        if (!ev.keyCode)
+            putKeyInBuffer(ev);
         return 1;
     }
 
@@ -3025,24 +3032,15 @@ bool endsWordForMark(unsigned int keyCode) {
 } // namespace
 
 //---------------------------------------------------------------------------
-// Re-run keys for the word that starts at wordStart, as if they were typed,
-// replacing what is in the buffer from there on.
+// Type keys again from buffer position bufStart and key position keyStart,
+// replacing what is there, the same way process() does.
 //---------------------------------------------------------------------------
-void UkEngine::retypeWord(int wordStart, int keyStart,
+void UkEngine::retypeWord(int bufStart, int keyStart,
                           const std::vector<unsigned int> &keys) {
-    m_current = wordStart - 1;
+    m_current = bufStart - 1;
     m_keyCurrent = keyStart - 1;
-    for (unsigned int keyCode : keys) {
-        UkKeyEvent ev;
-        m_pCtrl->input.keyCodeToEvent(keyCode, ev);
-        int ret = (this->*UkKeyProcList[ev.evType])(ev);
-        if (m_current >= 0) {
-            ev.chType = m_pCtrl->input.getCharType(ev.keyCode);
-            m_keyCurrent++;
-            m_keyStrokes[m_keyCurrent].ev = ev;
-            m_keyStrokes[m_keyCurrent].converted = (ret != 0);
-        }
-    }
+    for (unsigned int keyCode : keys)
+        processKey(keyCode);
 }
 
 //---------------------------------------------------------------------------
@@ -3072,17 +3070,21 @@ bool UkEngine::addMissingRimeMark(const UkKeyEvent &ev) {
         return false;
 
     std::vector<unsigned int> keys;
-    std::string lower;
+    std::string typedKeys;
     for (int i = keyStart; i <= m_keyCurrent; i++) {
         unsigned int keyCode = m_keyStrokes[i].ev.keyCode;
         if (keyCode >= 128 || !isalpha(keyCode))
             return false;
         keys.push_back(keyCode);
-        lower += static_cast<char>(tolower(keyCode));
+        typedKeys += static_cast<char>(tolower(keyCode));
     }
-    for (const char *english : EnglishLookalikes) {
-        if (lower == english)
-            return false;
+
+    std::vector<VnLexiName> shown;
+    int shownTones = 0;
+    for (int i = wordStart; i <= m_current; i++) {
+        shown.push_back(m_buffer[i].vnSym);
+        if (m_buffer[i].tone != 0)
+            shownTones++;
     }
 
     auto isTone = [this](char c) {
@@ -3091,69 +3093,115 @@ bool UkEngine::addMissingRimeMark(const UkKeyEvent &ev) {
         return toneEv.evType >= vneTone1 && toneEv.evType <= vneTone5;
     };
 
+    // Consonants at the start of a word can reach the buffer without key
+    // strokes: the frontend sends them with pass() when it commits them
+    // right away. They are taken from the buffer and left as they are.
     const char *onset = nullptr;
     const MarkedRime *rime = nullptr;
-    std::string rest;
-    for (const char *candidate : Onsets) {
-        if (lower.compare(0, strlen(candidate), candidate) != 0)
-            continue;
-        rest = lower.substr(strlen(candidate));
-        std::string plain;
-        for (char c : rest) {
-            if (!isTone(c))
-                plain += c;
-        }
-        for (const auto &marked : MarkedRimes) {
-            if (plain == marked.bare) {
-                onset = candidate;
-                rime = &marked;
-                break;
+    size_t prefixLen = 0;
+    std::vector<VnLexiName> typed;
+    bool found = false;
+    for (; !found && prefixLen <= 3 && prefixLen <= shown.size(); prefixLen++) {
+        std::string lower;
+        bool letters = true;
+        for (size_t i = 0; i < prefixLen && letters; i++) {
+            letters = false;
+            for (char c = 'a'; c <= 'z'; c++) {
+                if (IsoToVnLexi(static_cast<unsigned char>(c)) == shown[i] &&
+                    m_buffer[wordStart + i].tone == 0) {
+                    lower += c;
+                    letters = true;
+                    break;
+                }
             }
         }
-        if (rime)
+        if (!letters)
             break;
+        lower += typedKeys;
+        if (std::find(std::begin(EnglishLookalikes),
+                      std::end(EnglishLookalikes),
+                      lower) != std::end(EnglishLookalikes))
+            return false;
+
+        onset = nullptr;
+        rime = nullptr;
+        std::string rest;
+        for (const char *candidate : Onsets) {
+            if (lower.compare(0, strlen(candidate), candidate) != 0)
+                continue;
+            rest = lower.substr(strlen(candidate));
+            std::string plain;
+            for (char c : rest) {
+                if (!isTone(c))
+                    plain += c;
+            }
+            for (const auto &marked : MarkedRimes) {
+                if (plain == marked.bare) {
+                    onset = candidate;
+                    rime = &marked;
+                    break;
+                }
+            }
+            if (rime)
+                break;
+        }
+        // One tone key, typed after the vowels: "use" and "user" stay
+        // English, and so does "Hersch" with its second tone key.
+        if (!rime || !onsetFitsRime(onset, rime->bare) ||
+            prefixLen > strlen(onset) ||
+            rest.compare(0, strspn(rime->bare, "aeiouy"), rime->bare, 0,
+                         strspn(rime->bare, "aeiouy")) != 0 ||
+            std::count_if(rest.begin(), rest.end(), isTone) != 1)
+            continue;
+
+        // The buffer must show these keys, with the tone either applied or
+        // left as a letter; anything else means the keys do not tell the
+        // whole story (a tone taken back with Backspace, for one).
+        const size_t onsetLen = strlen(onset);
+        const bool dd = strcmp(onset, "dd") == 0;
+        std::vector<VnLexiName> withTone;
+        typed.clear();
+        for (size_t i = dd ? 2 : 0; i < lower.size(); i++) {
+            VnLexiName sym = IsoToVnLexi(static_cast<unsigned char>(lower[i]));
+            withTone.push_back(sym);
+            if (i < onsetLen || !isTone(lower[i]))
+                typed.push_back(sym);
+        }
+        if (dd) {
+            typed.insert(typed.begin(), vnl_dd);
+            withTone.insert(withTone.begin(), vnl_dd);
+        }
+        found = (shown == typed && shownTones == 1) ||
+                (shown == withTone && shownTones == 0);
     }
-    if (!rime || !onsetFitsRime(onset, rime->bare))
+    if (!found)
         return false;
+    prefixLen--;
 
-    // One tone key, typed after the vowels: "use" and "user" stay English,
-    // and so does "Hersch" with its second tone key.
-    std::string nucleus(rime->bare, strspn(rime->bare, "aeiouy"));
-    if (rest.compare(0, nucleus.size(), nucleus) != 0 ||
-        std::count_if(rest.begin(), rest.end(), isTone) != 1)
-        return false;
-
-    // The keys must be what the buffer shows, with the tone either applied
-    // or left as a letter. Text picked up from the application has no keys.
     const size_t onsetLen = strlen(onset);
     const bool dd = strcmp(onset, "dd") == 0;
-    std::vector<VnLexiName> typed, typedWithTone;
-    for (size_t i = dd ? 2 : 0; i < lower.size(); i++) {
-        VnLexiName sym = IsoToVnLexi(static_cast<unsigned char>(lower[i]));
-        typedWithTone.push_back(sym);
-        if (i < onsetLen || !isTone(lower[i]))
-            typed.push_back(sym);
-    }
-    if (dd) {
-        typed.insert(typed.begin(), vnl_dd);
-        typedWithTone.insert(typedWithTone.begin(), vnl_dd);
-    }
-    std::vector<VnLexiName> shown;
-    for (int i = wordStart; i <= m_current; i++)
-        shown.push_back(m_buffer[i].vnSym);
-    if (shown != typed && shown != typedWithTone)
-        return false;
-
     std::vector<unsigned int> marked = keys;
-    size_t markAfter = onsetLen + rime->markAt;
+    size_t markAfter = onsetLen + rime->markAt - prefixLen;
     unsigned int markKey =
         isupper(keys[markAfter]) ? toupper(rime->markKey) : rime->markKey;
     marked.insert(marked.begin() + markAfter + 1, markKey);
 
-    int oldBacks = m_backs;
-    int oldChangePos = m_changePos;
-    markChange(wordStart);
-    retypeWord(wordStart, keyStart, marked);
+    // Keep what is there, to put it back if the marked word does not work.
+    const int bufStart = wordStart + static_cast<int>(prefixLen);
+    const int oldCurrent = m_current;
+    const int oldKeyCurrent = m_keyCurrent;
+    const int oldBacks = m_backs;
+    const int oldChangePos = m_changePos;
+    std::vector<WordInfo> oldBuffer(m_buffer + bufStart,
+                                    m_buffer + m_current + 1);
+    std::vector<KeyBufEntry> oldKeys(m_keyStrokes + keyStart,
+                                     m_keyStrokes + m_keyCurrent + 1);
+
+    markChange(bufStart);
+    retypeWord(bufStart, keyStart, marked);
+    // processWordEnd is only reached outside single mode; dd may set it
+    // again while the word is retyped.
+    m_singleMode = false;
 
     // The result has to be the marked syllable with its one tone.
     int markPos =
@@ -3168,7 +3216,10 @@ bool UkEngine::addMissingRimeMark(const UkKeyEvent &ev) {
         m_buffer[markPos].vnSym == rime->markSym)
         return true;
 
-    retypeWord(wordStart, keyStart, keys);
+    std::copy(oldBuffer.begin(), oldBuffer.end(), m_buffer + bufStart);
+    std::copy(oldKeys.begin(), oldKeys.end(), m_keyStrokes + keyStart);
+    m_current = oldCurrent;
+    m_keyCurrent = oldKeyCurrent;
     m_backs = oldBacks;
     m_changePos = oldChangePos;
     return false;

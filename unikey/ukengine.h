@@ -138,6 +138,7 @@ protected:
     int checkEscapeVIQR(UkKeyEvent &ev);
     int processNoSpellCheck(UkKeyEvent &ev);
     int processWordEnd(UkKeyEvent &ev);
+    int processKey(unsigned int keyCode);
     void synchKeyStrokeBuffer();
     bool lastWordHasVnMark() const;
     bool lastWordIsNonVn() const;

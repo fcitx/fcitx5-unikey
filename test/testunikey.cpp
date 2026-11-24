@@ -1978,12 +1978,17 @@ void testAutoAddRimeMark(Instance *instance) {
         config.setValueByPath("InputMethod", "Telex");
         config.setValueByPath("SpellCheck", "True");
         config.setValueByPath("AutoNonVnRestore", "True");
-        config.setValueByPath("Macro", "False");
+        config.setValueByPath("FreeMarking", "True");
+        // Defaults; testBasic leaves other values behind.
+        config.setValueByPath("Macro", "True");
+        config.setValueByPath("ModifySurroundingText", "False");
         unikey->setConfig(config);
 
         auto type = [testfrontend, uuid](const std::string &keys) {
-            static const std::map<char, std::string> names{
-                {' ', "space"}, {',', "comma"}, {'.', "period"}};
+            static const std::map<char, std::string> names{{' ', "space"},
+                                                           {',', "comma"},
+                                                           {'.', "period"},
+                                                           {'<', "BackSpace"}};
             for (char c : keys) {
                 auto name = names.find(c);
                 testfrontend->call<ITestFrontend::keyEvent>(
@@ -2029,6 +2034,9 @@ void testAutoAddRimeMark(Instance *instance) {
             {"ghuops ", "ghuops "},
             // The marked word is still not valid, so the keys stay as typed.
             {"kuyenj ", "kuyenj "},
+            {"ddietr ", "đietr "},
+            // The tone was taken back, so there is nothing to mark.
+            {"tienff< ", "tien "},
         };
         for (const auto &[keys, text] : words) {
             testfrontend->call<ITestFrontend::pushCommitExpectation>(text);
@@ -2040,6 +2048,15 @@ void testAutoAddRimeMark(Instance *instance) {
         // Return ends the word too.
         type("tienf");
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
+        // Without macros, consonants that start a word are sent to the
+        // application right away and only the rest is in the preedit.
+        config.setValueByPath("Macro", "False");
+        unikey->setConfig(config);
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("iền ");
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("uận ");
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("ệnh ");
+        type("tienf luanj benhj ");
     });
 }
 
