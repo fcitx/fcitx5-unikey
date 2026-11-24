@@ -5,10 +5,12 @@
  */
 
 #include "keycons.h"
+#include <algorithm>
 #include <iostream>
 #include <mutex>
 #include <stdlib.h>
 #include <string.h>
+#include <string>
 #include <unordered_map>
 
 /*
@@ -826,8 +828,6 @@ VCPair VCPairList[] = {{vs_a, cs_c},    {vs_a, cs_ch},   {vs_a, cs_m},
 };
 
 const int VCPairCount = sizeof(VCPairList) / sizeof(VCPair);
-
-// TODO: auto-complete: e.g. luan -> lua^n
 
 typedef int (UkEngine::*UkKeyProc)(UkKeyEvent &ev);
 
@@ -2926,6 +2926,19 @@ int UkEngine::processWordEnd(UkKeyEvent &ev) {
     }
 
     int outSize = 0;
+    if (addMissingRimeMark(ev)) {
+        outSize = *m_pOutSize;
+        writeOutput(m_pOutBuf, outSize);
+        m_outputWritten = true;
+        putKeyInBuffer(ev);
+        if (ev.keyCode && outSize < *m_pOutSize) {
+            m_pOutBuf[outSize] = ev.keyCode;
+            outSize++;
+        }
+        *m_pOutSize = outSize;
+        return 1;
+    }
+
     if (m_pCtrl->options.autoNonVnRestore && lastWordIsNonVn()) {
         outSize = *m_pOutSize;
         if (restoreKeyStrokes(m_backs, m_pOutBuf, outSize, m_outType)) {
@@ -2946,6 +2959,219 @@ int UkEngine::processWordEnd(UkKeyEvent &ev) {
     }
 
     return 0;
+}
+
+namespace {
+
+// Rimes that are only ever written with ê, â, ơ or ư, so the mark can be
+// added when it was left out: tienf -> tiền, luanj -> luận.
+struct MarkedRime {
+    const char *bare;
+    int markAt;         // the last vowel the mark changes
+    char markKey;       // the Telex key that puts the mark there
+    VnLexiName markSym; // what that vowel becomes
+};
+
+const MarkedRime MarkedRimes[] = {
+    {"ien", 1, 'e', vnl_er},  {"ieu", 1, 'e', vnl_er}, {"iem", 1, 'e', vnl_er},
+    {"ieng", 1, 'e', vnl_er}, {"iet", 1, 'e', vnl_er}, {"iep", 1, 'e', vnl_er},
+    {"iec", 1, 'e', vnl_er},  {"yen", 1, 'e', vnl_er}, {"yeu", 1, 'e', vnl_er},
+    {"yem", 1, 'e', vnl_er},  {"yet", 1, 'e', vnl_er}, {"uyen", 2, 'e', vnl_er},
+    {"uyet", 2, 'e', vnl_er}, {"enh", 0, 'e', vnl_er}, {"eu", 0, 'e', vnl_er},
+    {"ech", 0, 'e', vnl_er},  {"ue", 1, 'e', vnl_er},  {"uech", 1, 'e', vnl_er},
+    {"uenh", 1, 'e', vnl_er}, {"uan", 1, 'a', vnl_ar}, {"uat", 1, 'a', vnl_ar},
+    {"uay", 1, 'a', vnl_ar},  {"uu", 0, 'w', vnl_uh},  {"uou", 1, 'w', vnl_oh},
+    {"uop", 1, 'w', vnl_oh},
+};
+
+// Tried in this order; the first one followed by a rime above is used, so
+// "quan" stays qu + an and "giet" becomes g + iet. đ is typed dd.
+const char *const Onsets[] = {"ngh", "ng", "nh", "gh", "kh", "ph", "th",
+                              "tr",  "ch", "qu", "gi", "b",  "c",  "dd",
+                              "d",   "g",  "h",  "k",  "l",  "m",  "n",
+                              "p",   "r",  "s",  "t",  "v",  "x",  ""};
+
+// English words typed like one of those syllables (hues and huế). Unikey has
+// no dictionary to tell them apart, so this also lists the words of
+// /usr/share/dict/american-english that would otherwise change.
+const char *const EnglishLookalikes[] = {
+    "cues", "diets", "dues",  "eur",   "hues",  "liens", "miens", "quiets",
+    "rues", "sues",  "techs", "truer", "trues", "tues",  "yens",  "yest"};
+
+// Spelling rules Unikey's own check lets through: gh, ngh and k only come
+// before i, e, ê or y, and c, g and ng never do (gi is an onset of its own).
+bool onsetFitsRime(const char *onset, const char *rime) {
+    bool front = strchr("iey", rime[0]) != nullptr;
+    if (!strcmp(onset, "gh") || !strcmp(onset, "ngh") || !strcmp(onset, "k"))
+        return front;
+    if (!strcmp(onset, "c") || !strcmp(onset, "ng"))
+        return !front;
+    if (!strcmp(onset, "g"))
+        return rime[0] != 'e' && rime[0] != 'y';
+    return true;
+}
+
+bool isTelexFamily(UkInputMethod im) {
+    return im == UkTelex || im == UkSimpleTelex || im == UkSimpleTelex2;
+}
+
+bool endsWordForMark(unsigned int keyCode) {
+    // Not digits, @, _, - or /, which also join parts of names and
+    // addresses (tuans@).
+    return keyCode == 0 ||
+           (keyCode < 128 && strchr(" .,;:!?)]}\"'", keyCode) != nullptr);
+}
+
+} // namespace
+
+//---------------------------------------------------------------------------
+// Re-run keys for the word that starts at wordStart, as if they were typed,
+// replacing what is in the buffer from there on.
+//---------------------------------------------------------------------------
+void UkEngine::retypeWord(int wordStart, int keyStart,
+                          const std::vector<unsigned int> &keys) {
+    m_current = wordStart - 1;
+    m_keyCurrent = keyStart - 1;
+    for (unsigned int keyCode : keys) {
+        UkKeyEvent ev;
+        m_pCtrl->input.keyCodeToEvent(keyCode, ev);
+        int ret = (this->*UkKeyProcList[ev.evType])(ev);
+        if (m_current >= 0) {
+            ev.chType = m_pCtrl->input.getCharType(ev.keyCode);
+            m_keyCurrent++;
+            m_keyStrokes[m_keyCurrent].ev = ev;
+            m_keyStrokes[m_keyCurrent].converted = (ret != 0);
+        }
+    }
+}
+
+//---------------------------------------------------------------------------
+// When a word ends in Telex with a rime that is always written with a mark
+// and the mark was left out (tienf, benhj, ruouj), type the mark key as if
+// it had been typed: tiền, bệnh, rượu.
+//---------------------------------------------------------------------------
+bool UkEngine::addMissingRimeMark(const UkKeyEvent &ev) {
+    if (!m_pCtrl->vietKey || !m_pCtrl->options.autoNonVnRestore ||
+        !m_pCtrl->options.freeMarking ||
+        !isTelexFamily(m_pCtrl->input.getIM()) ||
+        !endsWordForMark(ev.keyCode) || m_current < 0 ||
+        m_buffer[m_current].form == vnw_empty)
+        return false;
+
+    int wordStart = m_current;
+    while (wordStart > 0 && m_buffer[wordStart - 1].form != vnw_empty)
+        wordStart--;
+    int keyStart = m_keyCurrent;
+    while (keyStart >= 0 && m_keyStrokes[keyStart].ev.chType != ukcWordBreak)
+        keyStart--;
+    keyStart++;
+
+    // Room for the added key and the key that ends the word.
+    if (keyStart > m_keyCurrent || m_keyCurrent + 2 >= m_keyBufSize ||
+        m_current + 2 >= m_bufSize)
+        return false;
+
+    std::vector<unsigned int> keys;
+    std::string lower;
+    for (int i = keyStart; i <= m_keyCurrent; i++) {
+        unsigned int keyCode = m_keyStrokes[i].ev.keyCode;
+        if (keyCode >= 128 || !isalpha(keyCode))
+            return false;
+        keys.push_back(keyCode);
+        lower += static_cast<char>(tolower(keyCode));
+    }
+    for (const char *english : EnglishLookalikes) {
+        if (lower == english)
+            return false;
+    }
+
+    auto isTone = [this](char c) {
+        UkKeyEvent toneEv;
+        m_pCtrl->input.keyCodeToEvent(static_cast<unsigned char>(c), toneEv);
+        return toneEv.evType >= vneTone1 && toneEv.evType <= vneTone5;
+    };
+
+    const char *onset = nullptr;
+    const MarkedRime *rime = nullptr;
+    std::string rest;
+    for (const char *candidate : Onsets) {
+        if (lower.compare(0, strlen(candidate), candidate) != 0)
+            continue;
+        rest = lower.substr(strlen(candidate));
+        std::string plain;
+        for (char c : rest) {
+            if (!isTone(c))
+                plain += c;
+        }
+        for (const auto &marked : MarkedRimes) {
+            if (plain == marked.bare) {
+                onset = candidate;
+                rime = &marked;
+                break;
+            }
+        }
+        if (rime)
+            break;
+    }
+    if (!rime || !onsetFitsRime(onset, rime->bare))
+        return false;
+
+    // One tone key, typed after the vowels: "use" and "user" stay English,
+    // and so does "Hersch" with its second tone key.
+    std::string nucleus(rime->bare, strspn(rime->bare, "aeiouy"));
+    if (rest.compare(0, nucleus.size(), nucleus) != 0 ||
+        std::count_if(rest.begin(), rest.end(), isTone) != 1)
+        return false;
+
+    // The keys must be what the buffer shows, with the tone either applied
+    // or left as a letter. Text picked up from the application has no keys.
+    const size_t onsetLen = strlen(onset);
+    const bool dd = strcmp(onset, "dd") == 0;
+    std::vector<VnLexiName> typed, typedWithTone;
+    for (size_t i = dd ? 2 : 0; i < lower.size(); i++) {
+        VnLexiName sym = IsoToVnLexi(static_cast<unsigned char>(lower[i]));
+        typedWithTone.push_back(sym);
+        if (i < onsetLen || !isTone(lower[i]))
+            typed.push_back(sym);
+    }
+    if (dd) {
+        typed.insert(typed.begin(), vnl_dd);
+        typedWithTone.insert(typedWithTone.begin(), vnl_dd);
+    }
+    std::vector<VnLexiName> shown;
+    for (int i = wordStart; i <= m_current; i++)
+        shown.push_back(m_buffer[i].vnSym);
+    if (shown != typed && shown != typedWithTone)
+        return false;
+
+    std::vector<unsigned int> marked = keys;
+    size_t markAfter = onsetLen + rime->markAt;
+    unsigned int markKey =
+        isupper(keys[markAfter]) ? toupper(rime->markKey) : rime->markKey;
+    marked.insert(marked.begin() + markAfter + 1, markKey);
+
+    int oldBacks = m_backs;
+    int oldChangePos = m_changePos;
+    markChange(wordStart);
+    retypeWord(wordStart, keyStart, marked);
+
+    // The result has to be the marked syllable with its one tone.
+    int markPos =
+        wordStart + static_cast<int>(dd ? 1 : onsetLen) + rime->markAt;
+    int tones = 0;
+    for (int i = wordStart; i <= m_current; i++) {
+        if (m_buffer[i].tone != 0)
+            tones++;
+    }
+    if (m_current == wordStart + static_cast<int>(typed.size()) - 1 &&
+        !lastWordIsNonVn() && tones == 1 &&
+        m_buffer[markPos].vnSym == rime->markSym)
+        return true;
+
+    retypeWord(wordStart, keyStart, keys);
+    m_backs = oldBacks;
+    m_changePos = oldChangePos;
+    return false;
 }
 
 //---------------------------------------------------------------------------
