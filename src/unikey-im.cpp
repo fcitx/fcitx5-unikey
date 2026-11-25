@@ -348,28 +348,53 @@ public:
     bool mayRebuildStateFromSurroundingText_ = false;
 
     // The application's text may change when a key is passed to it. Until
-    // it sends surrounding text that differs from what it was then, the copy
-    // we have may be out of date: LibreOffice answers Return with the text
-    // from before the new line.
+    // it sends surrounding text that is not one of its answers from before
+    // the key, the copy we have may be out of date. After Return,
+    // LibreOffice sends the text it had before, and GTK sends the text it
+    // had before with our commit inserted at the cursor.
     void surroundingTextMayChange() {
         surroundingTextUpToDate_ = false;
         waitingForNewSurroundingText_ = true;
+        staleSurroundingTexts_.clear();
         const auto &surrounding = ic_->surroundingText();
-        staleSurroundingText_ = surrounding.text();
-        staleSurroundingCursor_ = surrounding.cursor();
-        staleSurroundingAnchor_ = surrounding.anchor();
+        if (!surrounding.isValid()) {
+            return;
+        }
+        staleSurroundingTexts_.push_back(
+            {surrounding.text(), surrounding.cursor(), surrounding.anchor()});
+        const auto &text = surrounding.text();
+        auto cursor = surrounding.cursor();
+        if (lastCommit_.empty() || surrounding.anchor() != cursor ||
+            utf8::lengthValidated(text) == utf8::INVALID_LENGTH ||
+            utf8::length(text) < cursor) {
+            return;
+        }
+        auto withCommit = text;
+        withCommit.insert(utf8::ncharByteLength(text.begin(), cursor),
+                          lastCommit_);
+        auto newCursor = cursor + utf8::length(lastCommit_);
+        staleSurroundingTexts_.push_back(
+            {std::move(withCommit), newCursor, newCursor});
     }
 
     void surroundingTextUpdated() {
-        const auto &surrounding = ic_->surroundingText();
-        if (!waitingForNewSurroundingText_ ||
-            surrounding.text() != staleSurroundingText_ ||
-            surrounding.cursor() != staleSurroundingCursor_ ||
-            surrounding.anchor() != staleSurroundingAnchor_) {
+        if (!waitingForNewSurroundingText_) {
             surroundingTextUpToDate_ = true;
-            waitingForNewSurroundingText_ = false;
+            return;
         }
+        const auto &surrounding = ic_->surroundingText();
+        for (const auto &stale : staleSurroundingTexts_) {
+            if (surrounding.text() == stale.text &&
+                surrounding.cursor() == stale.cursor &&
+                surrounding.anchor() == stale.anchor) {
+                return;
+            }
+        }
+        surroundingTextUpToDate_ = true;
+        waitingForNewSurroundingText_ = false;
     }
+
+    void clearLastCommit() { lastCommit_.clear(); }
 
 private:
     UnikeyEngine *engine_;
@@ -381,9 +406,14 @@ private:
     KeySym lastShiftPressed_ = FcitxKey_None;
     bool surroundingTextUpToDate_ = false;
     bool waitingForNewSurroundingText_ = false;
-    std::string staleSurroundingText_;
-    unsigned int staleSurroundingCursor_ = 0;
-    unsigned int staleSurroundingAnchor_ = 0;
+    struct StaleSurroundingText {
+        std::string text;
+        unsigned int cursor;
+        unsigned int anchor;
+    };
+    std::vector<StaleSurroundingText> staleSurroundingTexts_;
+    // What was committed while handling the current key.
+    std::string lastCommit_;
 };
 
 UnikeyEngine::UnikeyEngine(Instance *instance)
@@ -514,13 +544,17 @@ void UnikeyEngine::keyEvent(const InputMethodEntry & /*entry*/,
                             KeyEvent &keyEvent) {
     auto *ic = keyEvent.inputContext();
     auto *state = ic->propertyFor(&factory_);
+    state->clearLastCommit();
     state->rebuildFromSurroundingText();
     state->keyEvent(keyEvent);
     // A key passed to the application may change its text, and it reaches
     // the application after we have been sent its current surrounding text.
-    // Cursor moves are left out so that going back into a word still works.
+    // Cursor moves are left out so that going back into a word still works,
+    // and shortcuts such as Ctrl+S because most of them leave the text alone.
     if (!keyEvent.isRelease() && !keyEvent.accepted() &&
-        !keyEvent.key().isModifier() && !keyEvent.key().isCursorMove()) {
+        !keyEvent.key().isModifier() && !keyEvent.key().isCursorMove() &&
+        !keyEvent.rawKey().states().testAny(
+            KeyStates{KeyState::Ctrl, KeyState::Alt, KeyState::Super})) {
         state->surroundingTextMayChange();
     }
 }
@@ -775,6 +809,7 @@ void UnikeyState::handleIgnoredKey() {
 void UnikeyState::commit() {
     if (!preeditStr_.empty()) {
         ic_->commitString(preeditStr_);
+        lastCommit_ = preeditStr_;
     }
     reset();
 }

@@ -2000,6 +2000,33 @@ void testStaleSurroundingText(Instance *instance) {
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
 
+        // GTK answers with the preedit committed by Return, but still from
+        // before the new line.
+        ic->surroundingText().setText("", 0, 0);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("nga");
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("a");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("n"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("g"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+        ic->surroundingText().setText("nga", 3, 3);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
+        // A shortcut such as Ctrl+S leaves the text as it is, so the text
+        // sent after it can be used.
+        ic->surroundingText().setText("ngo", 3, 3);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("ngỏ");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+s"),
+                                                    false);
+        ic->surroundingText().setText("ngo", 3, 3);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("r"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
         // Once the application sends it again, it is used again.
         ic->surroundingText().setText("nga", 3, 3);
         ic->updateSurroundingText();
