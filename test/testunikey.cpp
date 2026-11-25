@@ -2053,6 +2053,18 @@ void testStaleSurroundingText(Instance *instance) {
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("r"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
 
+        // So do shortcuts we do not know, such as Ctrl+U deleting the line
+        // with GTK's Emacs key theme.
+        ic->surroundingText().setText("ca", 2, 2);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("r");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+u"),
+                                                    false);
+        ic->surroundingText().setText("ca", 2, 2);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("r"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
         config.setValueByPath("ModifySurroundingText", "False");
         unikey->setConfig(config);
     });

@@ -131,37 +131,27 @@ int latinToUtf(unsigned char *dst, const unsigned char *src, int inSize,
 // shortcuts do not, except the usual ones for deleting, cutting, pasting
 // and undoing.
 bool mayEditText(const Key &key) {
-    if (!key.states().testAny(
-            KeyStates{KeyState::Ctrl, KeyState::Alt, KeyState::Super})) {
+    // Shortcuts differ between applications and key themes (Ctrl+U deletes
+    // the line with GTK's Emacs theme), so only a few common ones that move
+    // the cursor or leave the text alone are trusted. Taking an editing key
+    // for one of these would restore deleted text, while the opposite only
+    // skips rebuilding the preedit until the text changes.
+    if (key.states().testAny(KeyStates{KeyState::Alt, KeyState::Super}) ||
+        !key.states().test(KeyState::Ctrl)) {
         return true;
-    }
-    switch (key.sym()) {
-    case FcitxKey_BackSpace:
-    case FcitxKey_Delete:
-    case FcitxKey_KP_Delete:
-    case FcitxKey_Return:
-    case FcitxKey_KP_Enter:
-    case FcitxKey_Tab:
-    case FcitxKey_ISO_Left_Tab:
-        return true;
-    default:
-        break;
-    }
-    if (!key.states().test(KeyState::Ctrl)) {
-        return false;
     }
     switch (Key::keySymToUnicode(key.sym())) {
-    case 'x':
-    case 'X':
-    case 'v':
-    case 'V':
-    case 'z':
-    case 'Z':
-    case 'y':
-    case 'Y':
-        return true;
-    default:
+    case 'a': // Select all, or line start with the Emacs theme.
+    case 'b': // Bold, or back a character.
+    case 'c': // Copy.
+    case 'e': // Center, or line end.
+    case 'f': // Find, or forward a character.
+    case 'n': // New, or next line.
+    case 'p': // Print, or previous line.
+    case 's': // Save.
         return false;
+    default:
+        return true;
     }
 }
 
