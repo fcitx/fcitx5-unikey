@@ -127,6 +127,44 @@ int latinToUtf(unsigned char *dst, const unsigned char *src, int inSize,
     return (outLeft >= 0);
 }
 
+// Whether a key passed to the application may change its text. Most
+// shortcuts do not, except the usual ones for deleting, cutting, pasting
+// and undoing.
+bool mayEditText(const Key &key) {
+    if (!key.states().testAny(
+            KeyStates{KeyState::Ctrl, KeyState::Alt, KeyState::Super})) {
+        return true;
+    }
+    switch (key.sym()) {
+    case FcitxKey_BackSpace:
+    case FcitxKey_Delete:
+    case FcitxKey_KP_Delete:
+    case FcitxKey_Return:
+    case FcitxKey_KP_Enter:
+    case FcitxKey_Tab:
+    case FcitxKey_ISO_Left_Tab:
+        return true;
+    default:
+        break;
+    }
+    if (!key.states().test(KeyState::Ctrl)) {
+        return false;
+    }
+    switch (Key::keySymToUnicode(key.sym())) {
+    case 'x':
+    case 'X':
+    case 'v':
+    case 'V':
+    case 'z':
+    case 'Z':
+    case 'y':
+    case 'Y':
+        return true;
+    default:
+        return false;
+    }
+}
+
 } // namespace
 
 class UnikeyState final : public InputContextProperty {
@@ -342,6 +380,9 @@ public:
         }
 
         ic_->deleteSurroundingText(-length, length);
+        // Keep our copy in step until the application sends its own, so that
+        // its answer to a key passed next can be recognized as stale.
+        ic_->surroundingText().deleteText(-length, length);
         updatePreedit();
     }
 
@@ -372,7 +413,8 @@ public:
         auto withCommit = text;
         withCommit.insert(utf8::ncharByteLength(text.begin(), cursor),
                           lastCommit_);
-        auto newCursor = cursor + utf8::length(lastCommit_);
+        auto newCursor =
+            cursor + static_cast<unsigned int>(utf8::length(lastCommit_));
         staleSurroundingTexts_.push_back(
             {std::move(withCommit), newCursor, newCursor});
     }
@@ -550,11 +592,10 @@ void UnikeyEngine::keyEvent(const InputMethodEntry & /*entry*/,
     // A key passed to the application may change its text, and it reaches
     // the application after we have been sent its current surrounding text.
     // Cursor moves are left out so that going back into a word still works,
-    // and shortcuts such as Ctrl+S because most of them leave the text alone.
+    // and so are shortcuts such as Ctrl+S that leave the text alone.
     if (!keyEvent.isRelease() && !keyEvent.accepted() &&
         !keyEvent.key().isModifier() && !keyEvent.key().isCursorMove() &&
-        !keyEvent.rawKey().states().testAny(
-            KeyStates{KeyState::Ctrl, KeyState::Alt, KeyState::Super})) {
+        mayEditText(keyEvent.rawKey())) {
         state->surroundingTextMayChange();
     }
 }

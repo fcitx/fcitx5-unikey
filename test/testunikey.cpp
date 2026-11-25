@@ -2034,6 +2034,25 @@ void testStaleSurroundingText(Instance *instance) {
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("r"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
 
+        // The word taken into the preedit was deleted from the application,
+        // so GTK's answer to Return holds the commit in its place.
+        ic->surroundingText().setText("ngả", 3, 3);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("a");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
+        // Shortcuts that edit the text make it stale like other keys.
+        ic->surroundingText().setText("xin", 3, 3);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("r");
+        testfrontend->call<ITestFrontend::keyEvent>(
+            uuid, Key("Control+BackSpace"), false);
+        ic->surroundingText().setText("xin", 3, 3);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("r"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
         config.setValueByPath("ModifySurroundingText", "False");
         unikey->setConfig(config);
     });
