@@ -2053,6 +2053,18 @@ void testStaleSurroundingText(Instance *instance) {
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("r"), false);
         testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
 
+        // BackSpace passed to the application, answered with the text from
+        // before it: the deleted letter must not come back.
+        ic->surroundingText().setText("xinh", 4, 4);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("r");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("BackSpace"),
+                                                    false);
+        ic->surroundingText().setText("xinh", 4, 4);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("r"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
         // So do shortcuts we do not know, such as Ctrl+U deleting the line
         // with GTK's Emacs key theme.
         ic->surroundingText().setText("ca", 2, 2);
