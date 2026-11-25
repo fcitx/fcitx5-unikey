@@ -1964,6 +1964,54 @@ void testBasic(Instance *instance) {
     });
 }
 
+void testStaleSurroundingText(Instance *instance) {
+    instance->eventDispatcher().schedule([instance]() {
+        auto *unikey = instance->addonManager().addon("unikey", true);
+        auto *testfrontend = instance->addonManager().addon("testfrontend");
+        auto uuid =
+            testfrontend->call<ITestFrontend::createInputContext>("testapp");
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
+        ic->setCapabilityFlags(CapabilityFlag::SurroundingText);
+        ic->focusIn();
+        instance->setCurrentInputMethod(ic, "unikey", false);
+
+        RawConfig config;
+        config.setValueByPath("ModifySurroundingText", "True");
+        unikey->setConfig(config);
+
+        // Return goes to the application, which starts a new line but does
+        // not send new surrounding text. The word before the cursor is gone,
+        // so it must not be taken into the preedit again.
+        ic->surroundingText().setText("abbbba", 6, 6);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("a");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
+        // LibreOffice 26.8 on Wayland answers Return with the text it had
+        // before handling the key, and sends the new line only later.
+        ic->surroundingText().setText("abbbba", 6, 6);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("a");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+        ic->surroundingText().setText("abbbba", 6, 6);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
+        // Once the application sends it again, it is used again.
+        ic->surroundingText().setText("nga", 3, 3);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("ngả");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("r"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
+        config.setValueByPath("ModifySurroundingText", "False");
+        unikey->setConfig(config);
+    });
+}
+
 void testType(Instance *instance) {
     instance->eventDispatcher().schedule([instance]() {
         auto *testfrontend = instance->addonManager().addon("testfrontend");
@@ -1997,6 +2045,7 @@ int main() {
     instance.addonManager().registerDefaultLoader(nullptr);
     setup(&instance);
     testBasic(&instance);
+    testStaleSurroundingText(&instance);
     testType(&instance);
     instance.eventDispatcher().schedule([&instance]() {
         instance.eventDispatcher().detach();

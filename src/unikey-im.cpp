@@ -289,8 +289,10 @@ public:
             return;
         }
 
+        // Text the application has not sent since it last changed may be
+        // gone, e.g. the word before the cursor after Return made a new line.
         if (!ic_->capabilityFlags().test(CapabilityFlag::SurroundingText) ||
-            !ic_->surroundingText().isValid() ||
+            !surroundingTextUpToDate_ || !ic_->surroundingText().isValid() ||
             !ic_->surroundingText().selectedText().empty()) {
             return;
         }
@@ -345,6 +347,30 @@ public:
 
     bool mayRebuildStateFromSurroundingText_ = false;
 
+    // The application's text may change when a key is passed to it. Until
+    // it sends surrounding text that differs from what it was then, the copy
+    // we have may be out of date: LibreOffice answers Return with the text
+    // from before the new line.
+    void surroundingTextMayChange() {
+        surroundingTextUpToDate_ = false;
+        waitingForNewSurroundingText_ = true;
+        const auto &surrounding = ic_->surroundingText();
+        staleSurroundingText_ = surrounding.text();
+        staleSurroundingCursor_ = surrounding.cursor();
+        staleSurroundingAnchor_ = surrounding.anchor();
+    }
+
+    void surroundingTextUpdated() {
+        const auto &surrounding = ic_->surroundingText();
+        if (!waitingForNewSurroundingText_ ||
+            surrounding.text() != staleSurroundingText_ ||
+            surrounding.cursor() != staleSurroundingCursor_ ||
+            surrounding.anchor() != staleSurroundingAnchor_) {
+            surroundingTextUpToDate_ = true;
+            waitingForNewSurroundingText_ = false;
+        }
+    }
+
 private:
     UnikeyEngine *engine_;
     UnikeyInputContext uic_;
@@ -353,6 +379,11 @@ private:
     std::string preeditStr_;
     bool autoCommit_ = false;
     KeySym lastShiftPressed_ = FcitxKey_None;
+    bool surroundingTextUpToDate_ = false;
+    bool waitingForNewSurroundingText_ = false;
+    std::string staleSurroundingText_;
+    unsigned int staleSurroundingCursor_ = 0;
+    unsigned int staleSurroundingAnchor_ = 0;
 };
 
 UnikeyEngine::UnikeyEngine(Instance *instance)
@@ -446,6 +477,7 @@ UnikeyEngine::UnikeyEngine(Instance *instance)
             auto *ic = icEvent.inputContext();
             auto *state = ic->propertyFor(&factory_);
             state->mayRebuildStateFromSurroundingText_ = true;
+            state->surroundingTextUpdated();
         }));
 
     reloadConfig();
@@ -484,6 +516,13 @@ void UnikeyEngine::keyEvent(const InputMethodEntry & /*entry*/,
     auto *state = ic->propertyFor(&factory_);
     state->rebuildFromSurroundingText();
     state->keyEvent(keyEvent);
+    // A key passed to the application may change its text, and it reaches
+    // the application after we have been sent its current surrounding text.
+    // Cursor moves are left out so that going back into a word still works.
+    if (!keyEvent.isRelease() && !keyEvent.accepted() &&
+        !keyEvent.key().isModifier() && !keyEvent.key().isCursorMove()) {
+        state->surroundingTextMayChange();
+    }
 }
 
 void UnikeyState::preedit(KeyEvent &keyEvent) {
