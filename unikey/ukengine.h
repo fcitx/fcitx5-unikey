@@ -12,6 +12,7 @@
 #include "mactab.h"
 #include "vnlexi.h"
 #include <functional>
+#include <vector>
 
 // This is a shared object among processes, do not put any pointer in it
 struct UkSharedMem {
@@ -137,9 +138,13 @@ protected:
     int checkEscapeVIQR(UkKeyEvent &ev);
     int processNoSpellCheck(UkKeyEvent &ev);
     int processWordEnd(UkKeyEvent &ev);
+    int processKey(unsigned int keyCode);
     void synchKeyStrokeBuffer();
     bool lastWordHasVnMark() const;
     bool lastWordIsNonVn() const;
+    bool addMissingRimeMark(const UkKeyEvent &ev);
+    void retypeWord(int wordStart, int keyStart,
+                    const std::vector<unsigned int> &keys);
 };
 
 void SetupUnikeyEngine();

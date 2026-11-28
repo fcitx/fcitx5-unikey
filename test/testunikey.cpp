@@ -1964,6 +1964,102 @@ void testBasic(Instance *instance) {
     });
 }
 
+void testAutoAddRimeMark(Instance *instance) {
+    instance->eventDispatcher().schedule([instance]() {
+        auto *unikey = instance->addonManager().addon("unikey", true);
+        auto *testfrontend = instance->addonManager().addon("testfrontend");
+        auto uuid =
+            testfrontend->call<ITestFrontend::createInputContext>("testapp");
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
+        ic->focusIn();
+        instance->setCurrentInputMethod(ic, "unikey", false);
+
+        RawConfig config;
+        config.setValueByPath("InputMethod", "Telex");
+        config.setValueByPath("SpellCheck", "True");
+        config.setValueByPath("AutoNonVnRestore", "True");
+        config.setValueByPath("FreeMarking", "True");
+        // Defaults; testBasic leaves other values behind.
+        config.setValueByPath("Macro", "True");
+        config.setValueByPath("ModifySurroundingText", "False");
+        unikey->setConfig(config);
+
+        auto type = [testfrontend, uuid](const std::string &keys) {
+            static const std::map<char, std::string> names{{' ', "space"},
+                                                           {',', "comma"},
+                                                           {'.', "period"},
+                                                           {'<', "BackSpace"}};
+            for (char c : keys) {
+                auto name = names.find(c);
+                testfrontend->call<ITestFrontend::keyEvent>(
+                    uuid,
+                    Key(name == names.end() ? std::string(1, c) : name->second),
+                    false);
+            }
+        };
+        const std::pair<std::string, std::string> words[] = {
+            // Rimes always written with ê, â, ơ or ư get the mark added.
+            {"tienf ", "tiền "},
+            {"viecj ", "việc "},
+            {"Nguyenx ", "Nguyễn "},
+            {"VIECJ ", "VIỆC "},
+            {"chuyenj ", "chuyện "},
+            {"giets ", "giết "},
+            {"ddiepj ", "điệp "},
+            {"keuf ", "kều "},
+            {"thuej ", "thuệ "},
+            {"huux ", "hữu "},
+            {"ruouj ", "rượu "},
+            {"cuops ", "cướp "},
+            {"tienf.", "tiền."},
+            {"viecj,", "việc,"},
+            // Unikey accepts these, but ẹnh, ẹch, uạn and uát are not
+            // Vietnamese.
+            {"benhj ", "bệnh "},
+            {"lechj ", "lệch "},
+            {"luanj ", "luận "},
+            {"xuats ", "xuất "},
+            // Left alone: qu takes the u, no tone, English words, the
+            // tone typed inside the vowels, two tone keys.
+            {"quanj ", "quạn "},
+            {"tien ", "tien "},
+            {"hues ", "hues "},
+            {"yens ", "yens "},
+            {"use ", "use "},
+            {"Hersch ", "Héch "},
+            // Spelling rules: c and ng never come before i or e, gh never
+            // before u.
+            {"cienf ", "cienf "},
+            {"ngieuf ", "ngieuf "},
+            {"ghuops ", "ghuops "},
+            // The marked word is still not valid, so the keys stay as typed.
+            {"kuyenj ", "kuyenj "},
+            {"ddietr ", "đietr "},
+            // The tone was taken back, so there is nothing to mark.
+            {"tienff< ", "tien "},
+        };
+        for (const auto &[keys, text] : words) {
+            testfrontend->call<ITestFrontend::pushCommitExpectation>(text);
+        }
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("tiền");
+        for (const auto &[keys, text] : words) {
+            type(keys);
+        }
+        // Return ends the word too.
+        type("tienf");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
+        // Without macros, consonants that start a word are sent to the
+        // application right away and only the rest is in the preedit.
+        config.setValueByPath("Macro", "False");
+        unikey->setConfig(config);
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("iền ");
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("uận ");
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("ệnh ");
+        type("tienf luanj benhj ");
+    });
+}
+
 void testType(Instance *instance) {
     instance->eventDispatcher().schedule([instance]() {
         auto *unikey = instance->addonManager().addon("unikey", true);
@@ -2160,6 +2256,7 @@ int main() {
     instance.addonManager().registerDefaultLoader(nullptr);
     setup(&instance);
     testBasic(&instance);
+    testAutoAddRimeMark(&instance);
     testType(&instance);
     testInvalidConsonant(&instance);
     instance.eventDispatcher().schedule([&instance]() {
