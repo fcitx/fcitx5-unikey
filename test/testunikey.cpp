@@ -1964,6 +1964,124 @@ void testBasic(Instance *instance) {
     });
 }
 
+void testStaleSurroundingText(Instance *instance) {
+    instance->eventDispatcher().schedule([instance]() {
+        auto *unikey = instance->addonManager().addon("unikey", true);
+        auto *testfrontend = instance->addonManager().addon("testfrontend");
+        auto uuid =
+            testfrontend->call<ITestFrontend::createInputContext>("testapp");
+        auto *ic = instance->inputContextManager().findByUUID(uuid);
+        ic->setCapabilityFlags(CapabilityFlag::SurroundingText);
+        ic->focusIn();
+        instance->setCurrentInputMethod(ic, "unikey", false);
+
+        RawConfig config;
+        config.setValueByPath("ModifySurroundingText", "True");
+        unikey->setConfig(config);
+
+        // Return goes to the application, which starts a new line but does
+        // not send new surrounding text. The word before the cursor is gone,
+        // so it must not be taken into the preedit again.
+        ic->surroundingText().setText("abbbba", 6, 6);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("a");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
+        // LibreOffice 26.8 on Wayland answers Return with the text it had
+        // before handling the key, and sends the new line only later.
+        ic->surroundingText().setText("abbbba", 6, 6);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("a");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+        ic->surroundingText().setText("abbbba", 6, 6);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
+        // GTK answers with the preedit committed by Return, but still from
+        // before the new line.
+        ic->surroundingText().setText("", 0, 0);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("nga");
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("a");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("n"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("g"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+        ic->surroundingText().setText("nga", 3, 3);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
+        // A shortcut such as Ctrl+S leaves the text as it is, so the text
+        // sent after it can be used.
+        ic->surroundingText().setText("ngo", 3, 3);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("ngỏ");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+s"),
+                                                    false);
+        ic->surroundingText().setText("ngo", 3, 3);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("r"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
+        // Once the application sends it again, it is used again.
+        ic->surroundingText().setText("nga", 3, 3);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("ngả");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("r"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
+        // The word taken into the preedit was deleted from the application,
+        // so GTK's answer to Return holds the commit in its place.
+        ic->surroundingText().setText("ngả", 3, 3);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("a");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("a"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
+        // Shortcuts that edit the text make it stale like other keys.
+        ic->surroundingText().setText("xin", 3, 3);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("r");
+        testfrontend->call<ITestFrontend::keyEvent>(
+            uuid, Key("Control+BackSpace"), false);
+        ic->surroundingText().setText("xin", 3, 3);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("r"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
+        // BackSpace passed to the application, answered with the text from
+        // before it: the deleted letter must not come back.
+        ic->surroundingText().setText("xinh", 4, 4);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("r");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("BackSpace"),
+                                                    false);
+        ic->surroundingText().setText("xinh", 4, 4);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("r"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
+        // So do shortcuts we do not know, such as Ctrl+U deleting the line
+        // with GTK's Emacs key theme.
+        ic->surroundingText().setText("ca", 2, 2);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::pushCommitExpectation>("r");
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Control+u"),
+                                                    false);
+        ic->surroundingText().setText("ca", 2, 2);
+        ic->updateSurroundingText();
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("r"), false);
+        testfrontend->call<ITestFrontend::keyEvent>(uuid, Key("Return"), false);
+
+        config.setValueByPath("ModifySurroundingText", "False");
+        unikey->setConfig(config);
+    });
+}
+
 void testType(Instance *instance) {
     instance->eventDispatcher().schedule([instance]() {
         auto *unikey = instance->addonManager().addon("unikey", true);
@@ -2160,6 +2278,7 @@ int main() {
     instance.addonManager().registerDefaultLoader(nullptr);
     setup(&instance);
     testBasic(&instance);
+    testStaleSurroundingText(&instance);
     testType(&instance);
     testInvalidConsonant(&instance);
     instance.eventDispatcher().schedule([&instance]() {

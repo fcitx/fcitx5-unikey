@@ -127,6 +127,34 @@ int latinToUtf(unsigned char *dst, const unsigned char *src, int inSize,
     return (outLeft >= 0);
 }
 
+// Whether a key passed to the application may change its text. Most
+// shortcuts do not, except the usual ones for deleting, cutting, pasting
+// and undoing.
+bool mayEditText(const Key &key) {
+    // Shortcuts differ between applications and key themes (Ctrl+U deletes
+    // the line with GTK's Emacs theme), so only a few common ones that move
+    // the cursor or leave the text alone are trusted. Taking an editing key
+    // for one of these would restore deleted text, while the opposite only
+    // skips rebuilding the preedit until the text changes.
+    if (key.states().testAny(KeyStates{KeyState::Alt, KeyState::Super}) ||
+        !key.states().test(KeyState::Ctrl)) {
+        return true;
+    }
+    switch (Key::keySymToUnicode(key.sym())) {
+    case 'a': // Select all, or line start with the Emacs theme.
+    case 'b': // Bold, or back a character.
+    case 'c': // Copy.
+    case 'e': // Center, or line end.
+    case 'f': // Find, or forward a character.
+    case 'n': // New, or next line.
+    case 'p': // Print, or previous line.
+    case 's': // Save.
+        return false;
+    default:
+        return true;
+    }
+}
+
 } // namespace
 
 class UnikeyState final : public InputContextProperty {
@@ -289,8 +317,10 @@ public:
             return;
         }
 
+        // Text the application has not sent since it last changed may be
+        // gone, e.g. the word before the cursor after Return made a new line.
         if (!ic_->capabilityFlags().test(CapabilityFlag::SurroundingText) ||
-            !ic_->surroundingText().isValid() ||
+            !surroundingTextUpToDate_ || !ic_->surroundingText().isValid() ||
             !ic_->surroundingText().selectedText().empty()) {
             return;
         }
@@ -340,10 +370,63 @@ public:
         }
 
         ic_->deleteSurroundingText(-length, length);
+        // Keep our copy in step until the application sends its own, so that
+        // its answer to a key passed next can be recognized as stale.
+        ic_->surroundingText().deleteText(-length, length);
         updatePreedit();
     }
 
     bool mayRebuildStateFromSurroundingText_ = false;
+
+    // The application's text may change when a key is passed to it. Until
+    // it sends surrounding text that is not one of its answers from before
+    // the key, the copy we have may be out of date. After Return,
+    // LibreOffice sends the text it had before, and GTK sends the text it
+    // had before with our commit inserted at the cursor.
+    void surroundingTextMayChange() {
+        surroundingTextUpToDate_ = false;
+        waitingForNewSurroundingText_ = true;
+        staleSurroundingTexts_.clear();
+        const auto &surrounding = ic_->surroundingText();
+        if (!surrounding.isValid()) {
+            return;
+        }
+        staleSurroundingTexts_.push_back(
+            {surrounding.text(), surrounding.cursor(), surrounding.anchor()});
+        const auto &text = surrounding.text();
+        auto cursor = surrounding.cursor();
+        if (lastCommit_.empty() || surrounding.anchor() != cursor ||
+            utf8::lengthValidated(text) == utf8::INVALID_LENGTH ||
+            utf8::length(text) < cursor) {
+            return;
+        }
+        auto withCommit = text;
+        withCommit.insert(utf8::ncharByteLength(text.begin(), cursor),
+                          lastCommit_);
+        auto newCursor =
+            cursor + static_cast<unsigned int>(utf8::length(lastCommit_));
+        staleSurroundingTexts_.push_back(
+            {std::move(withCommit), newCursor, newCursor});
+    }
+
+    void surroundingTextUpdated() {
+        if (!waitingForNewSurroundingText_) {
+            surroundingTextUpToDate_ = true;
+            return;
+        }
+        const auto &surrounding = ic_->surroundingText();
+        for (const auto &stale : staleSurroundingTexts_) {
+            if (surrounding.text() == stale.text &&
+                surrounding.cursor() == stale.cursor &&
+                surrounding.anchor() == stale.anchor) {
+                return;
+            }
+        }
+        surroundingTextUpToDate_ = true;
+        waitingForNewSurroundingText_ = false;
+    }
+
+    void clearLastCommit() { lastCommit_.clear(); }
 
 private:
     UnikeyEngine *engine_;
@@ -353,6 +436,16 @@ private:
     std::string preeditStr_;
     bool autoCommit_ = false;
     KeySym lastShiftPressed_ = FcitxKey_None;
+    bool surroundingTextUpToDate_ = false;
+    bool waitingForNewSurroundingText_ = false;
+    struct StaleSurroundingText {
+        std::string text;
+        unsigned int cursor;
+        unsigned int anchor;
+    };
+    std::vector<StaleSurroundingText> staleSurroundingTexts_;
+    // What was committed while handling the current key.
+    std::string lastCommit_;
 };
 
 UnikeyEngine::UnikeyEngine(Instance *instance)
@@ -446,6 +539,7 @@ UnikeyEngine::UnikeyEngine(Instance *instance)
             auto *ic = icEvent.inputContext();
             auto *state = ic->propertyFor(&factory_);
             state->mayRebuildStateFromSurroundingText_ = true;
+            state->surroundingTextUpdated();
         }));
 
     reloadConfig();
@@ -482,8 +576,18 @@ void UnikeyEngine::keyEvent(const InputMethodEntry & /*entry*/,
                             KeyEvent &keyEvent) {
     auto *ic = keyEvent.inputContext();
     auto *state = ic->propertyFor(&factory_);
+    state->clearLastCommit();
     state->rebuildFromSurroundingText();
     state->keyEvent(keyEvent);
+    // A key passed to the application may change its text, and it reaches
+    // the application after we have been sent its current surrounding text.
+    // Cursor moves are left out so that going back into a word still works,
+    // and so are shortcuts such as Ctrl+S that leave the text alone.
+    if (!keyEvent.isRelease() && !keyEvent.accepted() &&
+        !keyEvent.key().isModifier() && !keyEvent.key().isCursorMove() &&
+        mayEditText(keyEvent.rawKey())) {
+        state->surroundingTextMayChange();
+    }
 }
 
 void UnikeyState::preedit(KeyEvent &keyEvent) {
@@ -736,6 +840,7 @@ void UnikeyState::handleIgnoredKey() {
 void UnikeyState::commit() {
     if (!preeditStr_.empty()) {
         ic_->commitString(preeditStr_);
+        lastCommit_ = preeditStr_;
     }
     reset();
 }
